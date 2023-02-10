@@ -9,8 +9,8 @@ export type Vehicle = {
 
 export const ORIENTATIONS = ["N", "E", "S", "W"] // NOTE FOR COACHES: wanted to mark this 'as const' but then didn't seem to be able to use indexOf to validate my input;
 type VehicleType = "Rover"; //can be extended if other vehicle types need to be added
-type Orientation = typeof ORIENTATIONS[number];
-type Position = { xPos: number; yPos: number };
+export type Orientation = typeof ORIENTATIONS[number];
+export type Position = { xPos: number; yPos: number };
 type Direction = "L" | "R";
 
 export const moveVehicleForward = (vehicle: Vehicle, grid: Grid) => {
