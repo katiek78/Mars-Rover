@@ -1,19 +1,8 @@
 import { createGrid } from "./grid-functions";
-import { ORIENTATIONS, createVehicle, Vehicle, processMovementString } from "./vehicle-functions";
+import { ORIENTATIONS, createVehicle, processMovementString } from "./vehicle-functions";
 
 export const processTextInstructions = (instructionList: string) => {
-    /*return instructionList.split('\n')
-    .filter(instructionLine => instructionLine !== '')
-    .map(instructionLine => instructionLine.trim())
-    .slice(1)
-    .join("\n");*/
-
-    //split into lines
-    //create a grid from first line
-    //create a vehicle from second line
-    //process movements from third line and add to output
-    //keep creating vehicles and processing movements
-
+ 
     const instructionArray = instructionList.split('\n');
     console.log(instructionArray);
     let output = "";
