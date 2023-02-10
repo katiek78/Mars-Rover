@@ -1,13 +1,13 @@
 import { Grid } from "./grid-functions";
 
 export type Vehicle = {
-  name: string;
-  type: VehicleType;
-  position: Position;
-  orientation: Orientation;
+  name: string,
+  vehicleType: VehicleType,
+  position: Position,
+  orientation: Orientation
 };
 
-const ORIENTATIONS = ["N", "E", "S", "W"] as const;
+export const ORIENTATIONS = ["N", "E", "S", "W"] // NOTE FOR COACHES: wanted to mark this 'as const' but then didn't seem to be able to use indexOf to validate my input;
 type VehicleType = "Rover"; //can be extended if other vehicle types need to be added
 type Orientation = typeof ORIENTATIONS[number];
 type Position = { xPos: number; yPos: number };
@@ -31,6 +31,8 @@ export const moveVehicleForward = (vehicle: Vehicle, grid: Grid) => {
       return vehicle.position.xPos - 1 >= 0
         ? { xPos: vehicle.position.xPos - 1, yPos: vehicle.position.yPos }
         : vehicle.position;
+    default: 
+        return {xPos: vehicle.position.xPos, yPos: vehicle.position.yPos}; //NOTE FOR COACHES: Only needed because couldn't mark ORIENTATIONS 'as const'
   }
 };
 
