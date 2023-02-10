@@ -3,8 +3,7 @@ import { ORIENTATIONS, createVehicle, processMovementString } from "./vehicle-fu
 
 export const processTextInstructions = (instructionList: string) => {
  
-    const instructionArray = instructionList.split('\n');
-    console.log(instructionArray);
+    const instructionArray = instructionList.split('\n');    
     let output = "";
     
     //create grid
@@ -23,19 +22,15 @@ export const processTextInstructions = (instructionList: string) => {
         if (ORIENTATIONS.indexOf(orientation) === -1) return null;
         if (isNaN(xPos) || isNaN(yPos)) return null;        
         const vehiclePosition = {xPos, yPos};
-        const vehicle = createVehicle("", "Rover", vehiclePosition, orientation, grid);
-        console.log(JSON.stringify(vehicle));
+        const vehicle = createVehicle("", "Rover", vehiclePosition, orientation, grid);        
 
         //process movements for above vehicle
         if (line + 1 < instructionArray.length && instructionArray[line + 1] !== '') {
-            const newVehicleData = processMovementString(vehicle, grid, instructionArray[line+1]);
-            console.log(instructionArray[line+1]);
+            const newVehicleData = processMovementString(vehicle, grid, instructionArray[line+1]);            
             output += `${line == 1 ? '' : '\n'}${newVehicleData.position.xPos} ${newVehicleData.position.yPos} ${newVehicleData.orientation}`;            
         } else {
             output += `${line == 1 ? '' : '\n'}${vehicle.position.xPos} ${vehicle.position.yPos} ${vehicle.orientation}`;
-        }
-
-        
+        }        
     }
 
     return output;
