@@ -6,5 +6,5 @@ export type Grid = {
 
 
   export const createGrid = (maxX: number, maxY: number) => {
-    return {maxX: maxX, maxY: maxY};
+    return {maxX, maxY};
   }

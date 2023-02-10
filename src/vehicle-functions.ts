@@ -41,3 +41,7 @@ export const rotateVehicle = (vehicle: Vehicle, direction: Direction) => {
     ? ORIENTATIONS[ORIENTATIONS.indexOf(vehicle.orientation) - 1]
     : ORIENTATIONS[ORIENTATIONS.indexOf(vehicle.orientation) + 1];
 };
+
+export const createVehicle = (name: string, vehicleType: VehicleType, position: Position, orientation: Orientation, grid: Grid) => {
+    return {name, vehicleType, position, orientation, grid};
+  };

@@ -2,6 +2,7 @@ import {
   Vehicle,
   moveVehicleForward,
   rotateVehicle,
+  createVehicle
 } from "./vehicle-functions";
 
 import { Grid } from "./grid-functions";
@@ -129,4 +130,18 @@ describe("rotateVehicle", () => {
     expect(rotateVehicle(rover4, "R")).toEqual("W");
     expect(rotateVehicle(rover5, "R")).toEqual("S");
   });
+});
+
+describe("createVehicle", () => {
+  test("Creates a vehicle with the given parameters", () => {
+    expect(createVehicle("Buggy", "Rover", {xPos: 0, yPos: 0}, "N", GRID)).toEqual({
+      name: "Buggy",
+      vehicleType: "Rover",
+      position: {xPos: 0, yPos: 0},
+      orientation: "N",
+      grid: GRID
+    });
+   
+  });
+  
 });
