@@ -45,3 +45,15 @@ export const rotateVehicle = (vehicle: Vehicle, direction: Direction) => {
 export const createVehicle = (name: string, vehicleType: VehicleType, position: Position, orientation: Orientation, grid: Grid) => {
     return {name, vehicleType, position, orientation, grid};
   };
+
+export const processMovementString = (vehicle: Vehicle, grid: Grid, movementString: string) => {
+    
+    let movedVehicle = structuredClone(vehicle);
+    movementString.split("").forEach(instruction => {
+        if (instruction === "L") movedVehicle.orientation = rotateVehicle(movedVehicle, "L");
+        if (instruction === "R") movedVehicle.orientation = rotateVehicle(movedVehicle, "R");
+        if (instruction === "M") movedVehicle.position = moveVehicleForward(movedVehicle, grid);       
+    });
+    
+    return {position: movedVehicle.position, orientation: movedVehicle.orientation}
+}
