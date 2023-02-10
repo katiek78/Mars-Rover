@@ -1,3 +1,5 @@
+import { Grid } from "./grid-functions";
+
 export type Vehicle = {
   name: string;
   type: VehicleType;
@@ -11,16 +13,24 @@ type Orientation = typeof ORIENTATIONS[number];
 type Position = { xPos: number; yPos: number };
 type Direction = "L" | "R";
 
-export const moveVehicleForward = (vehicle: Vehicle) => {
+export const moveVehicleForward = (vehicle: Vehicle, grid: Grid) => {
   switch (vehicle.orientation) {
     case "N":
-      return { xPos: vehicle.position.xPos, yPos: vehicle.position.yPos + 1 };
+      return vehicle.position.yPos + 1 <= grid.maxY
+        ? { xPos: vehicle.position.xPos, yPos: vehicle.position.yPos + 1 }
+        : vehicle.position;
     case "E":
-      return { xPos: vehicle.position.xPos + 1, yPos: vehicle.position.yPos };
+      return vehicle.position.xPos + 1 <= grid.maxX
+        ? { xPos: vehicle.position.xPos + 1, yPos: vehicle.position.yPos }
+        : vehicle.position;
     case "S":
-      return { xPos: vehicle.position.xPos, yPos: vehicle.position.yPos - 1 };
+      return vehicle.position.yPos - 1 >= 0
+        ? { xPos: vehicle.position.xPos, yPos: vehicle.position.yPos - 1 }
+        : vehicle.position;
     case "W":
-      return { xPos: vehicle.position.xPos - 1, yPos: vehicle.position.yPos };
+      return vehicle.position.xPos - 1 >= 0
+        ? { xPos: vehicle.position.xPos - 1, yPos: vehicle.position.yPos }
+        : vehicle.position;
   }
 };
 
