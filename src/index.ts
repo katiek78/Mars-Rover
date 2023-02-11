@@ -1,5 +1,5 @@
 import { Grid, createGrid } from "./grid-functions";
-import { print, yn } from "./ui/console";
+import { print, yn, promptColour as prompt } from "./ui/console";
 import {
   parseGridDimension,
   parseVehiclePosition,
@@ -8,15 +8,10 @@ import {
 } from "./ui/parse";
 import {
   Vehicle,
-  Orientation,
   Position,
   createVehicle,
   processMovementString,
 } from "./vehicle-functions";
-
-const prompt = require("prompt-sync")(); //NOTE TO COACHES - wanted to use ES6 modules but not sure how to do that here
-//const yn = require('yn');
-//import yn from '../node_modules/yn';  //NOTE TO COACHES - neither of these worked, so had to write my own function
 
 const getGrid = (): Grid => {
   let maxXInput = prompt(`Please specify the grid width (X): `);
