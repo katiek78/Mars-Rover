@@ -1,6 +1,9 @@
 import { Grid, createGrid } from "./grid-functions";
 import { print, yn } from "./ui/console";
-import { parseGridDimension } from "./ui/parse";
+import {
+  parseGridDimension,
+  parseVehiclePositionOnRectangularGrid,
+} from "./ui/parse";
 import {
   Vehicle,
   Orientation,
@@ -39,8 +42,22 @@ const getVehicleMovements = (grid: Grid): Array<[Vehicle, string]> => {
   const vehicleMovements: Array<[Vehicle, string]> = [];
   const getVehicleDetails = (): void => {
     print("Vehicle 1:");
-    const xPos = parseInt(prompt(`Please specify the vehicle's X position? `));
-    const yPos = parseInt(prompt(`Please specify the vehicle's Y position? `));
+    let xPosInput = prompt(`Please specify the vehicle's X position: `);
+    let xPos = parseVehiclePositionOnRectangularGrid(xPosInput, grid, "X");
+    while (xPos === undefined) {
+      xPosInput = prompt(
+        `Invalid input. Please specify the vehicle's X position (as a number) within the specified grid: `
+      );
+      xPos = parseGridDimension(xPosInput);
+    }
+    let yPosInput = prompt(`Please specify the vehicle's Y position: `);
+    let yPos = parseVehiclePositionOnRectangularGrid(yPosInput, grid, "Y");
+    while (yPos === undefined) {
+      yPosInput = prompt(
+        `Invalid input. Please specify the vehicle's Y position (as a number) within the specified grid: `
+      );
+      yPos = parseGridDimension(yPosInput);
+    }
     const position: Position = { xPos, yPos };
     const orientation: Orientation = prompt(
       `Please specify the vehicle's orientation (N/E/S/W)? `

@@ -1,3 +1,5 @@
+export type Dimension = "X" | "Y";
+
 export type Grid = {
   // name: string;
   maxX: number;
@@ -8,7 +10,3 @@ export const createGrid = (maxX: number, maxY: number) => {
   return { maxX, maxY };
 };
 
-export const processTextInstructions = (instructionList: string) => {
-    const instructionArray = instructionList.split('\n');
-    
-};
