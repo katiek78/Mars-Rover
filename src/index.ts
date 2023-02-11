@@ -37,8 +37,10 @@ const getGrid = (): Grid => {
 
 const getVehicleMovements = (grid: Grid): Array<[Vehicle, string]> => {
   const vehicleMovements: Array<[Vehicle, string]> = [];
+  let vehicleCounter = 1;
   const getVehicleDetails = (): void => {
-    print("Vehicle 1:");
+	print('');
+    print(`Vehicle ${vehicleCounter}:`);
     let xPosInput = prompt(`Please specify the vehicle's X position: `);
     let xPos = parseVehiclePosition(xPosInput, grid, "X");
     while (xPos === undefined) {
@@ -94,6 +96,7 @@ const getVehicleMovements = (grid: Grid): Array<[Vehicle, string]> => {
   getVehicleDetails();
 
   while (yn(prompt("Do you want to add details for another vehicle? "))) {
+	vehicleCounter++;
     getVehicleDetails();
   }
 
