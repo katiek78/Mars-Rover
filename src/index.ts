@@ -1,23 +1,40 @@
 import { Grid, createGrid } from './grid-functions';
 import { print, yn } from './ui/console';
+import { parseGridDimension } from './ui/parse';
 import { Vehicle, Orientation, Position, createVehicle, processMovementString } from './vehicle-functions';
 
 const prompt = require('prompt-sync')();  //NOTE TO COACHES - wanted to use ES6 modules but not sure how to do that here
 //const yn = require('yn');
 //import yn from '../node_modules/yn';  //NOTE TO COACHES - neither of these worked, so had to write my own function
 
-function operateMarsVehicles(): void {
+
+const getGrid = (): Grid => {
+	let maxXInput = prompt(`Please specify the grid width (X): `);
+	let maxX = parseGridDimension(maxXInput);
+	while (maxX === undefined) {
+		maxXInput = prompt(`Invalid input. Please specify the grid width (X) as a number: `);
+		maxX = parseGridDimension(maxXInput);
+	}
+
+	let maxYInput = prompt(`Please specify the grid width (Y): `);
+	let maxY = parseGridDimension(maxYInput);
+	while (maxY === undefined) {
+		maxYInput = prompt(`Invalid input. Please specify the grid width (Y) as a number: `);
+		maxY = parseGridDimension(maxYInput);
+	}
+
+	return createGrid(maxX, maxY);
+}
+
+const operateMarsVehicles = (): void => {
 	console.clear();
 	print('------------------------------------------------');
 	print('| Welcome to the Mars Rover Operations Centre! |');
 	print('------------------------------------------------');
 
-	const maxX = prompt(`Please specify the grid width (X)? `);
-	const maxY = prompt(`Please specify the grid length (Y)? `);
-	const grid: Grid = createGrid(maxX, maxY);
+	const grid = getGrid();
 
 	const vehicleMovements: Array<[Vehicle, string]> = [];
-
 	
 	const getVehicleDetails = (): void => {
 		print("Vehicle 1:");
@@ -40,7 +57,7 @@ function operateMarsVehicles(): void {
 
 	print("---------------------------------------");
 	print("Grid dimensions and existing positions:");
-	print(`${maxX} ${maxY}`);
+	print(`${grid.maxX} ${grid.maxY}`);
 
 	vehicleMovements.forEach(vehicleMovement => {
 		const vehicle: Vehicle = vehicleMovement[0];		
@@ -60,3 +77,4 @@ function operateMarsVehicles(): void {
 }
 
 operateMarsVehicles();
+
