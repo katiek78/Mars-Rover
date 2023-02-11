@@ -3,6 +3,7 @@ import { print, yn } from "./ui/console";
 import {
   parseGridDimension,
   parseVehiclePositionOnRectangularGrid,
+  parseMovementString
 } from "./ui/parse";
 import {
   Vehicle,
@@ -62,12 +63,17 @@ const getVehicleMovements = (grid: Grid): Array<[Vehicle, string]> => {
     const orientation: Orientation = prompt(
       `Please specify the vehicle's orientation (N/E/S/W)? `
     );
-    const movementString = prompt(
-      "Please specify the vehicle's movement string (M for forward / L for left / R for right)? "
+    let movementStringInput = prompt(
+      "Please specify the vehicle's movement string (M for forward / L for left / R for right): "
     );
-    const vehicle: Vehicle = createVehicle(
+	
+	const vehicleType = "Rover"; //Can be extended in the future to allow user to choose vehicle type
+	
+	let movementString = parseMovementString(vehicleType, movementStringInput) 
+	
+	const vehicle: Vehicle = createVehicle(
       "",
-      "Rover",
+      vehicleType,
       position,
       orientation,
       grid
