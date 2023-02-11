@@ -84,6 +84,32 @@ const getVehicleMovements = (grid: Grid): Array<[Vehicle, string]> => {
   return vehicleMovements;
 };
 
+const printVehicleMovements = (grid: Grid, vehicleMovements: Array<[Vehicle, string]>): void => {
+	print("---------------------------------------");
+	print("Grid dimensions and existing positions:");
+	print(`${grid.maxX} ${grid.maxY}`);
+
+	vehicleMovements.forEach((vehicleMovement) => {
+		const vehicle: Vehicle = vehicleMovement[0];
+		print(
+		`${vehicle.position.xPos} ${vehicle.position.yPos} ${vehicle.orientation}`
+		);
+	});
+
+	print("--------------");
+	print("New positions:");
+	vehicleMovements.forEach((vehicleMovement) => {
+		const vehicle: Vehicle = vehicleMovement[0];
+		const movementString = vehicleMovement[1];
+		const newVehicleData = processMovementString(vehicle, grid, movementString);
+		print(
+		`${newVehicleData.position.xPos.toString()} ${newVehicleData.position.yPos.toString()} ${
+			newVehicleData.orientation
+		}`
+		);
+	});
+}
+
 const operateMarsVehicles = (): void => {
   console.clear();
   print("------------------------------------------------");
@@ -91,33 +117,9 @@ const operateMarsVehicles = (): void => {
   print("------------------------------------------------");
 
   const grid = getGrid();
-
-  //const vehicleMovements: Array<[Vehicle, string]> = [];
-  const vehicleMovements = getVehicleMovements(grid);
-
-  print("---------------------------------------");
-  print("Grid dimensions and existing positions:");
-  print(`${grid.maxX} ${grid.maxY}`);
-
-  vehicleMovements.forEach((vehicleMovement) => {
-    const vehicle: Vehicle = vehicleMovement[0];
-    print(
-      `${vehicle.position.xPos} ${vehicle.position.yPos} ${vehicle.orientation}`
-    );
-  });
-
-  print("--------------");
-  print("New positions:");
-  vehicleMovements.forEach((vehicleMovement) => {
-    const vehicle: Vehicle = vehicleMovement[0];
-    const movementString = vehicleMovement[1];
-    const newVehicleData = processMovementString(vehicle, grid, movementString);
-    print(
-      `${newVehicleData.position.xPos.toString()} ${newVehicleData.position.yPos.toString()} ${
-        newVehicleData.orientation
-      }`
-    );
-  });
+  const vehicleMovements: Array<[Vehicle, string]> = getVehicleMovements(grid);
+  printVehicleMovements(grid, vehicleMovements);
+  
 };
 
 operateMarsVehicles();
