@@ -1,5 +1,5 @@
 import { createGrid } from "./grid-functions";
-import { ORIENTATIONS, createVehicle, processMovementString } from "./vehicle-functions";
+import { ORIENTATIONS, Orientation, createVehicle, processMovementString } from "./vehicle-functions";
 
 export const processTextInstructions = (instructionList: string) => {
  
@@ -17,8 +17,11 @@ export const processTextInstructions = (instructionList: string) => {
         //create vehicle
         const vehicleDataLine = instructionArray[line];
         const xPos = parseInt(vehicleDataLine.split(" ")[0]);
-        const yPos = parseInt(vehicleDataLine.split(" ")[1]);
-        const orientation = ORIENTATIONS[ORIENTATIONS.indexOf(vehicleDataLine.split(" ")[2])];        
+        const yPos = parseInt(vehicleDataLine.split(" ")[1]);        
+        const legalOrientation = ORIENTATIONS.find(el => el === vehicleDataLine.split(" ")[2]);
+        if (legalOrientation === undefined) return undefined;
+        const orientation: Orientation = legalOrientation;
+        return orientation;
         if (ORIENTATIONS.indexOf(orientation) === -1) return null;
         if (isNaN(xPos) || isNaN(yPos)) return null;        
         const vehiclePosition = {xPos, yPos};
