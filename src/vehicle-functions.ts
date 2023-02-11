@@ -7,7 +7,7 @@ export type Vehicle = {
   orientation: Orientation
 };
 
-export const ORIENTATIONS = ["N", "E", "S", "W"] // NOTE FOR COACHES: wanted to mark this 'as const' but then didn't seem to be able to use indexOf to validate my input;
+export const ORIENTATIONS = ["N", "E", "S", "W"]; // NOTE FOR COACHES: wanted to mark this 'as const' but then didn't seem to be able to use indexOf to validate my input;
 export type VehicleType = "Rover"; //can be extended if other vehicle types need to be added
 export type Orientation = typeof ORIENTATIONS[number];
 export type Position = { xPos: number; yPos: number };

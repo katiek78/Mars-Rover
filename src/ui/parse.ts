@@ -15,7 +15,7 @@ export const parseVehiclePosition = (input: string, grid: Grid, dimension: Dimen
   
 export const parseMovementString = (vehicleType: VehicleType, input: string) => {
     if (vehicleType === "Rover") {
-        return input.split("").filter(ch => typeof ch === "string" && ROVER_INSTRUCTIONS.includes(ch)).join("");
+        return input.split("").filter(ch => ROVER_INSTRUCTIONS.includes(ch)).join("");
     }
     return input;
 }
