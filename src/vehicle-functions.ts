@@ -6,7 +6,7 @@ export interface Vehicle {
 }
 
 export interface Rover extends Vehicle {
-  
+  cameras: number;
 }
 
 export const ORIENTATIONS = ["N", "E", "S", "W"] as const;
@@ -47,17 +47,18 @@ export const rotateVehicle = (vehicle: Vehicle, direction: Direction) => {
 export const createRover = (
   position: Position,
   orientation: Orientation,
-  grid: Grid
+  grid: Grid,
+  cameras: number
 ) => {
-  return { position, orientation, grid };
+  return { position, orientation, grid, cameras };
 };
 
-export const processRoverMovements = (
-  rover: Rover,
+export const processVehicleMovements = (
+  vehicle: Vehicle,
   grid: Grid,
   movementString: string
 ) => {
-  const movingVehicle = structuredClone(rover);
+  const movingVehicle = structuredClone(vehicle);
   movementString.split("").forEach((instruction) => {
     if (instruction === "L")
       movingVehicle.orientation = rotateVehicle(movingVehicle, "L");

@@ -11,7 +11,7 @@ import {
   Rover,
   Position,
   createRover,
-  processRoverMovements,
+  processVehicleMovements,
 } from "./vehicle-functions";
 
 const getGrid = (): Grid => {
@@ -38,10 +38,12 @@ const getGrid = (): Grid => {
 
 const getVehicleMovements = (grid: Grid): Array<[Vehicle, string]> => {
   const vehicleMovements: Array<[Vehicle, string]> = [];
-  let roverCounter = 1;
+  let vehicleCounter = 1;
+
+  //Currently getVehicleDetails only gets Rover details but could be extended to allow other vehicle details to be obtained
   const getVehicleDetails = (): void => {
 	print('');
-    print(`Rover ${roverCounter}:`);
+    print(`Rover ${vehicleCounter}:`);
     let xPosInput = prompt(`Please specify the Rover's X position: `);
     let xPos = parseVehiclePosition(xPosInput, grid, "X");
     while (xPos === undefined) {
@@ -85,15 +87,16 @@ const getVehicleMovements = (grid: Grid): Array<[Vehicle, string]> => {
 	const rover: Rover= createRover(
       position,
       orientation,
-      grid
+      grid,
+      23
     );
     vehicleMovements.push([rover, roverMovements]);
   };
 
   getVehicleDetails();
 
-  while (yn(prompt("Do you want to add details for another vehicle? "))) {
-	roverCounter++;
+  while (yn(prompt("Do you want to add details for another Rover? "))) {
+	vehicleCounter++;
     getVehicleDetails();
   }
 
@@ -117,7 +120,7 @@ const printVehicleMovements = (grid: Grid, vehicleMovements: Array<[Vehicle, str
 	vehicleMovements.forEach((vehicleMovement) => {
 		const vehicle: Vehicle = vehicleMovement[0];
 		const movementString = vehicleMovement[1];
-		const movedVehicle = processRoverMovements(vehicle, grid, movementString);
+		const movedVehicle = processVehicleMovements(vehicle, grid, movementString);
 		print(
 		`${movedVehicle.position.xPos.toString()} ${movedVehicle.position.yPos.toString()} ${
 			movedVehicle.orientation
