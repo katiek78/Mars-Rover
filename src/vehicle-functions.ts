@@ -3,7 +3,7 @@ import { Grid } from "./grid-functions";
 export interface Vehicle {
   position: Position;
   orientation: Orientation;
-};
+}
 
 export const ORIENTATIONS = ["N", "E", "S", "W"] as const;
 export type Orientation = typeof ORIENTATIONS[number];
@@ -29,7 +29,7 @@ export const moveVehicleForward = (vehicle: Vehicle, grid: Grid) => {
     case "W":
       return vehicle.position.xPos - 1 >= 0
         ? { xPos: vehicle.position.xPos - 1, yPos: vehicle.position.yPos }
-        : vehicle.position;    
+        : vehicle.position;
   }
 };
 
@@ -41,7 +41,7 @@ export const rotateVehicle = (vehicle: Vehicle, direction: Direction) => {
     : ORIENTATIONS[ORIENTATIONS.indexOf(vehicle.orientation) + 1];
 };
 
-export const createVehicle = ( 
+export const createVehicle = (
   position: Position,
   orientation: Orientation,
   grid: Grid
@@ -64,8 +64,5 @@ export const processMovementString = (
       movingVehicle.position = moveVehicleForward(movingVehicle, grid);
   });
 
-  return {
-    position: movingVehicle.position,
-    orientation: movingVehicle.orientation,
-  };
+  return movingVehicle;
 };

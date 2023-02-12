@@ -118,10 +118,10 @@ const printVehicleMovements = (grid: Grid, vehicleMovements: Array<[Vehicle, str
 	vehicleMovements.forEach((vehicleMovement) => {
 		const vehicle: Vehicle = vehicleMovement[0];
 		const movementString = vehicleMovement[1];
-		const newVehicleData = processMovementString(vehicle, grid, movementString);
+		const movedVehicle = processMovementString(vehicle, grid, movementString);
 		print(
-		`${newVehicleData.position.xPos.toString()} ${newVehicleData.position.yPos.toString()} ${
-			newVehicleData.orientation
+		`${movedVehicle.position.xPos.toString()} ${movedVehicle.position.yPos.toString()} ${
+			movedVehicle.orientation
 		}`
 		);
 	});
