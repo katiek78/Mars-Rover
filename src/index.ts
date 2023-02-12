@@ -64,28 +64,26 @@ const getVehicleMovements = (grid: Grid): Array<[Vehicle, string]> => {
 	let orientationInput = prompt(
       "Please specify the vehicle's orientation (N/E/S/W): "
     );
-	let orientation = parseVehicleOrientation(vehicleType, orientationInput);
+	let orientation = parseVehicleOrientation(orientationInput);
 	while (orientation === undefined) {
 		orientationInput = prompt(
 			"Invalid input. Please specify the vehicle's orientation (N/E/S/W): "
 		  );
-		orientation = parseVehicleOrientation(vehicleType, orientationInput);
+		orientation = parseVehicleOrientation(orientationInput);
 	}
 
     let movementStringInput = prompt(
       "Please specify the vehicle's movements (M for forward / L for left / R for right): "
     );
-	let movementString = parseMovementString(vehicleType, movementStringInput);
+	let movementString = parseMovementString(movementStringInput);
 	while (movementString === undefined) {
 		movementStringInput = prompt(
 			"Invalid input. Please specify the vehicle's movements (M for forward / L for left / R for right): "
 		  );
-		  movementString = parseMovementString(vehicleType, movementStringInput); 
+		  movementString = parseMovementString(movementStringInput); 
 	}
 		
 	const vehicle: Vehicle = createVehicle(
-      "",
-      vehicleType,
       position,
       orientation,
       grid

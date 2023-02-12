@@ -1,14 +1,11 @@
 import { Grid } from "./grid-functions";
 
-export type Vehicle = {
-  name: string;
-  vehicleType: VehicleType;
+export interface Vehicle {
   position: Position;
   orientation: Orientation;
 };
 
 export const ORIENTATIONS = ["N", "E", "S", "W"] as const;
-export type VehicleType = "Rover"; //can be extended if other vehicle types need to be added
 export type Orientation = typeof ORIENTATIONS[number];
 export type Position = { xPos: number; yPos: number };
 export type Direction = "L" | "R";
@@ -44,14 +41,12 @@ export const rotateVehicle = (vehicle: Vehicle, direction: Direction) => {
     : ORIENTATIONS[ORIENTATIONS.indexOf(vehicle.orientation) + 1];
 };
 
-export const createVehicle = (
-  name: string,
-  vehicleType: VehicleType,
+export const createVehicle = ( 
   position: Position,
   orientation: Orientation,
   grid: Grid
 ) => {
-  return { name, vehicleType, position, orientation, grid };
+  return { position, orientation, grid };
 };
 
 export const processMovementString = (

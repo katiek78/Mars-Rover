@@ -1,4 +1,4 @@
-/*
+
 import {
     processTextInstructions
   } from "./main-operator-functions";
@@ -30,4 +30,3 @@ MMRMMRMRRM`;
         );   
       });
 });
-*/

@@ -1,6 +1,5 @@
 import { Grid, Dimension } from "../grid-functions";
 import {
-  VehicleType,
   ROVER_INSTRUCTIONS,
   ORIENTATIONS,
   Orientation,
@@ -23,26 +22,19 @@ export const parseVehiclePosition = (
 };
 
 export const parseMovementString = (
-  vehicleType: VehicleType,
   input: string
-) => {
-  if (vehicleType === "Rover") {
+) => {  
     return input
       .split("")
       .filter((ch) => ROVER_INSTRUCTIONS.find((el) => el === ch) !== undefined)
       .join("");
-  }
-  return input;
 };
 
-export const parseVehicleOrientation = (
-  vehicleType: VehicleType,
+export const parseVehicleOrientation = (  
   input: string
-) => {
-  if (vehicleType === "Rover") {
+) => { 
     const legalOrientation = ORIENTATIONS.find((el) => el === input);
     if (legalOrientation === undefined) return undefined;
     const orientation: Orientation = legalOrientation;
-    return orientation;
-  }
+    return orientation;  
 };
