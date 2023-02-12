@@ -14,7 +14,6 @@ export type Orientation = typeof ORIENTATIONS[number];
 export type Position = { xPos: number; yPos: number };
 export type Direction = "L" | "R";
 export const ROVER_INSTRUCTIONS = ["L", "R", "M"] as const;
-type RoverInstruction = typeof ROVER_INSTRUCTIONS[number];
 
 export const moveVehicleForward = (vehicle: Vehicle, grid: Grid) => {
   switch (vehicle.orientation) {
