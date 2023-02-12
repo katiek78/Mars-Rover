@@ -8,9 +8,10 @@ import {
 } from "./ui/parse";
 import {
   Vehicle,
+  Rover,
   Position,
-  createVehicle,
-  processMovementString,
+  createRover,
+  processRoverMovements,
 } from "./vehicle-functions";
 
 const getGrid = (): Grid => {
@@ -37,64 +38,62 @@ const getGrid = (): Grid => {
 
 const getVehicleMovements = (grid: Grid): Array<[Vehicle, string]> => {
   const vehicleMovements: Array<[Vehicle, string]> = [];
-  let vehicleCounter = 1;
+  let roverCounter = 1;
   const getVehicleDetails = (): void => {
 	print('');
-    print(`Vehicle ${vehicleCounter}:`);
-    let xPosInput = prompt(`Please specify the vehicle's X position: `);
+    print(`Rover ${roverCounter}:`);
+    let xPosInput = prompt(`Please specify the Rover's X position: `);
     let xPos = parseVehiclePosition(xPosInput, grid, "X");
     while (xPos === undefined) {
       xPosInput = prompt(
-        `Invalid input. Please specify the vehicle's X position (as a number) within the specified grid: `
+        `Invalid input. Please specify the Rover's X position (as a number) within the specified grid: `
       );
       xPos = parseGridDimension(xPosInput);
     }
-    let yPosInput = prompt(`Please specify the vehicle's Y position: `);
+    let yPosInput = prompt(`Please specify the Rover's Y position: `);
     let yPos = parseVehiclePosition(yPosInput, grid, "Y");
     while (yPos === undefined) {
       yPosInput = prompt(
-        `Invalid input. Please specify the vehicle's Y position (as a number) within the specified grid: `
+        `Invalid input. Please specify the Rover's Y position (as a number) within the specified grid: `
       );
       yPos = parseGridDimension(yPosInput);
     }
-    const position: Position = { xPos, yPos };
-    
-	const vehicleType = "Rover"; //Can be extended in the future to allow user to choose vehicle type
+    const position: Position = { xPos, yPos };	
 
 	let orientationInput = prompt(
-      "Please specify the vehicle's orientation (N/E/S/W): "
+      "Please specify the Rover's orientation (N/E/S/W): "
     );
 	let orientation = parseVehicleOrientation(orientationInput);
 	while (orientation === undefined) {
 		orientationInput = prompt(
-			"Invalid input. Please specify the vehicle's orientation (N/E/S/W): "
+			"Invalid input. Please specify the Rover's orientation (N/E/S/W): "
 		  );
 		orientation = parseVehicleOrientation(orientationInput);
 	}
 
-    let movementStringInput = prompt(
-      "Please specify the vehicle's movements (M for forward / L for left / R for right): "
+    let roverMovementInput = prompt(
+      "Please specify the Rover's movements (M for forward / L for left / R for right): "
     );
-	let movementString = parseMovementString(movementStringInput);
-	while (movementString === undefined) {
-		movementStringInput = prompt(
-			"Invalid input. Please specify the vehicle's movements (M for forward / L for left / R for right): "
+	let roverMovements = parseMovementString(roverMovementInput);
+	while (roverMovements === undefined) {
+		roverMovementInput = prompt(
+			"Invalid input. Please specify the Rover's movements (M for forward / L for left / R for right): "
 		  );
-		  movementString = parseMovementString(movementStringInput); 
+		  roverMovements = parseMovementString(roverMovementInput); 
 	}
 		
-	const vehicle: Vehicle = createVehicle(
+	const rover: Rover= createRover(
       position,
       orientation,
       grid
     );
-    vehicleMovements.push([vehicle, movementString]);
+    vehicleMovements.push([rover, roverMovements]);
   };
 
   getVehicleDetails();
 
   while (yn(prompt("Do you want to add details for another vehicle? "))) {
-	vehicleCounter++;
+	roverCounter++;
     getVehicleDetails();
   }
 
@@ -118,7 +117,7 @@ const printVehicleMovements = (grid: Grid, vehicleMovements: Array<[Vehicle, str
 	vehicleMovements.forEach((vehicleMovement) => {
 		const vehicle: Vehicle = vehicleMovement[0];
 		const movementString = vehicleMovement[1];
-		const movedVehicle = processMovementString(vehicle, grid, movementString);
+		const movedVehicle = processRoverMovements(vehicle, grid, movementString);
 		print(
 		`${movedVehicle.position.xPos.toString()} ${movedVehicle.position.yPos.toString()} ${
 			movedVehicle.orientation

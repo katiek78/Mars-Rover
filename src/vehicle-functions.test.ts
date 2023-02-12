@@ -2,8 +2,8 @@ import {
   Vehicle,
   moveVehicleForward,
   rotateVehicle,
-  createVehicle,
-  processMovementString
+  createRover,
+  processRoverMovements
 } from "./vehicle-functions";
 
 import { Grid } from "./grid-functions";
@@ -135,7 +135,7 @@ describe("rotateVehicle", () => {
 
 describe("createVehicle", () => {
   test("Creates a vehicle with the given parameters", () => {
-    expect(createVehicle("Buggy", "Rover", {xPos: 0, yPos: 0}, "N", GRID)).toEqual({
+    expect(createRover("Buggy", "Rover", {xPos: 0, yPos: 0}, "N", GRID)).toEqual({
       name: "Buggy",
       vehicleType: "Rover",
       position: {xPos: 0, yPos: 0},
@@ -148,43 +148,43 @@ describe("createVehicle", () => {
 
 describe("processMovementString", () => {
   test("Returns original vehicle position and orientation if movement string is empty", () => {
-    expect(processMovementString(rover1, GRID, "")).toEqual({    
+    expect(processRoverMovements(rover1, GRID, "")).toEqual({    
       position: { xPos: 0, yPos: 0 },
       orientation: "N",
     });   
   });
   test("Rotates vehicle clockwise if movement string is 'R'", () => {
-    expect(processMovementString(rover1, GRID, "R")).toEqual({   
+    expect(processRoverMovements(rover1, GRID, "R")).toEqual({   
       position: { xPos: 0, yPos: 0 },
       orientation: "E",
     }); 
   });
   test("Rotates vehicle anticlockwise if movement string is 'L'", () => {
-    expect(processMovementString(rover1, GRID, "L")).toEqual({      
+    expect(processRoverMovements(rover1, GRID, "L")).toEqual({      
       position: { xPos: 0, yPos: 0 },
       orientation: "W",
     }); 
   });
   test("Moves vehicle forward if movement string is 'M'", () => {
-    expect(processMovementString(rover1, GRID, "M")).toEqual({      
+    expect(processRoverMovements(rover1, GRID, "M")).toEqual({      
       position: { xPos: 0, yPos: 1 },
       orientation: "N",
     }); 
   });  
   test("Moves vehicle through multiple orientations", () => {
-    expect(processMovementString(rover1, GRID, "LL")).toEqual({      
+    expect(processRoverMovements(rover1, GRID, "LL")).toEqual({      
       position: { xPos: 0, yPos: 0 },
       orientation: "S",
     }); 
   });  
   test("Moves vehicle through multiple forward movements", () => {
-    expect(processMovementString(rover1, GRID, "MMMM")).toEqual({      
+    expect(processRoverMovements(rover1, GRID, "MMMM")).toEqual({      
       position: { xPos: 0, yPos: 4 },
       orientation: "N",
     }); 
   });  
   test("Moves vehicle through multiple orientations and forward movements", () => {
-    expect(processMovementString(rover1, GRID, "RMMMMLMML")).toEqual({      
+    expect(processRoverMovements(rover1, GRID, "RMMMMLMML")).toEqual({      
       position: { xPos: 4, yPos: 2 },
       orientation: "W",
     }); 

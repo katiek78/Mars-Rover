@@ -2,7 +2,11 @@ import { Grid } from "./grid-functions";
 
 export interface Vehicle {
   position: Position;
-  orientation: Orientation;
+  orientation: Orientation;  
+}
+
+export interface Rover extends Vehicle {
+  
 }
 
 export const ORIENTATIONS = ["N", "E", "S", "W"] as const;
@@ -41,7 +45,7 @@ export const rotateVehicle = (vehicle: Vehicle, direction: Direction) => {
     : ORIENTATIONS[ORIENTATIONS.indexOf(vehicle.orientation) + 1];
 };
 
-export const createVehicle = (
+export const createRover = (
   position: Position,
   orientation: Orientation,
   grid: Grid
@@ -49,12 +53,12 @@ export const createVehicle = (
   return { position, orientation, grid };
 };
 
-export const processMovementString = (
-  vehicle: Vehicle,
+export const processRoverMovements = (
+  rover: Rover,
   grid: Grid,
   movementString: string
 ) => {
-  const movingVehicle = structuredClone(vehicle);
+  const movingVehicle = structuredClone(rover);
   movementString.split("").forEach((instruction) => {
     if (instruction === "L")
       movingVehicle.orientation = rotateVehicle(movingVehicle, "L");
