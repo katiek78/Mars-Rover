@@ -12,7 +12,7 @@ export type VehicleType = "Rover"; //can be extended if other vehicle types need
 export type Orientation = typeof ORIENTATIONS[number];
 export type Position = { xPos: number; yPos: number };
 export type Direction = "L" | "R";
-export const ROVER_INSTRUCTIONS = ["L", "R", "M"];
+export const ROVER_INSTRUCTIONS = ["L", "R", "M"] as const;
 type RoverInstruction = typeof ROVER_INSTRUCTIONS[number];
 
 export const moveVehicleForward = (vehicle: Vehicle, grid: Grid) => {
@@ -60,7 +60,7 @@ export const processMovementString = (
   movementString: string
 ) => {
   const movingVehicle = structuredClone(vehicle);
-  movementString.split("").forEach((instruction: RoverInstruction) => {
+  movementString.split("").forEach((instruction) => {
     if (instruction === "L")
       movingVehicle.orientation = rotateVehicle(movingVehicle, "L");
     if (instruction === "R")
