@@ -13,7 +13,7 @@ export const ORIENTATIONS = ["N", "E", "S", "W"] as const;
 export type Orientation = typeof ORIENTATIONS[number];
 export type Position = { xPos: number; yPos: number };
 export type Direction = "L" | "R";
-export const ROVER_INSTRUCTIONS = ["L", "R", "M"] as const;
+export const ROVER_INSTRUCTIONS = ["L", "R", "M", "S"] as const;
 
 export const moveVehicleForward = (vehicle: Vehicle, grid: Grid) => {
   switch (vehicle.orientation) {
