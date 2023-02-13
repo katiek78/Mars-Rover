@@ -3,7 +3,8 @@ import {
   moveVehicleForward,
   rotateVehicle,
   createRover,
-  processVehicleInstructions
+  processVehicleInstructions,
+  takeSample
 } from "./vehicle-functions";
 
 import { Grid } from "./grid-functions";
@@ -78,7 +79,7 @@ const rover8: Rover = {
   orientation: "E",
   cameras: 23,
   sampleCapacity: 3,
-  samplesTaken: 2
+  samplesTaken: 3
 };
 const GRID: Grid = {
   maxX: 8,
@@ -237,4 +238,20 @@ describe("processVehicleInstructions", () => {
       samplesTaken: 0
     }); 
   });  
+});
+
+
+describe("takeSample", () => {
+  test("Returns vehicle unchanged if sampleCapacity is reached (samplesTaken would be greater than sampleCapacity)", () => {
+    expect(takeSample(rover8, GRID)).toEqual(rover8);   
+  });
+  test("Returns vehicle with samplesTaken increased by 1 if sampleCapacity is not reached", () => {
+    expect(takeSample(rover1, GRID)).toEqual({
+      position: { xPos: 0, yPos: 0 },
+      orientation: "N",
+      cameras: 0,
+      sampleCapacity: 10,
+      samplesTaken: 1
+    });   
+  });
 });

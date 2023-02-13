@@ -74,3 +74,13 @@ export const processVehicleInstructions = (
 
   return movingVehicle;
 };
+
+export const takeSample = (rover: Rover, grid: Grid) => {  
+  if (rover.samplesTaken + 1 > rover.sampleCapacity) {
+    return rover;
+  } else {
+    const newVehicle = structuredClone(rover);
+    newVehicle.samplesTaken++;
+    return newVehicle;
+  }
+}
