@@ -4,7 +4,8 @@ import {
   parseGridDimension,
   parseVehiclePosition,
   parseVehicleOrientation,
-  parseMovementString
+  parseMovementString,
+  parseChoice
 } from "./ui/parse";
 import {
   Vehicle,
@@ -35,6 +36,10 @@ const getGrid = (): Grid => {
 
   return createGrid(maxX, maxY);
 };
+
+const displayGrid = (grid: Grid) => {
+  console.log("display grid");
+}
 
 const getVehicleMovements = (grid: Grid): Array<[Vehicle, string]> => {
   const vehicleMovements: Array<[Vehicle, string]> = [];
@@ -139,6 +144,21 @@ const operateMarsVehicles = (): void => {
   const vehicleMovements: Array<[Vehicle, string]> = getVehicleMovements(grid);
   printVehicleMovements(grid, vehicleMovements);
   
+  print("What would you like to do next?");
+  const OPTIONS = ["View vehicle positions", "Redefine grid, vehicles and movements"];
+  OPTIONS.forEach((o, i) =>
+  print(
+    `   ${i + 1} - ${o}`
+  ))
+  let choice = parseChoice(prompt(
+    `Please select a number between 1 and ${OPTIONS.length.toString()}: `), OPTIONS);
+  switch(choice) {
+    case 1:
+      displayGrid(grid);
+      break;
+    case 2:
+      operateMarsVehicles();
+  }
 };
 
 operateMarsVehicles();

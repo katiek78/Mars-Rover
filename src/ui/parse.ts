@@ -38,3 +38,13 @@ export const parseVehicleOrientation = (
     const orientation: Orientation = legalOrientation;
     return orientation;  
 };
+
+export const parseChoice = (  
+  input: string,
+  options: String[]
+) => { 
+  if (isNaN(parseInt(input))) return undefined;
+  if (parseInt(input) > options.length || parseInt(input) < 0)
+    return undefined;
+  return parseInt(input);
+};
