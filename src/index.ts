@@ -155,31 +155,19 @@ const printNewVehicles = (vehicles: Array<Rover>) => {
   print("New positions:");
   vehicles.forEach((v) =>
     print(
-      `${v.position.xPos.toString()} ${v.position.yPos.toString()} ${v.orientation} - Samples taken: ${v.samplesTaken}/${v.sampleCapacity}`
+      `${v.position.xPos.toString()} ${v.position.yPos.toString()} ${
+        v.orientation
+      } - Samples taken: ${v.samplesTaken}/${v.sampleCapacity}`
     )
   );
 };
 
-const operateMarsVehicles = (): void => {
-  console.clear();
-  print("------------------------------------------------");
-  print("| Welcome to the Mars Rover Operations Centre! |");
-  print("------------------------------------------------");
-
-  const grid = getGrid();
-  const roverInstructions: Array<[Rover, string]> =
-    getVehicleInstructions(grid);
-  printGridAndVehicles(grid, roverInstructions);
-  const vehicles: Array<Rover> = processAllVehicleInstructions(
-    grid,
-    roverInstructions
-  );
-  printNewVehicles(vehicles);
-
+const offerChoice = (grid: Grid, vehicles: Array<Rover>) => {
   print("What would you like to do next?");
   const OPTIONS = [
     "View vehicle positions",
     "Redefine grid, vehicles and movements",
+    "Exit"
   ];
   OPTIONS.forEach((o, i) => print(`   ${i + 1} - ${o}`));
   let choice = parseChoice(
@@ -191,10 +179,36 @@ const operateMarsVehicles = (): void => {
   switch (choice) {
     case 1:
       displayGrid(grid, vehicles);
+      offerChoice(grid, vehicles);
       break;
     case 2:
       operateMarsVehicles();
+      break;
+    case 3:
+      return;
   }
 };
 
-operateMarsVehicles();
+const welcome = (): void => {
+  console.clear();
+  print("------------------------------------------------");
+  print("| Welcome to the Mars Rover Operations Centre! |");
+  print("------------------------------------------------");
+  operateMarsVehicles();
+};
+
+const operateMarsVehicles = (): void => {
+  const grid = getGrid();
+  const roverInstructions: Array<[Rover, string]> =
+    getVehicleInstructions(grid);
+  printGridAndVehicles(grid, roverInstructions);
+  const vehicles: Array<Rover> = processAllVehicleInstructions(
+    grid,
+    roverInstructions
+  );
+  printNewVehicles(vehicles);
+
+  offerChoice(grid, vehicles);
+};
+
+welcome();
