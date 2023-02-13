@@ -5,14 +5,14 @@ import {
   parseVehiclePosition,
   parseVehicleOrientation,
   parseMovementString,
-  parseChoice
+  parseChoice,
 } from "./ui/parse";
 import {
   Vehicle,
   Rover,
   Position,
   createRover,
-  processVehicleMovements,
+  processVehicleMovements as processVehicleInstructions,
 } from "./vehicle-functions";
 
 const getGrid = (): Grid => {
@@ -37,17 +37,37 @@ const getGrid = (): Grid => {
   return createGrid(maxX, maxY);
 };
 
-const displayGrid = (grid: Grid) => {
-  console.log("display grid");
-}
+const displayGrid = (grid: Grid, vehicles: Array<Vehicle>) => {
+  print("");
+  //for each grid line we go through and print . for no vehicle and R for a rover (with spaces)
+  for (let i = grid.maxY - 1; i >= 0; i--) {
+    let found = false;
+    let rowString = "";
+    for (let j = 0; j < grid.maxX; j++) {
+      found = false;
+      for (let v = 0; v < vehicles.length; v++) {
+        if (
+          vehicles[v].position.xPos === j &&
+          vehicles[v].position.yPos === i
+        ) {
+          rowString += "  R  ";
+          found = true;
+          break;
+        }
+      }
+      if (!found) rowString += "  .  ";
+    }
+    print(rowString);
+  }
+};
 
-const getVehicleMovements = (grid: Grid): Array<[Vehicle, string]> => {
-  const vehicleMovements: Array<[Vehicle, string]> = [];
+const getVehicleInstructions = (grid: Grid): Array<[Vehicle, string]> => {
+  const vehicleInstructions: Array<[Vehicle, string]> = [];
   let vehicleCounter = 1;
 
   //Currently getVehicleDetails only gets Rover details but could be extended to allow other vehicle details to be obtained
   const getVehicleDetails = (): void => {
-	print('');
+    print("");
     print(`Rover ${vehicleCounter}:`);
     let xPosInput = prompt(`Please specify the Rover's X position: `);
     let xPos = parseVehiclePosition(xPosInput, grid, "X");
@@ -65,74 +85,82 @@ const getVehicleMovements = (grid: Grid): Array<[Vehicle, string]> => {
       );
       yPos = parseGridDimension(yPosInput);
     }
-    const position: Position = { xPos, yPos };	
+    const position: Position = { xPos, yPos };
 
-	let orientationInput = prompt(
+    let orientationInput = prompt(
       "Please specify the Rover's orientation (N/E/S/W): "
     );
-	let orientation = parseVehicleOrientation(orientationInput);
-	while (orientation === undefined) {
-		orientationInput = prompt(
-			"Invalid input. Please specify the Rover's orientation (N/E/S/W): "
-		  );
-		orientation = parseVehicleOrientation(orientationInput);
-	}
+    let orientation = parseVehicleOrientation(orientationInput);
+    while (orientation === undefined) {
+      orientationInput = prompt(
+        "Invalid input. Please specify the Rover's orientation (N/E/S/W): "
+      );
+      orientation = parseVehicleOrientation(orientationInput);
+    }
 
     let roverMovementInput = prompt(
       "Please specify the Rover's movements (M for forward / L for left / R for right): "
     );
-	let roverMovements = parseMovementString(roverMovementInput);
-	while (roverMovements === undefined) {
-		roverMovementInput = prompt(
-			"Invalid input. Please specify the Rover's movements (M for forward / L for left / R for right): "
-		  );
-		  roverMovements = parseMovementString(roverMovementInput); 
-	}
-		
-	const rover: Rover= createRover(
-      position,
-      orientation,
-      grid,
-      23
-    );
-    vehicleMovements.push([rover, roverMovements]);
+    let roverMovements = parseMovementString(roverMovementInput);
+    while (roverMovements === undefined) {
+      roverMovementInput = prompt(
+        "Invalid input. Please specify the Rover's movements (M for forward / L for left / R for right): "
+      );
+      roverMovements = parseMovementString(roverMovementInput);
+    }
+
+    const rover: Rover = createRover(position, orientation, grid, 23);
+    vehicleInstructions.push([rover, roverMovements]);
   };
 
   getVehicleDetails();
 
   while (yn(prompt("Do you want to add details for another Rover? "))) {
-	vehicleCounter++;
+    vehicleCounter++;
     getVehicleDetails();
   }
 
-  return vehicleMovements;
+  return vehicleInstructions;
 };
 
-const printVehicleMovements = (grid: Grid, vehicleMovements: Array<[Vehicle, string]>): void => {
-	print("---------------------------------------");
-	print("Grid dimensions and existing positions:");
-	print(`${grid.maxX} ${grid.maxY}`);
+const printGridAndVehicles = (
+  grid: Grid,
+  vehicleInstructions: Array<[Vehicle, string]>
+) => {
+  print("---------------------------------------");
+  print("Grid dimensions and existing positions:");
+  print(`${grid.maxX} ${grid.maxY}`);
 
-	vehicleMovements.forEach((vehicleMovement) => {
-		const vehicle: Vehicle = vehicleMovement[0];
-		print(
-		`${vehicle.position.xPos} ${vehicle.position.yPos} ${vehicle.orientation}`
-		);
-	});
+  vehicleInstructions.forEach((vehicleMovement) => {
+    const vehicle: Vehicle = vehicleMovement[0];
+    print(
+      `${vehicle.position.xPos} ${vehicle.position.yPos} ${vehicle.orientation}`
+    );
+  });
+};
 
-	print("--------------");
-	print("New positions:");
-	vehicleMovements.forEach((vehicleMovement) => {
-		const vehicle: Vehicle = vehicleMovement[0];
-		const movementString = vehicleMovement[1];
-		const movedVehicle = processVehicleMovements(vehicle, grid, movementString);
-		print(
-		`${movedVehicle.position.xPos.toString()} ${movedVehicle.position.yPos.toString()} ${
-			movedVehicle.orientation
-		}`
-		);
-	});
-}
+const processAllVehicleInstructions = (
+  grid: Grid,
+  vehicleInstructions: Array<[Vehicle, string]>
+) => {
+  return vehicleInstructions.map((vehicleInstruction) => {
+    const vehicle: Vehicle = vehicleInstruction[0];
+    const instructionList = vehicleInstruction[1];
+    return processVehicleInstructions(vehicle, grid, instructionList);
+  });
+};
+
+const printNewVehicles = (vehicles: Array<Vehicle>) => {
+  print("--------------");
+  print("New positions:");
+  vehicles.forEach((v) =>
+    print(
+      `${v.position.xPos.toString()} ${v.position.yPos.toString()} ${
+        v.orientation
+      }`
+    )
+  );
+};
 
 const operateMarsVehicles = (): void => {
   console.clear();
@@ -141,20 +169,30 @@ const operateMarsVehicles = (): void => {
   print("------------------------------------------------");
 
   const grid = getGrid();
-  const vehicleMovements: Array<[Vehicle, string]> = getVehicleMovements(grid);
-  printVehicleMovements(grid, vehicleMovements);
-  
+  const vehicleInstructions: Array<[Vehicle, string]> =
+    getVehicleInstructions(grid);
+  printGridAndVehicles(grid, vehicleInstructions);
+  const vehicles: Array<Vehicle> = processAllVehicleInstructions(
+    grid,
+    vehicleInstructions
+  );
+  printNewVehicles(vehicles);
+
   print("What would you like to do next?");
-  const OPTIONS = ["View vehicle positions", "Redefine grid, vehicles and movements"];
-  OPTIONS.forEach((o, i) =>
-  print(
-    `   ${i + 1} - ${o}`
-  ))
-  let choice = parseChoice(prompt(
-    `Please select a number between 1 and ${OPTIONS.length.toString()}: `), OPTIONS);
-  switch(choice) {
+  const OPTIONS = [
+    "View vehicle positions",
+    "Redefine grid, vehicles and movements",
+  ];
+  OPTIONS.forEach((o, i) => print(`   ${i + 1} - ${o}`));
+  let choice = parseChoice(
+    prompt(
+      `Please select a number between 1 and ${OPTIONS.length.toString()}: `
+    ),
+    OPTIONS
+  );
+  switch (choice) {
     case 1:
-      displayGrid(grid);
+      displayGrid(grid, vehicles);
       break;
     case 2:
       operateMarsVehicles();

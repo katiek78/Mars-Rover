@@ -16,7 +16,7 @@ export const parseVehiclePosition = (
 ) => {
   if (isNaN(parseInt(input))) return undefined;
   const dimensionProperty = dimension === "X" ? "maxX" : "maxY";
-  if (parseInt(input) > grid[dimensionProperty] || parseInt(input) < 0)
+  if (parseInt(input) >= grid[dimensionProperty] || parseInt(input) < 0)
     return undefined;
   return parseInt(input);
 };

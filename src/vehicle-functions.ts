@@ -18,11 +18,11 @@ export const ROVER_INSTRUCTIONS = ["L", "R", "M"] as const;
 export const moveVehicleForward = (vehicle: Vehicle, grid: Grid) => {
   switch (vehicle.orientation) {
     case "N":
-      return vehicle.position.yPos + 1 <= grid.maxY
+      return vehicle.position.yPos + 1 < grid.maxY
         ? { xPos: vehicle.position.xPos, yPos: vehicle.position.yPos + 1 }
         : vehicle.position;
     case "E":
-      return vehicle.position.xPos + 1 <= grid.maxX
+      return vehicle.position.xPos + 1 < grid.maxX
         ? { xPos: vehicle.position.xPos + 1, yPos: vehicle.position.yPos }
         : vehicle.position;
     case "S":
