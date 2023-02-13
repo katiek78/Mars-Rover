@@ -61,8 +61,8 @@ const displayGrid = (grid: Grid, vehicles: Array<Vehicle>) => {
   }
 };
 
-const getVehicleInstructions = (grid: Grid): Array<[Vehicle, string]> => {
-  const vehicleInstructions: Array<[Vehicle, string]> = [];
+const getVehicleInstructions = (grid: Grid): Array<[Rover, string]> => {
+  const roverInstructions: Array<[Rover, string]> = [];
   let vehicleCounter = 1;
 
   //Currently getVehicleDetails only gets Rover details but could be extended to allow other vehicle details to be obtained
@@ -109,8 +109,8 @@ const getVehicleInstructions = (grid: Grid): Array<[Vehicle, string]> => {
       roverMovements = parseMovementString(roverMovementInput);
     }
 
-    const rover: Rover = createRover(position, orientation, grid, 23);
-    vehicleInstructions.push([rover, roverMovements]);
+    const rover: Rover = createRover(position, orientation, grid, 23, 10, 0);
+    roverInstructions.push([rover, roverMovements]);
   };
 
   getVehicleDetails();
@@ -120,44 +120,42 @@ const getVehicleInstructions = (grid: Grid): Array<[Vehicle, string]> => {
     getVehicleDetails();
   }
 
-  return vehicleInstructions;
+  return roverInstructions;
 };
 
 const printGridAndVehicles = (
   grid: Grid,
-  vehicleInstructions: Array<[Vehicle, string]>
+  roverInstructions: Array<[Rover, string]>
 ) => {
   print("---------------------------------------");
   print("Grid dimensions and existing positions:");
   print(`${grid.maxX} ${grid.maxY}`);
 
-  vehicleInstructions.forEach((vehicleMovement) => {
-    const vehicle: Vehicle = vehicleMovement[0];
+  roverInstructions.forEach((vehicleMovement) => {
+    const rover: Rover = vehicleMovement[0];
     print(
-      `${vehicle.position.xPos} ${vehicle.position.yPos} ${vehicle.orientation}`
+      `${rover.position.xPos} ${rover.position.yPos} ${rover.orientation} - Samples taken: ${rover.samplesTaken}/${rover.sampleCapacity}`
     );
   });
 };
 
 const processAllVehicleInstructions = (
   grid: Grid,
-  vehicleInstructions: Array<[Vehicle, string]>
+  vehicleInstructions: Array<[Rover, string]>
 ) => {
   return vehicleInstructions.map((vehicleInstruction) => {
-    const vehicle: Vehicle = vehicleInstruction[0];
+    const vehicle: Rover = vehicleInstruction[0];
     const instructionList = vehicleInstruction[1];
     return processVehicleInstructions(vehicle, grid, instructionList);
   });
 };
 
-const printNewVehicles = (vehicles: Array<Vehicle>) => {
+const printNewVehicles = (vehicles: Array<Rover>) => {
   print("--------------");
   print("New positions:");
   vehicles.forEach((v) =>
     print(
-      `${v.position.xPos.toString()} ${v.position.yPos.toString()} ${
-        v.orientation
-      }`
+      `${v.position.xPos.toString()} ${v.position.yPos.toString()} ${v.orientation} - Samples taken: ${v.samplesTaken}/${v.sampleCapacity}`
     )
   );
 };
@@ -169,12 +167,12 @@ const operateMarsVehicles = (): void => {
   print("------------------------------------------------");
 
   const grid = getGrid();
-  const vehicleInstructions: Array<[Vehicle, string]> =
+  const roverInstructions: Array<[Rover, string]> =
     getVehicleInstructions(grid);
-  printGridAndVehicles(grid, vehicleInstructions);
-  const vehicles: Array<Vehicle> = processAllVehicleInstructions(
+  printGridAndVehicles(grid, roverInstructions);
+  const vehicles: Array<Rover> = processAllVehicleInstructions(
     grid,
-    vehicleInstructions
+    roverInstructions
   );
   printNewVehicles(vehicles);
 

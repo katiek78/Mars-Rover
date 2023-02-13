@@ -24,7 +24,7 @@ export const processTextInstructions = (instructionList: string) => {
         if (ORIENTATIONS.indexOf(orientation) === -1) return null;
         if (isNaN(xPos) || isNaN(yPos)) return null;        
         const vehiclePosition = {xPos, yPos};
-        const vehicle = createRover(/*"", "Rover",*/ vehiclePosition, orientation, grid, 23);        
+        const vehicle = createRover(/*"", "Rover",*/ vehiclePosition, orientation, grid, 23, 10, 0);        
 
         //process movements for above vehicle
         if (line + 1 < instructionArray.length && instructionArray[line + 1] !== '') {

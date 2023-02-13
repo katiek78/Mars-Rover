@@ -7,6 +7,8 @@ export interface Vehicle {
 
 export interface Rover extends Vehicle {
   cameras: number;
+  sampleCapacity: number;
+  samplesTaken: number;
 }
 
 export const ORIENTATIONS = ["N", "E", "S", "W"] as const;
@@ -48,13 +50,15 @@ export const createRover = (
   position: Position,
   orientation: Orientation,
   grid: Grid,
-  cameras: number
+  cameras: number,
+  sampleCapacity: number,
+  samplesTaken: number
 ) => {
-  return { position, orientation, grid, cameras };
+  return { position, orientation, grid, cameras, sampleCapacity, samplesTaken };
 };
 
 export const processVehicleInstructions = (
-  vehicle: Vehicle,
+  vehicle: Rover,
   grid: Grid,
   movementString: string
 ) => {

@@ -1,5 +1,5 @@
-import {
-  Vehicle,
+import {  
+  Rover,
   moveVehicleForward,
   rotateVehicle,
   createRover,
@@ -8,53 +8,77 @@ import {
 
 import { Grid } from "./grid-functions";
 
-const rover1: Vehicle = {
+const rover1: Rover = {
   /*name: "Rover1",
   vehicleType: "Rover",*/
   position: { xPos: 0, yPos: 0 },
   orientation: "N",
+  cameras: 0,
+  sampleCapacity: 10,
+  samplesTaken: 0
 };
-const rover2: Vehicle = {
+const rover2: Rover = {
   /*name: "Rover2",
   vehicleType: "Rover",*/
   position: { xPos: 3, yPos: 8 },
   orientation: "N",
+  cameras: 17,
+  sampleCapacity: 3,
+  samplesTaken: 2
 };
-const rover3: Vehicle = {
+const rover3: Rover = {
   /*: "Rover3",
   vehicleType: "Rover",*/
   position: { xPos: 3, yPos: 8 },
   orientation: "W",
+  cameras: 17,
+  sampleCapacity: 3,
+  samplesTaken: 2
 };
-const rover4: Vehicle = {
+const rover4: Rover = {
   /*name: "Rover4",
   vehicleType: "Rover",*/
   position: { xPos: 3, yPos: 8 },
   orientation: "S",
+  cameras: 17,
+  sampleCapacity: 3,
+  samplesTaken: 2
 };
-const rover5: Vehicle = {
+const rover5: Rover = {
   /*name: "Rover5",
   vehicleType: "Rover",*/
   position: { xPos: 3, yPos: 8 },
   orientation: "E",
+  cameras: 17,
+  sampleCapacity: 3,
+  samplesTaken: 2
 };
-const rover6: Vehicle = {
+const rover6: Rover = {
   /*name: "Rover6",
   vehicleType: "Rover",*/
   position: { xPos: 0, yPos: 5 },
   orientation: "W",
+  cameras: 17,
+  sampleCapacity: 3,
+  samplesTaken: 2
 };
-const rover7: Vehicle = {
+const rover7: Rover = {
   /*name: "Rover7",
   vehicleType: "Rover",*/
   position: { xPos: 2, yPos: 0 },
   orientation: "S",
+  cameras: 17,
+  sampleCapacity: 3,
+  samplesTaken: 2
 };
-const rover8: Vehicle = {
+const rover8: Rover = {
 /*  name: "Rover8",
   vehicleType: "Rover",*/
   position: { xPos: 8, yPos: 6 },
   orientation: "E",
+  cameras: 23,
+  sampleCapacity: 3,
+  samplesTaken: 2
 };
 const GRID: Grid = {
   maxX: 8,
@@ -135,59 +159,82 @@ describe("rotateVehicle", () => {
 
 describe("createVehicle", () => {
   test("Creates a vehicle with the given parameters", () => {
-    expect(createRover(/*"Buggy", "Rover",*/ {xPos: 0, yPos: 0}, "N", GRID, 23)).toEqual({
+    expect(createRover(/*"Buggy", "Rover",*/ {xPos: 0, yPos: 0}, "N", GRID, 23, 10, 1)).toEqual({
       /*name: "Buggy",
       vehicleType: "Rover",*/
       position: {xPos: 0, yPos: 0},
       orientation: "N",
       grid: GRID,
-      cameras: 23
+      cameras: 23,
+      sampleCapacity: 10,
+      samplesTaken: 1
     });
    
   });
 });
 
-describe("processMovementString", () => {
+describe("processVehicleInstructions", () => {
   test("Returns original vehicle position and orientation if movement string is empty", () => {
     expect(processVehicleInstructions(rover1, GRID, "")).toEqual({    
       position: { xPos: 0, yPos: 0 },
       orientation: "N",
+      cameras: 0,
+      sampleCapacity: 10,
+      samplesTaken: 0
     });   
   });
   test("Rotates vehicle clockwise if movement string is 'R'", () => {
     expect(processVehicleInstructions(rover1, GRID, "R")).toEqual({   
       position: { xPos: 0, yPos: 0 },
       orientation: "E",
+      cameras: 0,
+      sampleCapacity: 10,
+      samplesTaken: 0
     }); 
   });
   test("Rotates vehicle anticlockwise if movement string is 'L'", () => {
     expect(processVehicleInstructions(rover1, GRID, "L")).toEqual({      
       position: { xPos: 0, yPos: 0 },
       orientation: "W",
+      cameras: 0,
+      sampleCapacity: 10,
+      samplesTaken: 0
     }); 
   });
   test("Moves vehicle forward if movement string is 'M'", () => {
     expect(processVehicleInstructions(rover1, GRID, "M")).toEqual({      
       position: { xPos: 0, yPos: 1 },
       orientation: "N",
+      cameras: 0,
+      sampleCapacity: 10,
+      samplesTaken: 0
     }); 
   });  
   test("Moves vehicle through multiple orientations", () => {
     expect(processVehicleInstructions(rover1, GRID, "LL")).toEqual({      
       position: { xPos: 0, yPos: 0 },
       orientation: "S",
+      cameras: 0,
+      sampleCapacity: 10,
+      samplesTaken: 0
     }); 
   });  
   test("Moves vehicle through multiple forward movements", () => {
     expect(processVehicleInstructions(rover1, GRID, "MMMM")).toEqual({      
       position: { xPos: 0, yPos: 4 },
       orientation: "N",
+      cameras: 0,
+      sampleCapacity: 10,
+      samplesTaken: 0
     }); 
   });  
   test("Moves vehicle through multiple orientations and forward movements", () => {
     expect(processVehicleInstructions(rover1, GRID, "RMMMMLMML")).toEqual({      
       position: { xPos: 4, yPos: 2 },
       orientation: "W",
+      cameras: 0,
+      sampleCapacity: 10,
+      samplesTaken: 0
     }); 
   });  
 });
