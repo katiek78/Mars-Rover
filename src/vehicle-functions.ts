@@ -70,6 +70,8 @@ export const processVehicleInstructions = (
       movingVehicle.orientation = rotateVehicle(movingVehicle, "R");
     if (instruction === "M")
       movingVehicle.position = moveVehicleForward(movingVehicle, grid);
+    if (instruction === "S")
+      movingVehicle.samplesTaken = takeSample(movingVehicle, grid);
   });
 
   return movingVehicle;
@@ -77,10 +79,6 @@ export const processVehicleInstructions = (
 
 export const takeSample = (rover: Rover, grid: Grid) => {  
   if (rover.samplesTaken + 1 > rover.sampleCapacity) {
-    return rover;
-  } else {
-    const newVehicle = structuredClone(rover);
-    newVehicle.samplesTaken++;
-    return newVehicle;
-  }
+    return rover.samplesTaken;
+  } else return rover.samplesTaken + 1;
 }

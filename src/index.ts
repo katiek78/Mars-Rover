@@ -99,7 +99,7 @@ const getVehicleInstructions = (grid: Grid): Array<[Rover, string]> => {
     }
 
     let roverMovementInput = prompt(
-      "Please specify the Rover's movements (M for forward / L for left / R for right): "
+      "Please specify the Rover's movements (M for forward / L for left / R for right / S to take sample): "
     );
     let roverMovements = parseMovementString(roverMovementInput);
     while (roverMovements === undefined) {

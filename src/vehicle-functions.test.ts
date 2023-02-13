@@ -238,20 +238,23 @@ describe("processVehicleInstructions", () => {
       samplesTaken: 0
     }); 
   });  
-});
-
-
-describe("takeSample", () => {
-  test("Returns vehicle unchanged if sampleCapacity is reached (samplesTaken would be greater than sampleCapacity)", () => {
-    expect(takeSample(rover8, GRID)).toEqual(rover8);   
-  });
-  test("Returns vehicle with samplesTaken increased by 1 if sampleCapacity is not reached", () => {
-    expect(takeSample(rover1, GRID)).toEqual({
+  test("Increases samplesTaken if an 'S' is found", () => {
+    expect(processVehicleInstructions(rover1, GRID, "S")).toEqual({      
       position: { xPos: 0, yPos: 0 },
       orientation: "N",
       cameras: 0,
       sampleCapacity: 10,
       samplesTaken: 1
-    });   
+    }); 
+  });  
+});
+
+
+describe("takeSample", () => {
+  test("Returns samplesTaken unchanged if sampleCapacity is reached (samplesTaken would be greater than sampleCapacity)", () => {
+    expect(takeSample(rover8, GRID)).toEqual(3);   
+  });
+  test("Returns samplesTaken increased by 1 if sampleCapacity is not reached", () => {
+    expect(takeSample(rover1, GRID)).toEqual(1);   
   });
 });
