@@ -20,12 +20,11 @@ export const processTextInstructions = (instructionList: string) => {
         const yPos = parseInt(vehicleDataLine.split(" ")[1]);        
         const legalOrientation = ORIENTATIONS.find(el => el === vehicleDataLine.split(" ")[2]);
         if (legalOrientation === undefined) return undefined;
-        const orientation: Orientation = legalOrientation;
-        return orientation;
+        const orientation: Orientation = legalOrientation;        
         if (ORIENTATIONS.indexOf(orientation) === -1) return null;
         if (isNaN(xPos) || isNaN(yPos)) return null;        
         const vehiclePosition = {xPos, yPos};
-        const vehicle = createRover("", "Rover", vehiclePosition, orientation, grid);        
+        const vehicle = createRover(/*"", "Rover",*/ vehiclePosition, orientation, grid, 23);        
 
         //process movements for above vehicle
         if (line + 1 < instructionArray.length && instructionArray[line + 1] !== '') {

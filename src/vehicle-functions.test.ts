@@ -9,50 +9,50 @@ import {
 import { Grid } from "./grid-functions";
 
 const rover1: Vehicle = {
-  name: "Rover1",
-  vehicleType: "Rover",
+  /*name: "Rover1",
+  vehicleType: "Rover",*/
   position: { xPos: 0, yPos: 0 },
   orientation: "N",
 };
 const rover2: Vehicle = {
-  name: "Rover2",
-  vehicleType: "Rover",
+  /*name: "Rover2",
+  vehicleType: "Rover",*/
   position: { xPos: 3, yPos: 8 },
   orientation: "N",
 };
 const rover3: Vehicle = {
-  name: "Rover3",
-  vehicleType: "Rover",
+  /*: "Rover3",
+  vehicleType: "Rover",*/
   position: { xPos: 3, yPos: 8 },
   orientation: "W",
 };
 const rover4: Vehicle = {
-  name: "Rover4",
-  vehicleType: "Rover",
+  /*name: "Rover4",
+  vehicleType: "Rover",*/
   position: { xPos: 3, yPos: 8 },
   orientation: "S",
 };
 const rover5: Vehicle = {
-  name: "Rover5",
-  vehicleType: "Rover",
+  /*name: "Rover5",
+  vehicleType: "Rover",*/
   position: { xPos: 3, yPos: 8 },
   orientation: "E",
 };
 const rover6: Vehicle = {
-  name: "Rover6",
-  vehicleType: "Rover",
+  /*name: "Rover6",
+  vehicleType: "Rover",*/
   position: { xPos: 0, yPos: 5 },
   orientation: "W",
 };
 const rover7: Vehicle = {
-  name: "Rover7",
-  vehicleType: "Rover",
+  /*name: "Rover7",
+  vehicleType: "Rover",*/
   position: { xPos: 2, yPos: 0 },
   orientation: "S",
 };
 const rover8: Vehicle = {
-  name: "Rover8",
-  vehicleType: "Rover",
+/*  name: "Rover8",
+  vehicleType: "Rover",*/
   position: { xPos: 8, yPos: 6 },
   orientation: "E",
 };
@@ -135,12 +135,13 @@ describe("rotateVehicle", () => {
 
 describe("createVehicle", () => {
   test("Creates a vehicle with the given parameters", () => {
-    expect(createRover("Buggy", "Rover", {xPos: 0, yPos: 0}, "N", GRID)).toEqual({
-      name: "Buggy",
-      vehicleType: "Rover",
+    expect(createRover(/*"Buggy", "Rover",*/ {xPos: 0, yPos: 0}, "N", GRID, 23)).toEqual({
+      /*name: "Buggy",
+      vehicleType: "Rover",*/
       position: {xPos: 0, yPos: 0},
       orientation: "N",
-      grid: GRID
+      grid: GRID,
+      cameras: 23
     });
    
   });
