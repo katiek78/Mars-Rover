@@ -53,7 +53,7 @@ export const createRover = (
   return { position, orientation, grid, cameras };
 };
 
-export const processVehicleMovements = (
+export const processVehicleInstructions = (
   vehicle: Vehicle,
   grid: Grid,
   movementString: string

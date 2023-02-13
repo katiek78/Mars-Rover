@@ -12,7 +12,7 @@ import {
   Rover,
   Position,
   createRover,
-  processVehicleMovements as processVehicleInstructions,
+  processVehicleInstructions,
 } from "./vehicle-functions";
 
 const getGrid = (): Grid => {

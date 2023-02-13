@@ -1,5 +1,5 @@
 import { createGrid } from "./grid-functions";
-import { ORIENTATIONS, Orientation, createRover, processVehicleMovements } from "./vehicle-functions";
+import { ORIENTATIONS, Orientation, createRover, processVehicleInstructions } from "./vehicle-functions";
 
 export const processTextInstructions = (instructionList: string) => {
  
@@ -28,7 +28,7 @@ export const processTextInstructions = (instructionList: string) => {
 
         //process movements for above vehicle
         if (line + 1 < instructionArray.length && instructionArray[line + 1] !== '') {
-            const newVehicleData = processVehicleMovements(vehicle, grid, instructionArray[line+1]);            
+            const newVehicleData = processVehicleInstructions(vehicle, grid, instructionArray[line+1]);            
             output += `${line == 1 ? '' : '\n'}${newVehicleData.position.xPos} ${newVehicleData.position.yPos} ${newVehicleData.orientation}`;            
         } else {
             output += `${line == 1 ? '' : '\n'}${vehicle.position.xPos} ${vehicle.position.yPos} ${vehicle.orientation}`;
