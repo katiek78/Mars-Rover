@@ -7,7 +7,7 @@ import {
   takeSample,
 } from "./vehicle-functions";
 
-import { RectangularGrid } from "../plateaus/grid-functions";
+import { createGrid, RectangularGrid } from "../plateaus/grid-functions";
 
 const rover1: Rover = {
   position: { xPos: 0, yPos: 0 },
@@ -79,12 +79,12 @@ const rover8: Rover = {
   sampleCapacity: 3,
   samplesTaken: 3,
 };
-const GRID: RectangularGrid = {
-  maxX: 8,
-  maxY: 8,
-  vehicles: [rover1],
-  samples: [],
-};
+const GRID: RectangularGrid = createGrid(
+  8,
+  8,
+  [rover1],
+  []
+);
 
 describe("moveVehicleForward", () => {  
   test("Moves vehicle 1 square up if orientation is N", () => {
@@ -231,25 +231,15 @@ describe("takeSample", () => {
     samplesTaken: 0,
   };
   const rover2: Rover = { ...rover1, samplesTaken: 10 };
-  const GRID: RectangularGrid = {
-    maxX: 8,
-    maxY: 8,
-    vehicles: [rover1],
-    samples: [],
-  };
-  const GRID2: RectangularGrid = {
-    maxX: 8,
-    maxY: 8,
-    vehicles: [rover2],
-    samples: [],
-  };
+  const grid: RectangularGrid = createGrid(8, 8, [rover1], []);
+  const grid2: RectangularGrid = createGrid(8, 8, [rover2], []);
 
   test("Returns samplesTaken unchanged if sampleCapacity is reached (samplesTaken would be greater than sampleCapacity)", () => {
-    expect(takeSample(GRID2, 0)).toEqual(GRID2);
+    expect(takeSample(grid2, 0)).toEqual(grid2);
   });
   test("Returns samplesTaken increased by 1 if sampleCapacity is not reached", () => {
-    expect(takeSample(GRID, 0)).toEqual({
-      ...GRID,
+    expect(takeSample(grid, 0)).toEqual({
+      ...grid,
       vehicles: [{ ...rover1, samplesTaken: 1 }],
       samples: [{ xPos: 0, yPos: 0 }],
     });

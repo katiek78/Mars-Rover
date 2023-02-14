@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "colors": "^1.4.0",
+    "lodash.clonedeep": "^4.5.0",
     "prompt-sync": "^4.2.0",
     "yn": "^5.0.0"
   }

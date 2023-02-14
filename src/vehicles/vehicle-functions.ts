@@ -1,5 +1,6 @@
 import { RectangularGrid } from "../plateaus/grid-functions";
 import { Position } from "../plateaus/plateau-functions"
+const cloneDeep = require('lodash.clonedeep');
 
 export interface Vehicle {
   position: Position;
@@ -61,7 +62,7 @@ export const processAllVehicleInstructions = (
   grid: RectangularGrid,
   vehicleInstructions: Array<string>
 ) => {
-  let newGrid = structuredClone(grid);
+  let newGrid = cloneDeep(grid);
   vehicleInstructions.forEach((vi, i) => {
     newGrid = processVehicleInstructions(newGrid, i, vi);
   });
@@ -73,7 +74,7 @@ export const processVehicleInstructions = (
   vehicleIndex: number,
   instructionList: string
 ) => {
-  let newGrid = structuredClone(grid);
+  let newGrid = cloneDeep(grid);
   let movingVehicle = structuredClone(newGrid.vehicles[vehicleIndex]);
   instructionList.split("").forEach((instruction) => {
     if (instruction === "L")
@@ -93,16 +94,16 @@ export const processVehicleInstructions = (
   return newGrid;
 };
 
-export const takeSample = (grid: RectangularGrid, roverIndex: number) => {
+export const takeSample = (grid: RectangularGrid, vehicleIndex: number) => {
   if (
-    grid.vehicles[roverIndex].samplesTaken + 1 >
-    grid.vehicles[roverIndex].sampleCapacity
+    grid.vehicles[vehicleIndex].samplesTaken + 1 >
+    grid.vehicles[vehicleIndex].sampleCapacity
   ) {
     return grid;
   } else {
-    const newGrid = structuredClone(grid);
-    newGrid.vehicles[roverIndex].samplesTaken++;
-    newGrid.samples.push(newGrid.vehicles[roverIndex].position);
+    const newGrid = cloneDeep(grid);
+    newGrid.vehicles[vehicleIndex].samplesTaken++;
+    newGrid.samples.push(newGrid.vehicles[vehicleIndex].position);
     return newGrid;
   }
 };

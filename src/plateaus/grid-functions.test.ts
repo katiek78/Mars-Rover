@@ -5,6 +5,7 @@ describe("createGrid", () => {
     expect(createGrid(9, 9, [], [])).toEqual({
       maxX: 9,
       maxY: 9,
+      checkMovement: checkRectangularGridMovement,
       vehicles: [],
       samples: [],
     });
@@ -12,7 +13,7 @@ describe("createGrid", () => {
 });
 
 
-describe("checkRectangularGridMovemnent", () => {
+describe("checkRectangularGridMovement", () => {
   test("Returns false if we are at top of grid and trying to move N", () => {
     expect(checkRectangularGridMovement({position: {xPos: 3, yPos: 9}, orientation: 'N'},{maxX: 6, maxY: 10})).toBeFalsy();
 });
