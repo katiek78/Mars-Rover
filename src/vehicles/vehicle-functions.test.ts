@@ -212,8 +212,7 @@ describe("processVehicleInstructions", () => {
       ],
     });
   });
-  test("Increases samplesTaken if an 'S' is found and adds the sample to the grid", () => {
-    console.log(GRID.vehicles[0]);
+  test("Increases samplesTaken if an 'S' is found and adds the sample to the grid", () => {    
     expect(processVehicleInstructions(GRID, 0, "S")).toEqual({
       ...GRID,
       vehicles: [{ ...rover1, samplesTaken: 1 }],

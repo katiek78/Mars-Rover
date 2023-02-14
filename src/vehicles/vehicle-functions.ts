@@ -1,5 +1,5 @@
-import { RectangularGrid } from "../plateaus/grid-functions";
-import { Position } from "../plateaus/plateau-functions"
+import { RectangularGrid, isRectangular } from "../plateaus/grid-functions";
+import { Plateau, Position } from "../plateaus/plateau-functions"
 const cloneDeep = require('lodash.clonedeep');
 
 export interface Vehicle {
@@ -19,25 +19,27 @@ export type Orientation = typeof ORIENTATIONS[number];
 export type Direction = "L" | "R";
 export const ROVER_INSTRUCTIONS = ["L", "R", "M", "S"] as const;
 
-export const moveVehicleForward = (vehicle: Pick<Vehicle, 'position' | 'orientation'>, grid: RectangularGrid) => {
+export const moveVehicleForward = (vehicle: Pick<Vehicle, 'position' | 'orientation'>, plateau: Plateau) => {
+  if (isRectangular(plateau)) {
   switch (vehicle.orientation) {
     case "N":
-      return vehicle.position.yPos + 1 < grid.maxY
+      return plateau.checkMovement(vehicle, plateau)
         ? { xPos: vehicle.position.xPos, yPos: vehicle.position.yPos + 1 }
         : vehicle.position;
     case "E":
-      return vehicle.position.xPos + 1 < grid.maxX
+      return plateau.checkMovement(vehicle, plateau)
         ? { xPos: vehicle.position.xPos + 1, yPos: vehicle.position.yPos }
         : vehicle.position;
     case "S":
-      return vehicle.position.yPos - 1 >= 0
+      return plateau.checkMovement(vehicle, plateau)
         ? { xPos: vehicle.position.xPos, yPos: vehicle.position.yPos - 1 }
         : vehicle.position;
     case "W":
-      return vehicle.position.xPos - 1 >= 0
+      return plateau.checkMovement(vehicle, plateau)
         ? { xPos: vehicle.position.xPos - 1, yPos: vehicle.position.yPos }
         : vehicle.position;
   }
+} else return vehicle.position;
 };
 
 export const rotateVehicle = (vehicle: Vehicle, direction: Direction) => {

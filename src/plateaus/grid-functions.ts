@@ -1,4 +1,4 @@
-import { Plateau, Dimension, Position } from "./plateau-functions"
+import { Plateau, Position } from "./plateau-functions"
 import { Vehicle, Rover } from "../vehicles/vehicle-functions";
 
 export interface RectangularGrid extends Plateau {
@@ -28,3 +28,7 @@ export const checkRectangularGridMovement = (vehicle: Pick<Vehicle, 'position' |
       return vehicle.position.xPos - 1 >= 0;
   }
 };
+
+export function isRectangular(plateau: Plateau): plateau is RectangularGrid {
+  return 'maxX' in plateau;
+}
