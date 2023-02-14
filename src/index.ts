@@ -1,4 +1,5 @@
-import { Grid, createGrid, Position } from "./plateaus/grid-functions";
+import { RectangularGrid, createGrid } from "./plateaus/grid-functions";
+import { Position } from "./plateaus/plateau-functions";
 import { print, yn, promptColour as prompt } from "./ui/console";
 import {
   parseGridDimension,
@@ -13,7 +14,7 @@ import {
   processAllVehicleInstructions,
 } from "./vehicles/vehicle-functions";
 
-const getGrid = (): Grid => {
+const getGrid = (): RectangularGrid => {
   let maxXInput = prompt(`Please specify the grid width (X): `);
   let maxX = parseGridDimension(maxXInput);
   while (maxX === undefined) {
@@ -35,7 +36,7 @@ const getGrid = (): Grid => {
   return createGrid(maxX, maxY, [], []);
 };
 
-const displayGrid = (grid: Grid) => {
+const displayGrid = (grid: RectangularGrid) => {
   print("");  
 
   for (let i = grid.maxY - 1; i >= 0; i--) {
@@ -66,7 +67,7 @@ const displayGrid = (grid: Grid) => {
   }
 };
 
-const getVehicleInstructions = (grid: Grid) => {
+const getVehicleInstructions = (grid: RectangularGrid) => {
   const roverInstructions: Array<string> = [];
   let vehicleCounter = 0;
 
@@ -129,7 +130,7 @@ const getVehicleInstructions = (grid: Grid) => {
   return roverInstructions;
 };
 
-const printGridAndVehicles = (grid: Grid) => {
+const printGridAndVehicles = (grid: RectangularGrid) => {
   print("---------------------------------------");
   print("Grid dimensions and existing positions:");
   print(`${grid.maxX} ${grid.maxY}`);
@@ -153,7 +154,7 @@ const printNewVehicles = (vehicles: Array<Rover>) => {
   );
 };
 
-const offerChoice = (grid: Grid) => {
+const offerChoice = (grid: RectangularGrid) => {
   print("What would you like to do next?");
   const OPTIONS = [
     "View vehicle positions",

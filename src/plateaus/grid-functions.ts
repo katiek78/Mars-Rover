@@ -1,12 +1,12 @@
+import { Plateau, Dimension, Position } from "./plateau-functions"
 import { Vehicle, Rover } from "../vehicles/vehicle-functions";
-export type Dimension = "X" | "Y";
-export type Position = { xPos: number; yPos: number };
 
-export type Grid = {
+
+
+
+export interface RectangularGrid extends Plateau {
   maxX: number;
   maxY: number;
-  vehicles: Array<Rover>;
-  samples: Array<Position>;
 };
 
 export const createGrid = (
@@ -18,7 +18,7 @@ export const createGrid = (
   return { maxX, maxY, vehicles, samples };
 };
 
-export const checkRectangularGridMovement = (vehicle: Pick<Vehicle, 'position' | 'orientation'>, grid: Pick<Grid, 'maxX' | 'maxY'>) => {
+export const checkRectangularGridMovement = (vehicle: Pick<Vehicle, 'position' | 'orientation'>, grid: Pick<RectangularGrid, 'maxX' | 'maxY'>) => {
   switch (vehicle.orientation) {
     case "N":
       return vehicle.position.yPos + 1 < grid.maxY;

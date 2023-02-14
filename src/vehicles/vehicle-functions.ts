@@ -1,4 +1,5 @@
-import { Grid, Position } from "../plateaus/grid-functions";
+import { RectangularGrid } from "../plateaus/grid-functions";
+import { Position } from "../plateaus/plateau-functions"
 
 export interface Vehicle {
   position: Position;
@@ -17,7 +18,7 @@ export type Orientation = typeof ORIENTATIONS[number];
 export type Direction = "L" | "R";
 export const ROVER_INSTRUCTIONS = ["L", "R", "M", "S"] as const;
 
-export const moveVehicleForward = (vehicle: Pick<Vehicle, 'position' | 'orientation'>, grid: Grid) => {
+export const moveVehicleForward = (vehicle: Pick<Vehicle, 'position' | 'orientation'>, grid: RectangularGrid) => {
   switch (vehicle.orientation) {
     case "N":
       return vehicle.position.yPos + 1 < grid.maxY
@@ -57,7 +58,7 @@ export const createRover = (
 };
 
 export const processAllVehicleInstructions = (
-  grid: Grid,
+  grid: RectangularGrid,
   vehicleInstructions: Array<string>
 ) => {
   let newGrid = structuredClone(grid);
@@ -68,7 +69,7 @@ export const processAllVehicleInstructions = (
 };
 
 export const processVehicleInstructions = (
-  grid: Grid,
+  grid: RectangularGrid,
   vehicleIndex: number,
   instructionList: string
 ) => {
@@ -92,7 +93,7 @@ export const processVehicleInstructions = (
   return newGrid;
 };
 
-export const takeSample = (grid: Grid, roverIndex: number) => {
+export const takeSample = (grid: RectangularGrid, roverIndex: number) => {
   if (
     grid.vehicles[roverIndex].samplesTaken + 1 >
     grid.vehicles[roverIndex].sampleCapacity

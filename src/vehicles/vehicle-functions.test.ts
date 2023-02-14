@@ -7,7 +7,7 @@ import {
   takeSample,
 } from "./vehicle-functions";
 
-import { Grid } from "../plateaus/grid-functions";
+import { RectangularGrid } from "../plateaus/grid-functions";
 
 const rover1: Rover = {
   position: { xPos: 0, yPos: 0 },
@@ -79,7 +79,7 @@ const rover8: Rover = {
   sampleCapacity: 3,
   samplesTaken: 3,
 };
-const GRID: Grid = {
+const GRID: RectangularGrid = {
   maxX: 8,
   maxY: 8,
   vehicles: [rover1],
@@ -231,13 +231,13 @@ describe("takeSample", () => {
     samplesTaken: 0,
   };
   const rover2: Rover = { ...rover1, samplesTaken: 10 };
-  const GRID: Grid = {
+  const GRID: RectangularGrid = {
     maxX: 8,
     maxY: 8,
     vehicles: [rover1],
     samples: [],
   };
-  const GRID2: Grid = {
+  const GRID2: RectangularGrid = {
     maxX: 8,
     maxY: 8,
     vehicles: [rover2],

@@ -1,4 +1,5 @@
-import { Grid, Dimension } from "../plateaus/grid-functions";
+import { RectangularGrid } from "../plateaus/grid-functions";
+import { Dimension } from "../plateaus/plateau-functions";
 import {
   ROVER_INSTRUCTIONS,
   ORIENTATIONS,
@@ -11,7 +12,7 @@ export const parseGridDimension = (input: string): number | undefined => {
 
 export const parseVehiclePosition = (
   input: string,
-  grid: Grid,
+  grid: RectangularGrid,
   dimension: Dimension
 ) => {
   if (isNaN(parseInt(input))) return undefined;
