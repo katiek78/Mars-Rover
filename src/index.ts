@@ -1,4 +1,4 @@
-import { Grid, createGrid } from "./plateaus/grid-functions";
+import { Grid, createGrid, Position } from "./plateaus/grid-functions";
 import { print, yn, promptColour as prompt } from "./ui/console";
 import {
   parseGridDimension,
@@ -10,7 +10,6 @@ import {
 import {
   Vehicle,
   Rover,
-  Position,
   createRover,
   processVehicleInstructions,
 } from "./vehicles/vehicle-functions";
@@ -34,7 +33,7 @@ const getGrid = (): Grid => {
     maxY = parseGridDimension(maxYInput);
   }
 
-  return createGrid(maxX, maxY);
+  return createGrid(maxX, maxY, []);
 };
 
 const displayGrid = (grid: Grid, vehicles: Array<Vehicle>) => {

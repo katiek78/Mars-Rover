@@ -10,7 +10,7 @@ export const processTextInstructions = (instructionList: string) => {
     const gridLine = instructionArray[0];
     const maxX = parseInt(gridLine.split(" ")[0]);
     const maxY = parseInt(gridLine.split(" ")[1]);
-    const grid = createGrid(maxX, maxY);
+    const grid = createGrid(maxX, maxY, []);
         
     for (let line=1; line < instructionArray.length; line+= 2) {
      

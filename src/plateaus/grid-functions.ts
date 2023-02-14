@@ -1,12 +1,13 @@
 export type Dimension = "X" | "Y";
+export type Position = { xPos: number; yPos: number };
 
 export type Grid = {
-  // name: string;
   maxX: number;
   maxY: number;
+  samples: Array<Position>;
 };
 
-export const createGrid = (maxX: number, maxY: number) => {
-  return { maxX, maxY };
+export const createGrid = (maxX: number, maxY: number, samples: Array<Position>) => {
+  return { maxX, maxY, samples };
 };
 

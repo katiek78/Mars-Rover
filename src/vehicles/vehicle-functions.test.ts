@@ -84,7 +84,8 @@ const rover8: Rover = {
 const GRID: Grid = {
   maxX: 8,
   maxY: 8,
-} as const;
+  samples: []
+};
 
 describe("moveVehicleForward", () => {
   test("Moves vehicle 1 square up if orientation is N", () => {

@@ -1,4 +1,4 @@
-import { Grid } from "../plateaus/grid-functions";
+import { Grid, Position } from "../plateaus/grid-functions";
 
 export interface Vehicle {
   position: Position;
@@ -13,7 +13,7 @@ export interface Rover extends Vehicle {
 
 export const ORIENTATIONS = ["N", "E", "S", "W"] as const;
 export type Orientation = typeof ORIENTATIONS[number];
-export type Position = { xPos: number; yPos: number };
+
 export type Direction = "L" | "R";
 export const ROVER_INSTRUCTIONS = ["L", "R", "M", "S"] as const;
 
