@@ -17,7 +17,7 @@ export type Orientation = typeof ORIENTATIONS[number];
 export type Direction = "L" | "R";
 export const ROVER_INSTRUCTIONS = ["L", "R", "M", "S"] as const;
 
-export const moveVehicleForward = (vehicle: Vehicle, grid: Grid) => {
+export const moveVehicleForward = (vehicle: Pick<Vehicle, 'position' | 'orientation'>, grid: Grid) => {
   switch (vehicle.orientation) {
     case "N":
       return vehicle.position.yPos + 1 < grid.maxY
@@ -69,23 +69,23 @@ export const processAllVehicleInstructions = (
 
 export const processVehicleInstructions = (
   grid: Grid,
-  roverIndex: number,
+  vehicleIndex: number,
   instructionList: string
 ) => {
   let newGrid = structuredClone(grid);
-  let movingVehicle = structuredClone(newGrid.vehicles[roverIndex]);
+  let movingVehicle = structuredClone(newGrid.vehicles[vehicleIndex]);
   instructionList.split("").forEach((instruction) => {
     if (instruction === "L")
       movingVehicle.orientation = rotateVehicle(movingVehicle, "L");
-    newGrid.vehicles[roverIndex] = movingVehicle;
+    newGrid.vehicles[vehicleIndex] = movingVehicle;
     if (instruction === "R")
       movingVehicle.orientation = rotateVehicle(movingVehicle, "R");
-    newGrid.vehicles[roverIndex] = movingVehicle;
+    newGrid.vehicles[vehicleIndex] = movingVehicle;
     if (instruction === "M")
       movingVehicle.position = moveVehicleForward(movingVehicle, grid);
-    newGrid.vehicles[roverIndex] = movingVehicle;
+    newGrid.vehicles[vehicleIndex] = movingVehicle;
     if (instruction === "S") {
-      newGrid = takeSample(newGrid, roverIndex);
+      newGrid = takeSample(newGrid, vehicleIndex);
     }
   });
 

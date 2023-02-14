@@ -7,8 +7,7 @@ import {
   parseMovementString,
   parseChoice,
 } from "./ui/parse";
-import {
-  Vehicle,
+import {  
   Rover,
   createRover,
   processAllVehicleInstructions,
@@ -37,9 +36,8 @@ const getGrid = (): Grid => {
 };
 
 const displayGrid = (grid: Grid) => {
-  print("");
-  //for each grid line we go through and print . for no vehicle and R for a rover (with spaces), yellow for sample
-  //can change this to an array of points for better efficiency
+  print("");  
+
   for (let i = grid.maxY - 1; i >= 0; i--) {
     let found = false;
     let rowString = "";
@@ -50,12 +48,19 @@ const displayGrid = (grid: Grid) => {
           grid.vehicles[v].position.xPos === j &&
           grid.vehicles[v].position.yPos === i
         ) {
-          rowString += (grid.samples.filter(s => s.xPos === j && s.yPos === i).length) ? "  R  ".yellow : "  R  ".green;
+          rowString += grid.samples.filter((s) => s.xPos === j && s.yPos === i)
+            .length
+            ? "  R  ".yellow
+            : "  R  ".green;
           found = true;
           break;
         }
       }
-      if (!found) rowString += (grid.samples.filter(s => s.xPos === j && s.yPos === i).length) ? "  .  ".yellow : "  .  ".green;
+      if (!found)
+        rowString += grid.samples.filter((s) => s.xPos === j && s.yPos === i)
+          .length
+          ? "  .  ".yellow
+          : "  .  ".green;
     }
     print(rowString);
   }
@@ -68,7 +73,7 @@ const getVehicleInstructions = (grid: Grid) => {
   //Currently getVehicleDetails only gets Rover details but could be extended to allow other vehicle details to be obtained
   const getVehicleDetails = (): void => {
     print("");
-    print(`Rover ${vehicleCounter+1}:`);
+    print(`Rover ${vehicleCounter + 1}:`);
     let xPosInput = prompt(`Please specify the Rover's X position: `);
     let xPos = parseVehiclePosition(xPosInput, grid, "X");
     while (xPos === undefined) {
@@ -97,7 +102,7 @@ const getVehicleInstructions = (grid: Grid) => {
       );
       orientation = parseVehicleOrientation(orientationInput);
     }
-    
+
     let roverMovementInput = prompt(
       "Please specify the Rover's movements (M for forward / L for left / R for right / S to take sample): "
     );
@@ -129,13 +134,12 @@ const printGridAndVehicles = (grid: Grid) => {
   print("Grid dimensions and existing positions:");
   print(`${grid.maxX} ${grid.maxY}`);
 
-  grid.vehicles.forEach(v => {    
+  grid.vehicles.forEach((v) => {
     print(
-      `${v.position.xPos} ${v.position.yPos} ${v.orientation} - Samples taken: ${v.samplesTaken }/${v.sampleCapacity}`
+      `${v.position.xPos} ${v.position.yPos} ${v.orientation} - Samples taken: ${v.samplesTaken}/${v.sampleCapacity}`
     );
   });
 };
-
 
 const printNewVehicles = (vehicles: Array<Rover>) => {
   print("--------------");
@@ -154,7 +158,7 @@ const offerChoice = (grid: Grid) => {
   const OPTIONS = [
     "View vehicle positions",
     "Redefine grid, vehicles and movements",
-    "Exit"
+    "Exit",
   ];
   OPTIONS.forEach((o, i) => print(`   ${i + 1} - ${o}`));
   let choice = parseChoice(
@@ -186,13 +190,9 @@ const welcome = (): void => {
 
 const operateMarsVehicles = (): void => {
   let grid = getGrid();
-  const roverInstructions: Array<string> =
-    getVehicleInstructions(grid);
+  const roverInstructions: Array<string> = getVehicleInstructions(grid);
   printGridAndVehicles(grid);
-  grid = processAllVehicleInstructions(
-    grid,
-    roverInstructions
-  );
+  grid = processAllVehicleInstructions(grid, roverInstructions);
   printNewVehicles(grid.vehicles);
 
   offerChoice(grid);

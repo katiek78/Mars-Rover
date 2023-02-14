@@ -26,7 +26,7 @@ export const parseMovementString = (
 ) => {  
     return input
       .split("")
-      .filter((ch) => ROVER_INSTRUCTIONS.find((el) => el === ch) !== undefined)
+      .filter((ch) => ROVER_INSTRUCTIONS.find((el) => el === ch) !== undefined)     
       .join("");
 };
 
