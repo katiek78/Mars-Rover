@@ -33,21 +33,22 @@ const getGrid = (): Grid => {
     maxY = parseGridDimension(maxYInput);
   }
 
-  return createGrid(maxX, maxY, []);
+  return createGrid(maxX, maxY, [], []);
 };
 
-const displayGrid = (grid: Grid, vehicles: Array<Vehicle>) => {
+const displayGrid = (grid: Grid) => {
   print("");
   //for each grid line we go through and print . for no vehicle and R for a rover (with spaces), yellow for sample
+  //can change this to an array of points for better efficiency
   for (let i = grid.maxY - 1; i >= 0; i--) {
     let found = false;
     let rowString = "";
     for (let j = 0; j < grid.maxX; j++) {
       found = false;
-      for (let v = 0; v < vehicles.length; v++) {
+      for (let v = 0; v < grid.vehicles.length; v++) {
         if (
-          vehicles[v].position.xPos === j &&
-          vehicles[v].position.yPos === i
+          grid.vehicles[v].position.xPos === j &&
+          grid.vehicles[v].position.yPos === i
         ) {
           rowString += (grid.samples.filter(s => s.xPos === j && s.yPos === i).length) ? "  R  ".yellow : "  R  ".green;
           found = true;
@@ -60,14 +61,14 @@ const displayGrid = (grid: Grid, vehicles: Array<Vehicle>) => {
   }
 };
 
-const getVehicleInstructions = (grid: Grid): Array<[Rover, string]> => {
-  const roverInstructions: Array<[Rover, string]> = [];
-  let vehicleCounter = 1;
+const getVehicleInstructions = (grid: Grid) => {
+  const roverInstructions: Array<string> = [];
+  let vehicleCounter = 0;
 
   //Currently getVehicleDetails only gets Rover details but could be extended to allow other vehicle details to be obtained
   const getVehicleDetails = (): void => {
     print("");
-    print(`Rover ${vehicleCounter}:`);
+    print(`Rover ${vehicleCounter+1}:`);
     let xPosInput = prompt(`Please specify the Rover's X position: `);
     let xPos = parseVehiclePosition(xPosInput, grid, "X");
     while (xPos === undefined) {
@@ -96,7 +97,7 @@ const getVehicleInstructions = (grid: Grid): Array<[Rover, string]> => {
       );
       orientation = parseVehicleOrientation(orientationInput);
     }
-
+    
     let roverMovementInput = prompt(
       "Please specify the Rover's movements (M for forward / L for left / R for right / S to take sample): "
     );
@@ -108,8 +109,9 @@ const getVehicleInstructions = (grid: Grid): Array<[Rover, string]> => {
       roverMovements = parseMovementString(roverMovementInput);
     }
 
-    const rover: Rover = createRover(position, orientation, grid, 23, 10, 0);
-    roverInstructions.push([rover, roverMovements]);
+    const rover: Rover = createRover(position, orientation, 23, 10, 0);
+    grid.vehicles.push(rover);
+    roverInstructions.push(roverMovements);
   };
 
   getVehicleDetails();
@@ -122,31 +124,27 @@ const getVehicleInstructions = (grid: Grid): Array<[Rover, string]> => {
   return roverInstructions;
 };
 
-const printGridAndVehicles = (
-  grid: Grid,
-  roverInstructions: Array<[Rover, string]>
-) => {
+const printGridAndVehicles = (grid: Grid) => {
   print("---------------------------------------");
   print("Grid dimensions and existing positions:");
   print(`${grid.maxX} ${grid.maxY}`);
 
-  roverInstructions.forEach((vehicleMovement) => {
-    const rover: Rover = vehicleMovement[0];
+  grid.vehicles.forEach(v => {    
     print(
-      `${rover.position.xPos} ${rover.position.yPos} ${rover.orientation} - Samples taken: ${rover.samplesTaken}/${rover.sampleCapacity}`
+      `${v.position.xPos} ${v.position.yPos} ${v.orientation} - Samples taken: ${v.samplesTaken }/${v.sampleCapacity}`
     );
   });
 };
 
 const processAllVehicleInstructions = (
   grid: Grid,
-  vehicleInstructions: Array<[Rover, string]>
+  vehicleInstructions: Array<string>
 ) => {
-  return vehicleInstructions.map((vehicleInstruction) => {
-    const vehicle: Rover = vehicleInstruction[0];
-    const instructionList = vehicleInstruction[1];
-    return processVehicleInstructions(vehicle, grid, instructionList);
-  });
+  let newGrid = structuredClone(grid);   
+  vehicleInstructions.forEach((vi, i) => {
+    newGrid = processVehicleInstructions(newGrid, i, vi);
+  })
+  return newGrid;
 };
 
 const printNewVehicles = (vehicles: Array<Rover>) => {
@@ -161,7 +159,7 @@ const printNewVehicles = (vehicles: Array<Rover>) => {
   );
 };
 
-const offerChoice = (grid: Grid, vehicles: Array<Rover>) => {
+const offerChoice = (grid: Grid) => {
   print("What would you like to do next?");
   const OPTIONS = [
     "View vehicle positions",
@@ -177,8 +175,8 @@ const offerChoice = (grid: Grid, vehicles: Array<Rover>) => {
   );
   switch (choice) {
     case 1:
-      displayGrid(grid, vehicles);
-      offerChoice(grid, vehicles);
+      displayGrid(grid);
+      offerChoice(grid);
       break;
     case 2:
       operateMarsVehicles();
@@ -197,17 +195,17 @@ const welcome = (): void => {
 };
 
 const operateMarsVehicles = (): void => {
-  const grid = getGrid();
-  const roverInstructions: Array<[Rover, string]> =
+  let grid = getGrid();
+  const roverInstructions: Array<string> =
     getVehicleInstructions(grid);
-  printGridAndVehicles(grid, roverInstructions);
-  const vehicles: Array<Rover> = processAllVehicleInstructions(
+  printGridAndVehicles(grid);
+  grid = processAllVehicleInstructions(
     grid,
     roverInstructions
   );
-  printNewVehicles(vehicles);
+  printNewVehicles(grid.vehicles);
 
-  offerChoice(grid, vehicles);
+  offerChoice(grid);
 };
 
 welcome();

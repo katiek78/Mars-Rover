@@ -48,45 +48,47 @@ export const rotateVehicle = (vehicle: Vehicle, direction: Direction) => {
 
 export const createRover = (
   position: Position,
-  orientation: Orientation,
-  grid: Grid,
+  orientation: Orientation, 
   cameras: number,
   sampleCapacity: number,
   samplesTaken: number
 ) => {
-  return { position, orientation, grid, cameras, sampleCapacity, samplesTaken };
+  return { position, orientation, cameras, sampleCapacity, samplesTaken };
 };
 
-export const processVehicleInstructions = (
-  vehicle: Rover,
+export const processVehicleInstructions = (  
   grid: Grid,
-  movementString: string
+  roverIndex: number,
+  instructionList: string
 ) => {
-  let movingVehicle = structuredClone(vehicle);
-  movementString.split("").forEach((instruction) => {
+  let newGrid = structuredClone(grid);
+  let movingVehicle = structuredClone(newGrid.vehicles[roverIndex]);
+  instructionList.split("").forEach((instruction) => {
     if (instruction === "L")
       movingVehicle.orientation = rotateVehicle(movingVehicle, "L");
+      newGrid.vehicles[roverIndex] = movingVehicle;
     if (instruction === "R")
       movingVehicle.orientation = rotateVehicle(movingVehicle, "R");
+      newGrid.vehicles[roverIndex] = movingVehicle;
     if (instruction === "M")
       movingVehicle.position = moveVehicleForward(movingVehicle, grid);
-    if (instruction === "S") {
-      let newState = takeSample(movingVehicle, grid); 
-      movingVehicle = newState.rover;
-      grid = newState.grid;
+      newGrid.vehicles[roverIndex] = movingVehicle;
+    if (instruction === "S") {      
+      newGrid = takeSample(newGrid, roverIndex);       
     }
   });
 
-  return movingVehicle;
+  return newGrid;
 };
 
-export const takeSample = (rover: Rover, grid: Grid) => {  
-  if (rover.samplesTaken + 1 > rover.sampleCapacity) {
-    return {rover, grid};
+export const takeSample = (grid: Grid, roverIndex: number) => {    
+  if (grid.vehicles[roverIndex].samplesTaken + 1 > grid.vehicles[roverIndex].sampleCapacity) {
+    return grid;
   } else {
-    rover.samplesTaken++;
-    grid.samples.push(rover.position);        
-    return {rover, grid};
+    const newGrid = structuredClone(grid);
+    newGrid.vehicles[roverIndex].samplesTaken++;
+    newGrid.samples.push(newGrid.vehicles[roverIndex].position);        
+    return newGrid;
     
   }
 }

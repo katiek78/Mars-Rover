@@ -9,9 +9,7 @@ import {
 
 import { Grid } from "../plateaus/grid-functions";
 
-const rover1: Rover = {
-  /*name: "Rover1",
-  vehicleType: "Rover",*/
+const rover1: Rover = { 
   position: { xPos: 0, yPos: 0 },
   orientation: "N",
   cameras: 0,
@@ -84,13 +82,10 @@ const rover8: Rover = {
 const GRID: Grid = {
   maxX: 8,
   maxY: 8,
+  vehicles: [rover1],
   samples: []
 };
-const GRID2: Grid = {
-  maxX: 8,
-  maxY: 8,
-  samples: []
-};
+
 
 describe("moveVehicleForward", () => {
   test("Moves vehicle 1 square up if orientation is N", () => {
@@ -166,12 +161,9 @@ describe("rotateVehicle", () => {
 
 describe("createVehicle", () => {
   test("Creates a vehicle with the given parameters", () => {
-    expect(createRover(/*"Buggy", "Rover",*/ {xPos: 0, yPos: 0}, "N", GRID, 23, 10, 1)).toEqual({
-      /*name: "Buggy",
-      vehicleType: "Rover",*/
+    expect(createRover({xPos: 0, yPos: 0}, "N",  23, 10, 1)).toEqual({ 
       position: {xPos: 0, yPos: 0},
-      orientation: "N",
-      grid: GRID,
+      orientation: "N",     
       cameras: 23,
       sampleCapacity: 10,
       samplesTaken: 1
@@ -181,94 +173,71 @@ describe("createVehicle", () => {
 });
 
 describe("processVehicleInstructions", () => {
-  test("Returns original vehicle position and orientation if movement string is empty", () => {
-    expect(processVehicleInstructions(rover1, GRID, "")).toEqual({    
-      position: { xPos: 0, yPos: 0 },
-      orientation: "N",
-      cameras: 0,
-      sampleCapacity: 10,
-      samplesTaken: 0
-    });   
+  test("Returns original grid if instruction string is empty", () => {
+    expect(processVehicleInstructions(GRID, 0, "")).toEqual(   
+      GRID
+    );   
   });
   test("Rotates vehicle clockwise if movement string is 'R'", () => {
-    expect(processVehicleInstructions(rover1, GRID, "R")).toEqual({   
-      position: { xPos: 0, yPos: 0 },
-      orientation: "E",
-      cameras: 0,
-      sampleCapacity: 10,
-      samplesTaken: 0
-    }); 
+    expect(processVehicleInstructions(GRID, 0, "R")).toEqual(   
+      {...GRID, vehicles: [{...rover1, orientation: "E"}]}
+    ); 
   });
   test("Rotates vehicle anticlockwise if movement string is 'L'", () => {
-    expect(processVehicleInstructions(rover1, GRID, "L")).toEqual({      
-      position: { xPos: 0, yPos: 0 },
-      orientation: "W",
-      cameras: 0,
-      sampleCapacity: 10,
-      samplesTaken: 0
-    }); 
+    expect(processVehicleInstructions(GRID, 0, "L")).toEqual({...GRID, vehicles: [{...rover1, orientation: "W"}
+    ]}); 
   });
   test("Moves vehicle forward if movement string is 'M'", () => {
-    expect(processVehicleInstructions(rover1, GRID, "M")).toEqual({      
-      position: { xPos: 0, yPos: 1 },
-      orientation: "N",
-      cameras: 0,
-      sampleCapacity: 10,
-      samplesTaken: 0
-    }); 
+    expect(processVehicleInstructions(GRID, 0, "M")).toEqual(    
+      {...GRID, vehicles: [{...rover1, position: {xPos: 0, yPos: 1}}]}
+    ); 
   });  
   test("Moves vehicle through multiple orientations", () => {
-    expect(processVehicleInstructions(rover1, GRID, "LL")).toEqual({      
-      position: { xPos: 0, yPos: 0 },
-      orientation: "S",
-      cameras: 0,
-      sampleCapacity: 10,
-      samplesTaken: 0
-    }); 
+    expect(processVehicleInstructions(GRID, 0, "LL")).toEqual(  {...GRID, vehicles: [{...rover1, orientation: "S"}]}); 
   });  
   test("Moves vehicle through multiple forward movements", () => {
-    expect(processVehicleInstructions(rover1, GRID, "MMMM")).toEqual({      
-      position: { xPos: 0, yPos: 4 },
-      orientation: "N",
-      cameras: 0,
-      sampleCapacity: 10,
-      samplesTaken: 0
-    }); 
+    expect(processVehicleInstructions(GRID, 0, "MMMM")).toEqual(  {...GRID, vehicles: [{...rover1, position: {xPos: 0, yPos: 4}}]}); ; 
   });  
-  test("Moves vehicle through multiple orientations and forward movements", () => {
-    expect(processVehicleInstructions(rover1, GRID, "RMMMMLMML")).toEqual({      
-      position: { xPos: 4, yPos: 2 },
-      orientation: "W",
-      cameras: 0,
-      sampleCapacity: 10,
-      samplesTaken: 0
-    }); 
+  test("Moves vehicle through multiple orientations and forward movements", () => {    
+    expect(processVehicleInstructions(GRID, 0, "RMMMMLMML")).toEqual(  {...GRID, vehicles: [{...rover1, orientation: "W", position: {xPos: 4, yPos: 2}}]}); 
   });  
-  test("Increases samplesTaken if an 'S' is found", () => {
-    expect(processVehicleInstructions(rover1, GRID, "S")).toEqual({      
-      position: { xPos: 0, yPos: 0 },
-      orientation: "N",
-      cameras: 0,
-      sampleCapacity: 10,
-      samplesTaken: 1
-    }); 
+  test("Increases samplesTaken if an 'S' is found and adds the sample to the grid", () => {
+    console.log(GRID.vehicles[0]);
+    expect(processVehicleInstructions(GRID, 0, "S")).toEqual(  {...GRID, vehicles: [{...rover1, samplesTaken: 1}], samples: [{xPos: 0, yPos: 0}]}); 
   });  
 });
 
 
 describe("takeSample", () => {
+  const rover1: Rover = { 
+    position: { xPos: 0, yPos: 0 },
+    orientation: "N",
+    cameras: 0,
+    sampleCapacity: 10,
+    samplesTaken: 0
+  };
+  const rover2: Rover = { ...rover1,
+    samplesTaken: 10
+  };
+  const GRID: Grid = {
+    maxX: 8,
+    maxY: 8,
+    vehicles: [rover1],
+    samples: []
+  };
+  const GRID2: Grid = {
+    maxX: 8,
+    maxY: 8,
+    vehicles: [rover2],
+    samples: []
+  };
+ 
+  
+
   test("Returns samplesTaken unchanged if sampleCapacity is reached (samplesTaken would be greater than sampleCapacity)", () => {
-    expect(takeSample(rover8, GRID)).toEqual({rover: rover8, grid: GRID});   
+    expect(takeSample(GRID2, 0)).toEqual(GRID2);   
   });
   test("Returns samplesTaken increased by 1 if sampleCapacity is not reached", () => {
-    expect(takeSample(rover1, GRID2)).toEqual({rover: {position: { xPos: 0, yPos: 0 },
-      orientation: "N",
-      cameras: 0,
-      sampleCapacity: 10,
-      samplesTaken: 1}, grid: {
-        maxX: 8,
-        maxY: 8,
-        samples: [{xPos: 0, yPos: 0}]
-      }});   
+    expect(takeSample(GRID, 0)).toEqual({...GRID, vehicles: [{...rover1, samplesTaken: 1}], samples: [{xPos: 0, yPos: 0}]});   
   });
 });
