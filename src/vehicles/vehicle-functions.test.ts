@@ -86,6 +86,11 @@ const GRID: Grid = {
   maxY: 8,
   samples: []
 };
+const GRID2: Grid = {
+  maxX: 8,
+  maxY: 8,
+  samples: []
+};
 
 describe("moveVehicleForward", () => {
   test("Moves vehicle 1 square up if orientation is N", () => {
@@ -253,9 +258,17 @@ describe("processVehicleInstructions", () => {
 
 describe("takeSample", () => {
   test("Returns samplesTaken unchanged if sampleCapacity is reached (samplesTaken would be greater than sampleCapacity)", () => {
-    expect(takeSample(rover8, GRID)).toEqual(3);   
+    expect(takeSample(rover8, GRID)).toEqual({rover: rover8, grid: GRID});   
   });
   test("Returns samplesTaken increased by 1 if sampleCapacity is not reached", () => {
-    expect(takeSample(rover1, GRID)).toEqual(1);   
+    expect(takeSample(rover1, GRID2)).toEqual({rover: {position: { xPos: 0, yPos: 0 },
+      orientation: "N",
+      cameras: 0,
+      sampleCapacity: 10,
+      samplesTaken: 1}, grid: {
+        maxX: 8,
+        maxY: 8,
+        samples: [{xPos: 0, yPos: 0}]
+      }});   
   });
 });

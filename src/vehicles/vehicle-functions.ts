@@ -62,7 +62,7 @@ export const processVehicleInstructions = (
   grid: Grid,
   movementString: string
 ) => {
-  const movingVehicle = structuredClone(vehicle);
+  let movingVehicle = structuredClone(vehicle);
   movementString.split("").forEach((instruction) => {
     if (instruction === "L")
       movingVehicle.orientation = rotateVehicle(movingVehicle, "L");
@@ -70,8 +70,11 @@ export const processVehicleInstructions = (
       movingVehicle.orientation = rotateVehicle(movingVehicle, "R");
     if (instruction === "M")
       movingVehicle.position = moveVehicleForward(movingVehicle, grid);
-    if (instruction === "S")
-      movingVehicle.samplesTaken = takeSample(movingVehicle, grid);
+    if (instruction === "S") {
+      let newState = takeSample(movingVehicle, grid); 
+      movingVehicle = newState.rover;
+      grid = newState.grid;
+    }
   });
 
   return movingVehicle;
@@ -79,6 +82,11 @@ export const processVehicleInstructions = (
 
 export const takeSample = (rover: Rover, grid: Grid) => {  
   if (rover.samplesTaken + 1 > rover.sampleCapacity) {
-    return rover.samplesTaken;
-  } else return rover.samplesTaken + 1;
+    return {rover, grid};
+  } else {
+    rover.samplesTaken++;
+    grid.samples.push(rover.position);        
+    return {rover, grid};
+    
+  }
 }
