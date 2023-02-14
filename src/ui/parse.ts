@@ -3,7 +3,7 @@ import {
   ROVER_INSTRUCTIONS,
   ORIENTATIONS,
   Orientation,
-} from "../vehicle-functions";
+} from "../vehicles/vehicle-functions";
 
 export const parseGridDimension = (input: string): number | undefined => {
   return isNaN(parseInt(input)) ? undefined : parseInt(input);

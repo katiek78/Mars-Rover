@@ -1,5 +1,5 @@
 import { createGrid } from "./grid-functions";
-import { ORIENTATIONS, Orientation, createRover, processVehicleInstructions } from "./vehicle-functions";
+import { ORIENTATIONS, Orientation, createRover, processVehicleInstructions } from "./vehicles/vehicle-functions";
 
 export const processTextInstructions = (instructionList: string) => {
  

@@ -13,7 +13,7 @@ import {
   Position,
   createRover,
   processVehicleInstructions,
-} from "./vehicle-functions";
+} from "./vehicles/vehicle-functions";
 
 const getGrid = (): Grid => {
   let maxXInput = prompt(`Please specify the grid width (X): `);
