@@ -11,7 +11,7 @@ import {
   Vehicle,
   Rover,
   createRover,
-  processVehicleInstructions,
+  processAllVehicleInstructions,
 } from "./vehicles/vehicle-functions";
 
 const getGrid = (): Grid => {
@@ -136,16 +136,6 @@ const printGridAndVehicles = (grid: Grid) => {
   });
 };
 
-const processAllVehicleInstructions = (
-  grid: Grid,
-  vehicleInstructions: Array<string>
-) => {
-  let newGrid = structuredClone(grid);   
-  vehicleInstructions.forEach((vi, i) => {
-    newGrid = processVehicleInstructions(newGrid, i, vi);
-  })
-  return newGrid;
-};
 
 const printNewVehicles = (vehicles: Array<Rover>) => {
   print("--------------");

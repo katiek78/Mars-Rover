@@ -2,7 +2,7 @@ import { Grid, Position } from "../plateaus/grid-functions";
 
 export interface Vehicle {
   position: Position;
-  orientation: Orientation;  
+  orientation: Orientation;
 }
 
 export interface Rover extends Vehicle {
@@ -48,7 +48,7 @@ export const rotateVehicle = (vehicle: Vehicle, direction: Direction) => {
 
 export const createRover = (
   position: Position,
-  orientation: Orientation, 
+  orientation: Orientation,
   cameras: number,
   sampleCapacity: number,
   samplesTaken: number
@@ -56,7 +56,18 @@ export const createRover = (
   return { position, orientation, cameras, sampleCapacity, samplesTaken };
 };
 
-export const processVehicleInstructions = (  
+export const processAllVehicleInstructions = (
+  grid: Grid,
+  vehicleInstructions: Array<string>
+) => {
+  let newGrid = structuredClone(grid);
+  vehicleInstructions.forEach((vi, i) => {
+    newGrid = processVehicleInstructions(newGrid, i, vi);
+  });
+  return newGrid;
+};
+
+export const processVehicleInstructions = (
   grid: Grid,
   roverIndex: number,
   instructionList: string
@@ -66,29 +77,31 @@ export const processVehicleInstructions = (
   instructionList.split("").forEach((instruction) => {
     if (instruction === "L")
       movingVehicle.orientation = rotateVehicle(movingVehicle, "L");
-      newGrid.vehicles[roverIndex] = movingVehicle;
+    newGrid.vehicles[roverIndex] = movingVehicle;
     if (instruction === "R")
       movingVehicle.orientation = rotateVehicle(movingVehicle, "R");
-      newGrid.vehicles[roverIndex] = movingVehicle;
+    newGrid.vehicles[roverIndex] = movingVehicle;
     if (instruction === "M")
       movingVehicle.position = moveVehicleForward(movingVehicle, grid);
-      newGrid.vehicles[roverIndex] = movingVehicle;
-    if (instruction === "S") {      
-      newGrid = takeSample(newGrid, roverIndex);       
+    newGrid.vehicles[roverIndex] = movingVehicle;
+    if (instruction === "S") {
+      newGrid = takeSample(newGrid, roverIndex);
     }
   });
 
   return newGrid;
 };
 
-export const takeSample = (grid: Grid, roverIndex: number) => {    
-  if (grid.vehicles[roverIndex].samplesTaken + 1 > grid.vehicles[roverIndex].sampleCapacity) {
+export const takeSample = (grid: Grid, roverIndex: number) => {
+  if (
+    grid.vehicles[roverIndex].samplesTaken + 1 >
+    grid.vehicles[roverIndex].sampleCapacity
+  ) {
     return grid;
   } else {
     const newGrid = structuredClone(grid);
     newGrid.vehicles[roverIndex].samplesTaken++;
-    newGrid.samples.push(newGrid.vehicles[roverIndex].position);        
+    newGrid.samples.push(newGrid.vehicles[roverIndex].position);
     return newGrid;
-    
   }
-}
+};

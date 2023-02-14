@@ -9,7 +9,11 @@ export type Grid = {
   samples: Array<Position>;
 };
 
-export const createGrid = (maxX: number, maxY: number, vehicles: Array<Rover>, samples: Array<Position>) => {
+export const createGrid = (
+  maxX: number,
+  maxY: number,
+  vehicles: Array<Rover>,
+  samples: Array<Position>
+) => {
   return { maxX, maxY, vehicles, samples };
 };
-
