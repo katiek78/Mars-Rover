@@ -38,7 +38,7 @@ const getGrid = (): Grid => {
 
 const displayGrid = (grid: Grid, vehicles: Array<Vehicle>) => {
   print("");
-  //for each grid line we go through and print . for no vehicle and R for a rover (with spaces)
+  //for each grid line we go through and print . for no vehicle and R for a rover (with spaces), yellow for sample
   for (let i = grid.maxY - 1; i >= 0; i--) {
     let found = false;
     let rowString = "";
@@ -49,12 +49,12 @@ const displayGrid = (grid: Grid, vehicles: Array<Vehicle>) => {
           vehicles[v].position.xPos === j &&
           vehicles[v].position.yPos === i
         ) {
-          rowString += "  R  ";
+          rowString += (grid.samples.filter(s => s.xPos === j && s.yPos === i).length) ? "  R  ".yellow : "  R  ".green;
           found = true;
           break;
         }
       }
-      if (!found) rowString += "  .  ";
+      if (!found) rowString += (grid.samples.filter(s => s.xPos === j && s.yPos === i).length) ? "  .  ".yellow : "  .  ".green;
     }
     print(rowString);
   }
