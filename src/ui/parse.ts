@@ -1,4 +1,4 @@
-import { Grid, Dimension } from "../grid-functions";
+import { Grid, Dimension } from "../plateaus/grid-functions";
 import {
   ROVER_INSTRUCTIONS,
   ORIENTATIONS,

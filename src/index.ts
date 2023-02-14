@@ -1,4 +1,4 @@
-import { Grid, createGrid } from "./grid-functions";
+import { Grid, createGrid } from "./plateaus/grid-functions";
 import { print, yn, promptColour as prompt } from "./ui/console";
 import {
   parseGridDimension,

@@ -7,7 +7,7 @@ import {
   takeSample
 } from "./vehicle-functions";
 
-import { Grid } from "../grid-functions";
+import { Grid } from "../plateaus/grid-functions";
 
 const rover1: Rover = {
   /*name: "Rover1",

@@ -1,4 +1,4 @@
-import { createGrid } from "./grid-functions";
+import { createGrid } from "./plateaus/grid-functions";
 import { ORIENTATIONS, Orientation, createRover, processVehicleInstructions } from "./vehicles/vehicle-functions";
 
 export const processTextInstructions = (instructionList: string) => {

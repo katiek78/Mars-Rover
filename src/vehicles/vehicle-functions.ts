@@ -1,4 +1,4 @@
-import { Grid } from "../grid-functions";
+import { Grid } from "../plateaus/grid-functions";
 
 export interface Vehicle {
   position: Position;
