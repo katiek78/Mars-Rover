@@ -1,5 +1,6 @@
 import { RectangularGrid, createGrid } from "../plateaus/grid-functions";
-import { Rover, createRover, takeSample } from "./rover-functions";
+import { Rover, createRover, isRover, takeSample } from "./rover-functions";
+import { Vehicle } from "./vehicle-functions";
 
 describe("createRover", () => {
     test("Creates a Rover with the given parameters", () => {
@@ -11,6 +12,29 @@ describe("createRover", () => {
         samplesTaken: 1,
       });
     });
+  });
+
+  describe("isRover", () => {
+
+    const rover1: Rover = {
+        position: { xPos: 0, yPos: 0 },
+        orientation: "N",
+        cameras: 0,
+        sampleCapacity: 10,
+        samplesTaken: 0,
+      };
+
+      const vehicle1: Vehicle = {
+        position: { xPos: 0, yPos: 0 },
+        orientation: "N",        
+      };
+
+    test("Returns true if a vehicle is a Rover", () => {
+      expect(isRover(rover1)).toBeTruthy();
+    });
+    test("Returns false if a vehicle is not a Rover", () => {
+        expect(isRover(vehicle1)).toBeFalsy();
+      });
   });
 
   describe("takeSample", () => {
