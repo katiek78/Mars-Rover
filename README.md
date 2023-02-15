@@ -32,6 +32,8 @@ If the vehicle has no cameras, it cannot take any photos.
 The user can then view the positions of the vehicles, photos and samples as a grid of green asterisks. Samples are displayed in blue, photos are displayed in red, and any points where both a sample and a photo have been taken will be shown in magenta. Any grid points with Rovers will be indicated by the letter 'R' (combined with the appropriate colour).
 For example, a blue 'R' on the grid means that a Rover is in this position AND a sample has been taken at that point.
 
+![Screenshot of grid](/assets/images/grid.png)
+
 ## The code
 ### Files
 The main file is index.ts: this is the top-level file that deals with the user input.
