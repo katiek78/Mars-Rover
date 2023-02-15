@@ -1,6 +1,15 @@
 import { checkRectangularGridMovement, createGrid } from "./grid-functions";
+import { Rover } from "../vehicles/vehicle-functions";
 
 describe("createGrid", () => {
+  const rover1: Rover = {
+    position: { xPos: 0, yPos: 0 },
+    orientation: "N",
+    cameras: 0,
+    sampleCapacity: 10,
+    samplesTaken: 0,
+  };
+
   test("Returns a Grid with the given dimensions", () => {
     expect(createGrid(9, 9, [], [])).toEqual({
       maxX: 9,
@@ -9,7 +18,14 @@ describe("createGrid", () => {
       vehicles: [],
       samples: [],
     });
-  });
+    expect(createGrid(3, 8, [rover1], [{xPos: 1, yPos: 5}])).toEqual({
+      maxX: 3,
+      maxY: 8,
+      checkMovement: checkRectangularGridMovement,
+      vehicles: [rover1],
+      samples: [{xPos: 1, yPos: 5}],
+    });
+  });  
 });
 
 
