@@ -49,19 +49,56 @@ const displayGrid = (grid: RectangularGrid) => {
           grid.vehicles[v].position.xPos === j &&
           grid.vehicles[v].position.yPos === i
         ) {
+          /*
+          
           rowString += grid.samples.filter((s) => s.xPos === j && s.yPos === i)
             .length
-            ? "  R  ".yellow
+            ? "  R  ".blue
             : "  R  ".green;
+            */
+            const foundSample: boolean = grid.samples.filter((s) => s.xPos === j && s.yPos === i).length > 0;        
+            let foundPhoto = false;
+             for (let v = 0; v < grid.vehicles.length; v++) {
+               const currentVehicle = grid.vehicles[v];
+               if (!isRover(currentVehicle)) break;
+               if (currentVehicle.photos.filter((p) => p.xPos === j && p.yPos === i).length > 0) {
+                 foundPhoto = true;
+                 break;
+               }
+             }
+             if (foundSample && foundPhoto) {
+               rowString += "  R  ".magenta;
+             } else if (foundPhoto) {
+               rowString += "  R  ".red;
+             } else if (foundSample) {
+               rowString += "  R  ".blue;
+             } else rowString += "  R  ".green;
+
+
           found = true;
           break;
         }
       }
-      if (!found)
-        rowString += grid.samples.filter((s) => s.xPos === j && s.yPos === i)
-          .length
-          ? "  *  ".yellow
-          : "  *  ".green;
+      if (!found) {       
+        const foundSample: boolean = grid.samples.filter((s) => s.xPos === j && s.yPos === i).length > 0;        
+         let foundPhoto = false;
+          for (let v = 0; v < grid.vehicles.length; v++) {
+            const currentVehicle = grid.vehicles[v];
+            if (!isRover(currentVehicle)) break;
+            if (currentVehicle.photos.filter((p) => p.xPos === j && p.yPos === i).length > 0) {
+              foundPhoto = true;
+              break;
+            }
+          }
+          if (foundSample && foundPhoto) {
+            rowString += "  *  ".magenta;
+          } else if (foundPhoto) {
+            rowString += "  *  ".red;
+          } else if (foundSample) {
+            rowString += "  *  ".blue;
+          } else rowString += "  *  ".green;
+      }
+      
     }
     print(rowString);
   }
