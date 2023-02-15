@@ -1,4 +1,4 @@
-import { RectangularGrid, isRectangular } from "../plateaus/grid-functions";
+import { isRectangular } from "../plateaus/grid-functions";
 import { Plateau, Position } from "../plateaus/plateau-functions";
 import { isRover} from "./rover-functions";
 
@@ -50,14 +50,14 @@ export const rotateVehicle = (vehicle: Vehicle, direction: Direction) => {
 
 
 export const processAllVehicleInstructions = (
-  grid: RectangularGrid,
+  plateau: Plateau,
   vehicleInstructions: Array<string>
 ) => {
-  let newGrid = cloneDeep(grid);
+  let newPlateau = cloneDeep(plateau);
   vehicleInstructions.forEach((vi, i) => {
-    newGrid = processVehicleInstructions(newGrid, i, vi);
+    newPlateau = processVehicleInstructions(newPlateau, i, vi);
   });
-  return newGrid;
+  return newPlateau;
 };
 
 export const processVehicleInstructions = (

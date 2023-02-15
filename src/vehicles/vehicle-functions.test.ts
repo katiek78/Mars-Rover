@@ -2,6 +2,7 @@ import {
   moveVehicleForward,
   rotateVehicle,
   processVehicleInstructions,
+  processAllVehicleInstructions,
 } from "./vehicle-functions";
 import { Rover, createRover } from "./rover-functions";
 
@@ -226,9 +227,7 @@ describe("processVehicleInstructions", () => {
   test("Stops taking samples when capacity is reached", () => {
     expect(processVehicleInstructions(grid, 0, "SSSSSSSSSSSSSSSSSS")).toEqual({
       ...grid,
-      vehicles: [
-        { ...rover1, samplesTaken: 10 },
-      ],
+      vehicles: [{ ...rover1, samplesTaken: 10 }],
       samples: [
         { xPos: 0, yPos: 0 },
         { xPos: 0, yPos: 0 },
@@ -242,5 +241,57 @@ describe("processVehicleInstructions", () => {
         { xPos: 0, yPos: 0 },
       ],
     });
+  });
+});
+
+describe("processAllVehicleInstructions", () => {
+  const outputGrid = {
+    ...grid,
+    samples: [{ xPos: 0, yPos: 3 }],
+    vehicles: [
+      {
+        ...rover1,
+        samplesTaken: 1,
+        position: { xPos: 0, yPos: 3 },
+        orientation: "W",
+      },
+    ],
+  };
+  const outputGrid2 = {
+    ...outputGrid,
+    samples: [
+      { xPos: 0, yPos: 3 },
+      { xPos: 4, yPos: 8 },
+    ],
+    vehicles: [
+      {
+        ...rover1,
+        samplesTaken: 1,
+        position: { xPos: 0, yPos: 3 },
+        orientation: "W",
+      },
+      {
+        ...rover2,
+        samplesTaken: 3,
+        position: { xPos: 4, yPos: 8 },
+        orientation: "E",
+      },
+    ],
+  };
+  test("Returns original plateau if instruction string array is empty", () => {
+    expect(processAllVehicleInstructions(grid, [])).toEqual(grid);
+  });
+  test("Returns plateau with changes if instruction string array has one instruction list", () => {
+    expect(
+      processAllVehicleInstructions({ ...grid, vehicles: [rover1] }, ["MMMSL"])
+    ).toEqual(outputGrid);
+  });
+  test("Returns plateau with changes if instruction string array has multiple instruction lists", () => {
+    expect(
+      processAllVehicleInstructions({ ...grid, vehicles: [rover1, rover2] }, [
+        "MMMSL",
+        "RMS",
+      ])
+    ).toEqual(outputGrid2);
   });
 });
