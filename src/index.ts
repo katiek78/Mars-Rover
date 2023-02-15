@@ -5,7 +5,7 @@ import {
   parseGridDimension,
   parseVehiclePositionOnGrid,
   parseVehicleOrientation,
-  parseMovementString,
+  parseInstructionList,
   parseChoice,
 } from "./ui/parse";
 import {
@@ -109,12 +109,12 @@ const getVehicleInstructions = (grid: RectangularGrid) => {
     let roverMovementInput = prompt(
       "Please specify the Rover's movements (M for forward / L for left / R for right / S to take sample): "
     );
-    let roverMovements = parseMovementString(roverMovementInput);
+    let roverMovements = parseInstructionList(roverMovementInput);
     while (roverMovements === undefined) {
       roverMovementInput = prompt(
         "Invalid input. Please specify the Rover's movements (M for forward / L for left / R for right): "
       );
-      roverMovements = parseMovementString(roverMovementInput);
+      roverMovements = parseInstructionList(roverMovementInput);
     }
 
     const rover: Rover = createRover(position, orientation, 23, 10, 0);

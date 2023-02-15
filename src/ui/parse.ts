@@ -22,7 +22,7 @@ export const parseVehiclePositionOnGrid = (
   return parseInt(input);
 };
 
-export const parseMovementString = (input: string) => {
+export const parseInstructionList = (input: string) => {
   return input
     .split("")
     .filter((ch) => ROVER_INSTRUCTIONS.find((el) => el === ch) !== undefined)
