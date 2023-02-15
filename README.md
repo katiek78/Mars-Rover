@@ -10,6 +10,8 @@ I have assumed that all the vehicles are Rovers, but the code allows for other v
 ## Using the app
 The user is presented with a welcome screen:
 
+![Screenshot of welcome screen](/assets/images/welcome.png)
+
 They are then asked to enter grid dimensions (must be integers).
 
 The user can then enter the position and instructions for each vehicle:
