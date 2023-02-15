@@ -102,10 +102,7 @@ export const processVehicleInstructions = (
 export const takeSample = (grid: RectangularGrid, vehicleIndex: number) => {
   const currentVehicle = grid.vehicles[vehicleIndex];
   if (!isRover(currentVehicle)) return;
-  if (    
-    currentVehicle.samplesTaken + 1 >
-    currentVehicle.sampleCapacity
-  ) {
+  if (currentVehicle.samplesTaken + 1 > currentVehicle.sampleCapacity) {
     return grid;
   } else {
     const newGrid = cloneDeep(grid);
@@ -116,5 +113,9 @@ export const takeSample = (grid: RectangularGrid, vehicleIndex: number) => {
 };
 
 export function isRover(vehicle: Vehicle): vehicle is Rover {
-  return 'sampleCapacity' in vehicle;
+  return "sampleCapacity" in vehicle;
+}
+
+export function isOrientation(input: string): input is Orientation {
+  return input === 'N' || input === 'E' || input === 'S' || input === 'W';
 }

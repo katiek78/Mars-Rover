@@ -2,8 +2,7 @@ import { RectangularGrid } from "../plateaus/grid-functions";
 import { Dimension } from "../plateaus/plateau-functions";
 import {
   ROVER_INSTRUCTIONS,
-  ORIENTATIONS,
-  Orientation,
+  isOrientation,
 } from "../vehicles/vehicle-functions";
 
 export const parseGridDimension = (input: string) => {
@@ -30,14 +29,10 @@ export const parseInstructionList = (input: string) => {
 };
 
 export const parseVehicleOrientation = (input: string) => {
-  const legalOrientation = ORIENTATIONS.find((el) => el === input);
-  if (legalOrientation === undefined) return undefined;
-  const orientation: Orientation = legalOrientation;
-  return orientation;
+  return (isOrientation(input) ? input : undefined);
 };
 
 export const parseChoice = (input: string, options: String[]) => {
-  if (isNaN(parseInt(input))) return undefined;
-  if (parseInt(input) > options.length || parseInt(input) < 0) return undefined;
+  if (isNaN(parseInt(input)) || parseInt(input) < 0 || parseInt(input) > options.length) return undefined;
   return parseInt(input);
 };
