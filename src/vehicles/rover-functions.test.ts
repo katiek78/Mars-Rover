@@ -1,5 +1,5 @@
 import { RectangularGrid, createGrid } from "../plateaus/grid-functions";
-import { Rover, createRover, isRover, takeSample } from "./rover-functions";
+import { Rover, createRover, isRover, isRoverInstruction, takeSample } from "./rover-functions";
 import { Vehicle } from "./vehicle-functions";
 
 describe("createRover", () => {
@@ -12,24 +12,24 @@ describe("createRover", () => {
       samplesTaken: 1,
     });
     expect(createRover({ xPos: 10, yPos: 10 }, "S", 5, 0, 0)).toEqual({
-        position: { xPos: 10, yPos: 10 },
-        orientation: "S",
-        cameras: 5,
-        sampleCapacity: 0,
-        samplesTaken: 0,
-      });
+      position: { xPos: 10, yPos: 10 },
+      orientation: "S",
+      cameras: 5,
+      sampleCapacity: 0,
+      samplesTaken: 0,
+    });
     expect(createRover({ xPos: 10, yPos: 10 }, "S", 5, -1, 0)).toEqual({
-        position: { xPos: 10, yPos: 10 },
-        orientation: "S",
-        cameras: 5,
-        sampleCapacity: 0,
-        samplesTaken: 0,
-      });
+      position: { xPos: 10, yPos: 10 },
+      orientation: "S",
+      cameras: 5,
+      sampleCapacity: 0,
+      samplesTaken: 0,
+    });
   });
 });
 
 describe("isRover", () => {
-  const rover1: Rover = {
+  const ROVER1: Rover = {
     position: { xPos: 0, yPos: 0 },
     orientation: "N",
     cameras: 0,
@@ -37,18 +37,32 @@ describe("isRover", () => {
     samplesTaken: 0,
   };
 
-  const vehicle1: Vehicle = {
+  const VEHICLE1: Vehicle = {
     position: { xPos: 0, yPos: 0 },
     orientation: "N",
   };
 
   test("Returns true if a vehicle is a Rover", () => {
-    expect(isRover(rover1)).toBeTruthy();
+    expect(isRover(ROVER1)).toBeTruthy();
   });
   test("Returns false if a vehicle is not a Rover", () => {
-    expect(isRover(vehicle1)).toBeFalsy();
+    expect(isRover(VEHICLE1)).toBeFalsy();
   });
 });
+
+describe("isRoverInstruction", () => {      
+    test("Returns true if an instruction is a Rover instruction", () => {
+      expect(isRoverInstruction("L")).toBeTruthy();
+      expect(isRoverInstruction("R")).toBeTruthy();
+      expect(isRoverInstruction("M")).toBeTruthy();
+      expect(isRoverInstruction("S")).toBeTruthy();
+    });
+    test("Returns false if an instruction is not a Rover instruction", () => {
+      expect(isRoverInstruction("J")).toBeFalsy();
+      expect(isRoverInstruction("")).toBeFalsy();
+      expect(isRoverInstruction("SS")).toBeFalsy();
+    });
+  });
 
 describe("takeSample", () => {
   const rover1: Rover = {
