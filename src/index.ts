@@ -9,12 +9,10 @@ import {
   parseChoice,
 } from "./ui/parse";
 import {
-  Rover,
-  Vehicle,
-  createRover,
+  Vehicle,  
   processAllVehicleInstructions,
-  isRover
 } from "./vehicles/vehicle-functions";
+import { Rover, createRover, isRover } from "./vehicles/rover-functions";
 
 const getGrid = (): RectangularGrid => {
   let maxXInput = prompt(`Please specify the grid width (X): `);
@@ -138,22 +136,34 @@ const printGridAndVehicles = (grid: RectangularGrid) => {
   print(`${grid.maxX} ${grid.maxY}`);
 
   grid.vehicles.forEach((v) => {
-    print(
-      `${v.position.xPos} ${v.position.yPos} ${v.orientation} - Samples taken: ${isRover(v) ? v.samplesTaken : ''}/${isRover(v) ? v.sampleCapacity : ''}`
-    );
+    if (isRover(v)) {
+      print(
+        `${v.position.xPos} ${v.position.yPos} ${v.orientation} - Samples taken: ${v.samplesTaken}/${v.sampleCapacity}`
+      );
+    } else {
+      print(`${v.position.xPos} ${v.position.yPos} ${v.orientation}`);
+    }
   });
 };
 
 const printNewVehicles = (vehicles: Array<Vehicle>) => {
   print("--------------");
   print("New positions:");
-  vehicles.forEach((v) =>
-    print(
-      `${v.position.xPos.toString()} ${v.position.yPos.toString()} ${
-        v.orientation
-      } - Samples taken: ${isRover(v) ? v.samplesTaken : ''}/${isRover(v) ? v.sampleCapacity : ''}`
-    )
-  );
+  vehicles.forEach((v) => {
+    if (isRover(v)) {
+      print(
+        `${v.position.xPos.toString()} ${v.position.yPos.toString()} ${
+          v.orientation
+        } - Samples taken: ${v.samplesTaken}/${v.sampleCapacity}`
+      );
+    } else {
+      print(
+        `${v.position.xPos.toString()} ${v.position.yPos.toString()} ${
+          v.orientation
+        }`
+      );
+    }
+  });
 };
 
 const offerChoice = (grid: RectangularGrid) => {

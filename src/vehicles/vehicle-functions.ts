@@ -1,16 +1,12 @@
 import { RectangularGrid, isRectangular } from "../plateaus/grid-functions";
 import { Plateau, Position } from "../plateaus/plateau-functions";
-const cloneDeep = require("lodash.clonedeep");
+import { takeSample } from "./rover-functions";
+
+export const cloneDeep = require("lodash.clonedeep");
 
 export interface Vehicle {
   position: Position;
   orientation: Orientation;
-}
-
-export interface Rover extends Vehicle {
-  cameras: number;
-  sampleCapacity: number;
-  samplesTaken: number;
 }
 
 export const ORIENTATIONS = ["N", "E", "S", "W"] as const;
@@ -98,23 +94,6 @@ export const processVehicleInstructions = (
 
   return newGrid;
 };
-
-export const takeSample = (grid: RectangularGrid, vehicleIndex: number) => {
-  const currentVehicle = grid.vehicles[vehicleIndex];
-  if (!isRover(currentVehicle)) return;
-  if (currentVehicle.samplesTaken + 1 > currentVehicle.sampleCapacity) {
-    return grid;
-  } else {
-    const newGrid = cloneDeep(grid);
-    newGrid.vehicles[vehicleIndex].samplesTaken++;
-    newGrid.samples.push(newGrid.vehicles[vehicleIndex].position);
-    return newGrid;
-  }
-};
-
-export function isRover(vehicle: Vehicle): vehicle is Rover {
-  return "sampleCapacity" in vehicle;
-}
 
 export function isOrientation(input: string): input is Orientation {
   return input === 'N' || input === 'E' || input === 'S' || input === 'W';

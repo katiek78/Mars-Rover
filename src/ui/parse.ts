@@ -1,9 +1,9 @@
 import { RectangularGrid } from "../plateaus/grid-functions";
 import { Dimension } from "../plateaus/plateau-functions";
-import {
-  ROVER_INSTRUCTIONS,
+import {  
   isOrientation,
 } from "../vehicles/vehicle-functions";
+import { ROVER_INSTRUCTIONS } from "../vehicles/rover-functions";
 
 export const parseGridDimension = (input: string) => {
   return isNaN(parseInt(input)) ? undefined : parseInt(input);

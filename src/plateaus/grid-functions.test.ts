@@ -1,5 +1,5 @@
 import { checkRectangularGridMovement, createGrid } from "./grid-functions";
-import { Rover } from "../vehicles/vehicle-functions";
+import { Rover } from "../vehicles/rover-functions";
 
 describe("createGrid", () => {
   const rover1: Rover = {
