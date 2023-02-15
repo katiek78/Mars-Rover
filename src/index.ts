@@ -115,7 +115,7 @@ const getVehicleInstructions = (grid: RectangularGrid) => {
       roverMovements = parseInstructionList(roverMovementInput);
     }
 
-    const rover: Rover = createRover(position, orientation, 23, 10, 0);
+    const rover: Rover = createRover(position, orientation, 23, 10, 0, []);
     grid.vehicles.push(rover);
     roverInstructions.push(roverMovements);
   };

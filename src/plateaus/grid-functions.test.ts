@@ -8,6 +8,7 @@ describe("createGrid", () => {
     cameras: 0,
     sampleCapacity: 10,
     samplesTaken: 0,
+    photos: []
   };
 
   test("Returns a Grid with the given dimensions", () => {

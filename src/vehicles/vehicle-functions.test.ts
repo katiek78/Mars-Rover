@@ -15,6 +15,7 @@ const rover1: Rover = {
   cameras: 0,
   sampleCapacity: 10,
   samplesTaken: 0,
+  photos: []
 };
 const rover2: Rover = {  
   position: { xPos: 3, yPos: 8 },
@@ -22,6 +23,7 @@ const rover2: Rover = {
   cameras: 17,
   sampleCapacity: 3,
   samplesTaken: 2,
+  photos: []
 };
 const rover3: Rover = {  
   position: { xPos: 3, yPos: 8 },
@@ -29,6 +31,7 @@ const rover3: Rover = {
   cameras: 17,
   sampleCapacity: 3,
   samplesTaken: 2,
+  photos: []
 };
 const rover4: Rover = {
   position: { xPos: 3, yPos: 8 },
@@ -36,6 +39,7 @@ const rover4: Rover = {
   cameras: 17,
   sampleCapacity: 3,
   samplesTaken: 2,
+  photos: []
 };
 const rover5: Rover = {
   position: { xPos: 3, yPos: 8 },
@@ -43,6 +47,7 @@ const rover5: Rover = {
   cameras: 17,
   sampleCapacity: 3,
   samplesTaken: 2,
+  photos: []
 };
 const rover6: Rover = {  
   position: { xPos: 0, yPos: 5 },
@@ -50,6 +55,7 @@ const rover6: Rover = {
   cameras: 17,
   sampleCapacity: 3,
   samplesTaken: 2,
+  photos: []
 };
 const rover7: Rover = { 
   position: { xPos: 2, yPos: 0 },
@@ -57,6 +63,7 @@ const rover7: Rover = {
   cameras: 17,
   sampleCapacity: 3,
   samplesTaken: 2,
+  photos: []
 };
 const rover8: Rover = {  
   position: { xPos: 8, yPos: 6 },
@@ -64,6 +71,7 @@ const rover8: Rover = {
   cameras: 23,
   sampleCapacity: 3,
   samplesTaken: 3,
+  photos: []
 };
 const grid: RectangularGrid = createGrid(8, 8, [rover1], []);
 const PLATEAU: Plateau = {

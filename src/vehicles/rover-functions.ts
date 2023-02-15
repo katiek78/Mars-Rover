@@ -1,13 +1,14 @@
 import { Vehicle, Orientation } from "./vehicle-functions";
 import { Position } from "../plateaus/plateau-functions";
 
-export const ROVER_INSTRUCTIONS = ["L", "R", "M", "S"] as const;
+export const ROVER_INSTRUCTIONS = ["L", "R", "M", "S", "P"] as const;
 export type RoverInstruction = typeof ROVER_INSTRUCTIONS[number];
 
 export interface Rover extends Vehicle {
   cameras: number;
   sampleCapacity: number;
   samplesTaken: number;
+  photos: Array<Position>;
 }
 
 export const createRover = (
@@ -15,7 +16,8 @@ export const createRover = (
   orientation: Orientation,
   cameras: number,
   sampleCapacity: number,
-  samplesTaken: number
+  samplesTaken: number,
+  photos: Array<Position>
 ) => {
   return {
     position,
@@ -23,6 +25,7 @@ export const createRover = (
     cameras,
     sampleCapacity: sampleCapacity >= 0 ? sampleCapacity : 0,
     samplesTaken,
+    photos
   };
 };
 
@@ -31,6 +34,6 @@ export function isRover(vehicle: Vehicle): vehicle is Rover {
 }
 
 export function isRoverInstruction(str: string): str is RoverInstruction {
-    return str === "L" || str === "R" || str === "M" || str === "S";
+    return str === "L" || str === "R" || str === "M" || str === "S" || str === "P";
   }
 
