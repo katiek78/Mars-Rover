@@ -67,8 +67,8 @@ export const processVehicleInstructions = (
 ) => {
   let newPlateau: Plateau = cloneDeep(plateau);
   const movingVehicle: Vehicle = cloneDeep(newPlateau.vehicles[vehicleIndex]);
-  for (let i = 0; i < instructionList.split("").length; i++) {    
-    const instruction = instructionList[i];
+  instructionList.split("").forEach(instruction => {    
+    //const instruction = instructionList[i];
     if (instruction === "L")
       movingVehicle.orientation = rotateVehicle(movingVehicle, "L");
     newPlateau.vehicles[vehicleIndex] = movingVehicle;
@@ -84,7 +84,7 @@ export const processVehicleInstructions = (
         newPlateau.samples.push(newPlateau.vehicles[vehicleIndex].position);
       }
     }
-  };
+  });
 
   return newPlateau;
 };
