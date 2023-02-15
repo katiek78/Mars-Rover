@@ -1,7 +1,7 @@
 # Mars-Rover
 
 ## Introduction
-This app is designed to allow a number of **Rovers** to be moved around the surface of Mars on a **plateau**. The instructions are entered via the console. The Rovers can also collect **samples** from the surface of Mars. The positions of the Rovers and any samples taken can also be viewed.
+This app is designed to allow a number of **Rovers** to be moved around the surface of Mars on a **plateau**. The instructions are entered via the console. The Rovers can also collect **samples** from the surface of Mars and take **photos**. The positions of the Rovers and any samples or photos taken can also be viewed.
 
 ## Assumptions
 I have assumed that the plateau will be a rectangular grid (but the code is designed such that other plateau shapes can be implemented in the future).
@@ -19,13 +19,16 @@ L - rotates the vehicle 90° left (anti-clockwise)
 R - rotates the vehicle 90° right (clockwise)
 M - moves the vehicle forward by 1 grid line
 S - instructs the vehicle to take a sample using its robot arm
+P - instructs the vehicle to take a photo using one of its cameras
 
 If the vehicle reaches the edge of the plateau, it is prevented from moving forward if this would cause it to leave the plateau.
 
 If the vehicle's sample capacity is reached, it cannot carry any more samples and so no more samples can be taken.
 
-The user can then view the positions of the vehicles and samples as a grid of dots. Samples are displayed in yellow, while a Rover is indicated by the letter 'R'.
-A yellow 'R' on the grid means that a Rover is in this position AND a sample has been taken at that point.
+If the vehicle has no cameras, it cannot take any photos.
+
+The user can then view the positions of the vehicles, photos and samples as a grid of green asterisks. Samples are displayed in blue, photos are displayed in red, and any points where both a sample and a photo have been taken will be shown in magenta. Any grid points with Rovers will be indicated by the letter 'R' (combined with the appropriate colour).
+For example, a blue 'R' on the grid means that a Rover is in this position AND a sample has been taken at that point.
 
 ## The code
 ### Files
@@ -55,6 +58,4 @@ For each function, I have endeavoured to pass in only what information is requir
 
 **Other vehicles** could also be implemented, with different instruction strings (`ROVER_INSTRUCTIONS` currently specifies the allowed letters for its instruction list). For instance, some vehicles could just be used to move around the surface, whereas others might carry out blasting operations or only take photographs.
 
-**Cameras** would be one of the main features I would hope to add, as the Mars Rovers are designed to be able to send back photos of the planet. Each vehicle could have a different number of cameras, and the instruction list could have a 'P' option that takes a photo (if the vehicle has at least one camera).
-
-I would also aim to add functionality to allow the user to **move the vehicles** that have already been defined. 
+One major aim would be to add functionality to allow the user to **move the vehicles** that have already been defined. 
