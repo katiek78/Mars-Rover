@@ -16,8 +16,7 @@ export const parseVehiclePositionOnGrid = (
 ) => {
   if (isNaN(parseInt(input)) || parseInt(input) < 0) return undefined;
   const dimensionProperty = dimension === "X" ? "maxX" : "maxY";
-  if (parseInt(input) >= grid[dimensionProperty])
-    return undefined;
+  if (parseInt(input) >= grid[dimensionProperty]) return undefined;
   return parseInt(input);
 };
 
@@ -29,10 +28,15 @@ export const parseInstructionList = (input: string) => {
 };
 
 export const parseVehicleOrientation = (input: string) => {
-  return (isOrientation(input) ? input : undefined);
+  return isOrientation(input) ? input : undefined;
 };
 
 export const parseChoice = (input: string, options: String[]) => {
-  if (isNaN(parseInt(input)) || parseInt(input) < 0 || parseInt(input) > options.length) return undefined;
+  if (
+    isNaN(parseInt(input)) ||
+    parseInt(input) < 0 ||
+    parseInt(input) > options.length
+  )
+    return undefined;
   return parseInt(input);
 };
