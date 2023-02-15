@@ -11,6 +11,20 @@ describe("createRover", () => {
       sampleCapacity: 10,
       samplesTaken: 1,
     });
+    expect(createRover({ xPos: 10, yPos: 10 }, "S", 5, 0, 0)).toEqual({
+        position: { xPos: 10, yPos: 10 },
+        orientation: "S",
+        cameras: 5,
+        sampleCapacity: 0,
+        samplesTaken: 0,
+      });
+    expect(createRover({ xPos: 10, yPos: 10 }, "S", 5, -1, 0)).toEqual({
+        position: { xPos: 10, yPos: 10 },
+        orientation: "S",
+        cameras: 5,
+        sampleCapacity: 0,
+        samplesTaken: 0,
+      });
   });
 });
 
