@@ -1,4 +1,8 @@
-import { RectangularGrid, createGrid, isRectangular } from "./plateaus/grid-functions";
+import {
+  RectangularGrid,
+  createGrid,
+  isRectangular,
+} from "./plateaus/grid-functions";
 import { Plateau, Position } from "./plateaus/plateau-functions";
 import { print, yn, promptColour as prompt } from "./ui/console";
 import {
@@ -9,7 +13,7 @@ import {
   parseChoice,
 } from "./ui/parse";
 import {
-  Vehicle,  
+  Vehicle,
   processAllVehicleInstructions,
 } from "./vehicles/vehicle-functions";
 import { Rover, createRover, isRover } from "./vehicles/rover-functions";
@@ -49,57 +53,104 @@ const displayGrid = (grid: RectangularGrid) => {
           grid.vehicles[v].position.xPos === j &&
           grid.vehicles[v].position.yPos === i
         ) {
-          /*
-          
-          rowString += grid.samples.filter((s) => s.xPos === j && s.yPos === i)
-            .length
-            ? "  R  ".blue
-            : "  R  ".green;
-            */
-            const foundSample: boolean = grid.samples.filter((s) => s.xPos === j && s.yPos === i).length > 0;        
-            let foundPhoto = false;
-             for (let v = 0; v < grid.vehicles.length; v++) {
-               const currentVehicle = grid.vehicles[v];
-               if (!isRover(currentVehicle)) break;
-               if (currentVehicle.photos.filter((p) => p.xPos === j && p.yPos === i).length > 0) {
-                 foundPhoto = true;
-                 break;
-               }
-             }
-             if (foundSample && foundPhoto) {
-               rowString += "  R  ".magenta;
-             } else if (foundPhoto) {
-               rowString += "  R  ".red;
-             } else if (foundSample) {
-               rowString += "  R  ".blue;
-             } else rowString += "  R  ".green;
-
-
-          found = true;
-          break;
-        }
-      }
-      if (!found) {       
-        const foundSample: boolean = grid.samples.filter((s) => s.xPos === j && s.yPos === i).length > 0;        
-         let foundPhoto = false;
+          const foundSample: boolean =
+            grid.samples.filter((s) => s.xPos === j && s.yPos === i).length > 0;
+          let foundPhoto = false;
           for (let v = 0; v < grid.vehicles.length; v++) {
             const currentVehicle = grid.vehicles[v];
             if (!isRover(currentVehicle)) break;
-            if (currentVehicle.photos.filter((p) => p.xPos === j && p.yPos === i).length > 0) {
+            if (
+              currentVehicle.photos.filter((p) => p.xPos === j && p.yPos === i)
+                .length > 0
+            ) {
               foundPhoto = true;
               break;
             }
           }
           if (foundSample && foundPhoto) {
-            rowString += "  *  ".magenta;
+            rowString += "  R  ".magenta;
           } else if (foundPhoto) {
-            rowString += "  *  ".red;
+            rowString += "  R  ".red;
           } else if (foundSample) {
-            rowString += "  *  ".blue;
-          } else rowString += "  *  ".green;
+            rowString += "  R  ".blue;
+          } else rowString += "  R  ".green;
+
+          found = true;
+          break;
+        }
       }
-      
+      if (!found) {
+        const foundSample: boolean =
+          grid.samples.filter((s) => s.xPos === j && s.yPos === i).length > 0;
+        let foundPhoto = false;
+        for (let v = 0; v < grid.vehicles.length; v++) {
+          const currentVehicle = grid.vehicles[v];
+          if (!isRover(currentVehicle)) break;
+          if (
+            currentVehicle.photos.filter((p) => p.xPos === j && p.yPos === i)
+              .length > 0
+          ) {
+            foundPhoto = true;
+            break;
+          }
+        }
+        if (foundSample && foundPhoto) {
+          rowString += "  *  ".magenta;
+        } else if (foundPhoto) {
+          rowString += "  *  ".red;
+        } else if (foundSample) {
+          rowString += "  *  ".blue;
+        } else rowString += "  *  ".green;
+      }
     }
+    print(rowString);
+  }
+};
+
+const displayGrid2 = (grid: RectangularGrid) => {
+  print("");
+
+  for (let i = grid.maxY - 1; i >= 0; i--) {
+    let found = false;
+    let rowString = "";
+    for (let j = 0; j < grid.maxX; j++) {
+      found = false;
+      for (let v = 0; v < grid.vehicles.length; v++) {
+        if (
+          grid.vehicles[v].position.xPos === j &&
+          grid.vehicles[v].position.yPos === i
+        ) {
+          found = true;
+          break;
+        }
+      }
+      const pointSymbol = found ? "R" : "*";
+
+      const foundSample: boolean =
+        grid.samples.filter((s) => s.xPos === j && s.yPos === i).length > 0;
+
+      let foundPhoto = false;
+      for (let v = 0; v < grid.vehicles.length; v++) {
+        const currentVehicle = grid.vehicles[v];
+        if (!isRover(currentVehicle)) break;
+        if (
+          currentVehicle.photos.filter((p) => p.xPos === j && p.yPos === i)
+            .length > 0
+        ) {
+          foundPhoto = true;
+          break;
+        }
+      }
+      const pointString = `  ${pointSymbol}  `;
+      if (foundSample && foundPhoto) {
+        rowString += pointString.magenta;
+      } else if (foundPhoto) {
+        rowString += pointString.red;
+      } else if (foundSample) {
+        rowString += pointString.blue;
+      } else rowString += pointString.green;
+    }
+
     print(rowString);
   }
 };
@@ -204,7 +255,7 @@ const printNewVehicles = (vehicles: Array<Vehicle>) => {
 };
 
 const offerChoice = (plateau: Plateau) => {
-  print("What would you like to do next?");  
+  print("What would you like to do next?");
   const OPTIONS = [
     "View vehicle positions",
     "Redefine grid, vehicles and movements",
