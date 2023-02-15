@@ -1,5 +1,5 @@
-import { RectangularGrid, createGrid } from "./plateaus/grid-functions";
-import { Position } from "./plateaus/plateau-functions";
+import { RectangularGrid, createGrid, isRectangular } from "./plateaus/grid-functions";
+import { Plateau, Position } from "./plateaus/plateau-functions";
 import { print, yn, promptColour as prompt } from "./ui/console";
 import {
   parseGridDimension,
@@ -60,8 +60,8 @@ const displayGrid = (grid: RectangularGrid) => {
       if (!found)
         rowString += grid.samples.filter((s) => s.xPos === j && s.yPos === i)
           .length
-          ? "  .  ".yellow
-          : "  .  ".green;
+          ? "  *  ".yellow
+          : "  *  ".green;
     }
     print(rowString);
   }
@@ -166,8 +166,8 @@ const printNewVehicles = (vehicles: Array<Vehicle>) => {
   });
 };
 
-const offerChoice = (grid: RectangularGrid) => {
-  print("What would you like to do next?");
+const offerChoice = (plateau: Plateau) => {
+  print("What would you like to do next?");  
   const OPTIONS = [
     "View vehicle positions",
     "Redefine grid, vehicles and movements",
@@ -182,8 +182,8 @@ const offerChoice = (grid: RectangularGrid) => {
   );
   switch (choice) {
     case 1:
-      displayGrid(grid);
-      offerChoice(grid);
+      if (isRectangular(plateau)) displayGrid(plateau);
+      offerChoice(plateau);
       break;
     case 2:
       operateMarsVehicles();
