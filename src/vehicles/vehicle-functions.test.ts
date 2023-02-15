@@ -4,7 +4,7 @@ import {
   processVehicleInstructions,
   processAllVehicleInstructions,
 } from "./vehicle-functions";
-import { Rover, createRover } from "./rover-functions";
+import { Rover } from "./rover-functions";
 
 import { createGrid, RectangularGrid } from "../plateaus/grid-functions";
 import { Plateau } from "../plateaus/plateau-functions";
@@ -16,18 +16,14 @@ const rover1: Rover = {
   sampleCapacity: 10,
   samplesTaken: 0,
 };
-const rover2: Rover = {
-  /*name: "Rover2",
-  vehicleType: "Rover",*/
+const rover2: Rover = {  
   position: { xPos: 3, yPos: 8 },
   orientation: "N",
   cameras: 17,
   sampleCapacity: 3,
   samplesTaken: 2,
 };
-const rover3: Rover = {
-  /*: "Rover3",
-  vehicleType: "Rover",*/
+const rover3: Rover = {  
   position: { xPos: 3, yPos: 8 },
   orientation: "W",
   cameras: 17,
@@ -35,8 +31,6 @@ const rover3: Rover = {
   samplesTaken: 2,
 };
 const rover4: Rover = {
-  /*name: "Rover4",
-  vehicleType: "Rover",*/
   position: { xPos: 3, yPos: 8 },
   orientation: "S",
   cameras: 17,
@@ -44,35 +38,27 @@ const rover4: Rover = {
   samplesTaken: 2,
 };
 const rover5: Rover = {
-  /*name: "Rover5",
-  vehicleType: "Rover",*/
   position: { xPos: 3, yPos: 8 },
   orientation: "E",
   cameras: 17,
   sampleCapacity: 3,
   samplesTaken: 2,
 };
-const rover6: Rover = {
-  /*name: "Rover6",
-  vehicleType: "Rover",*/
+const rover6: Rover = {  
   position: { xPos: 0, yPos: 5 },
   orientation: "W",
   cameras: 17,
   sampleCapacity: 3,
   samplesTaken: 2,
 };
-const rover7: Rover = {
-  /*name: "Rover7",
-  vehicleType: "Rover",*/
+const rover7: Rover = { 
   position: { xPos: 2, yPos: 0 },
   orientation: "S",
   cameras: 17,
   sampleCapacity: 3,
   samplesTaken: 2,
 };
-const rover8: Rover = {
-  /*  name: "Rover8",
-  vehicleType: "Rover",*/
+const rover8: Rover = {  
   position: { xPos: 8, yPos: 6 },
   orientation: "E",
   cameras: 23,
