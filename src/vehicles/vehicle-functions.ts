@@ -1,6 +1,6 @@
 import { RectangularGrid, isRectangular } from "../plateaus/grid-functions";
-import { Plateau, Position } from "../plateaus/plateau-functions"
-const cloneDeep = require('lodash.clonedeep');
+import { Plateau, Position } from "../plateaus/plateau-functions";
+const cloneDeep = require("lodash.clonedeep");
 
 export interface Vehicle {
   position: Position;
@@ -19,27 +19,30 @@ export type Orientation = typeof ORIENTATIONS[number];
 export type Direction = "L" | "R";
 export const ROVER_INSTRUCTIONS = ["L", "R", "M", "S"] as const;
 
-export const moveVehicleForward = (vehicle: Pick<Vehicle, 'position' | 'orientation'>, plateau: Plateau) => {
+export const moveVehicleForward = (
+  vehicle: Pick<Vehicle, "position" | "orientation">,
+  plateau: Plateau
+) => {
   if (isRectangular(plateau)) {
-  switch (vehicle.orientation) {
-    case "N":
-      return plateau.checkMovement(vehicle, plateau)
-        ? { xPos: vehicle.position.xPos, yPos: vehicle.position.yPos + 1 }
-        : vehicle.position;
-    case "E":
-      return plateau.checkMovement(vehicle, plateau)
-        ? { xPos: vehicle.position.xPos + 1, yPos: vehicle.position.yPos }
-        : vehicle.position;
-    case "S":
-      return plateau.checkMovement(vehicle, plateau)
-        ? { xPos: vehicle.position.xPos, yPos: vehicle.position.yPos - 1 }
-        : vehicle.position;
-    case "W":
-      return plateau.checkMovement(vehicle, plateau)
-        ? { xPos: vehicle.position.xPos - 1, yPos: vehicle.position.yPos }
-        : vehicle.position;
-  }
-} else return vehicle.position;
+    switch (vehicle.orientation) {
+      case "N":
+        return plateau.checkMovement(vehicle, plateau)
+          ? { xPos: vehicle.position.xPos, yPos: vehicle.position.yPos + 1 }
+          : vehicle.position;
+      case "E":
+        return plateau.checkMovement(vehicle, plateau)
+          ? { xPos: vehicle.position.xPos + 1, yPos: vehicle.position.yPos }
+          : vehicle.position;
+      case "S":
+        return plateau.checkMovement(vehicle, plateau)
+          ? { xPos: vehicle.position.xPos, yPos: vehicle.position.yPos - 1 }
+          : vehicle.position;
+      case "W":
+        return plateau.checkMovement(vehicle, plateau)
+          ? { xPos: vehicle.position.xPos - 1, yPos: vehicle.position.yPos }
+          : vehicle.position;
+    }
+  } else return vehicle.position;
 };
 
 export const rotateVehicle = (vehicle: Vehicle, direction: Direction) => {
@@ -97,9 +100,11 @@ export const processVehicleInstructions = (
 };
 
 export const takeSample = (grid: RectangularGrid, vehicleIndex: number) => {
-  if (
-    grid.vehicles[vehicleIndex].samplesTaken + 1 >
-    grid.vehicles[vehicleIndex].sampleCapacity
+  const currentVehicle = grid.vehicles[vehicleIndex];
+  if (!isRover(currentVehicle)) return;
+  if (    
+    currentVehicle.samplesTaken + 1 >
+    currentVehicle.sampleCapacity
   ) {
     return grid;
   } else {
@@ -109,3 +114,7 @@ export const takeSample = (grid: RectangularGrid, vehicleIndex: number) => {
     return newGrid;
   }
 };
+
+export function isRover(vehicle: Vehicle): vehicle is Rover {
+  return 'sampleCapacity' in vehicle;
+}

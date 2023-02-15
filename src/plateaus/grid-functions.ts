@@ -1,5 +1,5 @@
 import { Plateau, Position } from "./plateau-functions"
-import { Vehicle, Rover } from "../vehicles/vehicle-functions";
+import { Vehicle } from "../vehicles/vehicle-functions";
 
 export interface RectangularGrid extends Plateau {
   maxX: number;
@@ -10,7 +10,7 @@ export interface RectangularGrid extends Plateau {
 export const createGrid = (
   maxX: number,
   maxY: number,  
-  vehicles: Array<Rover>,
+  vehicles: Array<Vehicle>,
   samples: Array<Position>
 ) => {
   return { maxX, maxY, checkMovement: checkRectangularGridMovement, vehicles, samples };
