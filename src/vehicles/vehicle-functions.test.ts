@@ -223,4 +223,24 @@ describe("processVehicleInstructions", () => {
       ],
     });
   });
+  test("Stops taking samples when capacity is reached", () => {
+    expect(processVehicleInstructions(grid, 0, "SSSSSSSSSSSSSSSSSS")).toEqual({
+      ...grid,
+      vehicles: [
+        { ...rover1, samplesTaken: 10 },
+      ],
+      samples: [
+        { xPos: 0, yPos: 0 },
+        { xPos: 0, yPos: 0 },
+        { xPos: 0, yPos: 0 },
+        { xPos: 0, yPos: 0 },
+        { xPos: 0, yPos: 0 },
+        { xPos: 0, yPos: 0 },
+        { xPos: 0, yPos: 0 },
+        { xPos: 0, yPos: 0 },
+        { xPos: 0, yPos: 0 },
+        { xPos: 0, yPos: 0 },
+      ],
+    });
+  });
 });
