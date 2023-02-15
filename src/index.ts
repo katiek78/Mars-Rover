@@ -3,7 +3,7 @@ import { Position } from "./plateaus/plateau-functions";
 import { print, yn, promptColour as prompt } from "./ui/console";
 import {
   parseGridDimension,
-  parseVehiclePosition,
+  parseVehiclePositionOnGrid,
   parseVehicleOrientation,
   parseMovementString,
   parseChoice,
@@ -78,7 +78,7 @@ const getVehicleInstructions = (grid: RectangularGrid) => {
     print("");
     print(`Rover ${vehicleCounter + 1}:`);
     let xPosInput = prompt(`Please specify the Rover's X position: `);
-    let xPos = parseVehiclePosition(xPosInput, grid, "X");
+    let xPos = parseVehiclePositionOnGrid(xPosInput, grid, "X");
     while (xPos === undefined) {
       xPosInput = prompt(
         `Invalid input. Please specify the Rover's X position (as a number) within the specified grid: `
@@ -86,7 +86,7 @@ const getVehicleInstructions = (grid: RectangularGrid) => {
       xPos = parseGridDimension(xPosInput);
     }
     let yPosInput = prompt(`Please specify the Rover's Y position: `);
-    let yPos = parseVehiclePosition(yPosInput, grid, "Y");
+    let yPos = parseVehiclePositionOnGrid(yPosInput, grid, "Y");
     while (yPos === undefined) {
       yPosInput = prompt(
         `Invalid input. Please specify the Rover's Y position (as a number) within the specified grid: `
