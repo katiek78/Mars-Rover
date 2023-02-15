@@ -48,7 +48,11 @@ For variables that can have only certain values, such as orientation (N/E/S/W), 
 Each of these arrays then has a convenience type defined in the following way: `type Orientation = typeof ORIENTATIONS[number]`.
 This helps to ensure that only valid values can be defined as Orientation, for example.
 
+For each function, I have endeavoured to pass in only what information is required. The TypeScript syntax `Pick` has been used in some functions for this purpose. Rather than modifying variables such as the grid or rover directly, my approach has been to clone the object, modify it and re-assign.
+
 ## Ideas for the future
-Other plateau shapes
-Other vehicles
-Cameras
+Other plateau shapes could be implemented. These would require different inputs (e.g. for a triangular plateau with equal sides, only one input would be needed). The movement limits would need to be calculated in different ways, so the plateau could have a different `checkMovement` function than the one used by the `RectangularGrid`.
+
+Other vehicles could also be implemented, with different instruction strings (`ROVER_INSTRUCTIONS` currently specifies the allowed letters for its instruction list). For instance, some vehicles could just be used to move around the surface, whereas others might carry out blasting operations or only take photographs.
+
+Cameras would be the next area of functionality I would hope to add, as the Mars Rovers are designed to be able to send back photos of the planet. Each vehicle could have a different number of cameras, and the instruction list could have a 'P' option that takes a photo (if the vehicle has at least one camera).
