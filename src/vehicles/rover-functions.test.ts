@@ -1,5 +1,5 @@
 import { RectangularGrid, createGrid } from "../plateaus/grid-functions";
-import { Rover, createRover, isRover, isRoverInstruction, takeSample } from "./rover-functions";
+import { Rover, createRover, isRover, isRoverInstruction } from "./rover-functions";
 import { Vehicle } from "./vehicle-functions";
 
 describe("createRover", () => {
@@ -64,32 +64,3 @@ describe("isRoverInstruction", () => {
     });
   });
 
-describe("takeSample", () => {
-  const rover1: Rover = {
-    position: { xPos: 0, yPos: 0 },
-    orientation: "N",
-    cameras: 0,
-    sampleCapacity: 10,
-    samplesTaken: 0,
-  };
-  const rover2: Rover = { ...rover1, samplesTaken: 10 };
-  const rover3: Rover = { ...rover1, sampleCapacity: 0 };
-  const rover4: Rover = { ...rover1, sampleCapacity: -1 };
-  const grid: RectangularGrid = createGrid(8, 8, [rover1], []);
-  const grid2: RectangularGrid = createGrid(8, 8, [rover2, rover3, rover4], []);
-
-  test("Returns samplesTaken unchanged if sampleCapacity is not a positive integer", () => {
-    expect(takeSample(grid2, 1)).toEqual(grid2);
-    expect(takeSample(grid2, 2)).toEqual(grid2);
-  });
-  test("Returns samplesTaken unchanged if sampleCapacity is reached (samplesTaken would be greater than sampleCapacity)", () => {
-    expect(takeSample(grid2, 0)).toEqual(grid2);
-  });
-  test("Returns samplesTaken increased by 1 if sampleCapacity is not reached", () => {
-    expect(takeSample(grid, 0)).toEqual({
-      ...grid,
-      vehicles: [{ ...rover1, samplesTaken: 1 }],
-      samples: [{ xPos: 0, yPos: 0 }],
-    });
-  });
-});

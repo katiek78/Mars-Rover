@@ -35,15 +35,3 @@ export function isRoverInstruction(str: string): str is RoverInstruction {
     return str === "L" || str === "R" || str === "M" || str === "S";
   }
 
-export const takeSample = (plateau: Plateau, vehicleIndex: number) => {
-  const currentVehicle = plateau.vehicles[vehicleIndex];
-  if (!isRover(currentVehicle)) return;
-  if (currentVehicle.samplesTaken + 1 > currentVehicle.sampleCapacity) {
-    return plateau;
-  } else {
-    const newPlateau = cloneDeep(plateau);
-    newPlateau.vehicles[vehicleIndex].samplesTaken++;
-    newPlateau.samples.push(newPlateau.vehicles[vehicleIndex].position);
-    return newPlateau;
-  }
-};

@@ -1,6 +1,6 @@
 import { RectangularGrid, isRectangular } from "../plateaus/grid-functions";
 import { Plateau, Position } from "../plateaus/plateau-functions";
-import { takeSample } from "./rover-functions";
+import { isRover} from "./rover-functions";
 
 export const cloneDeep = require("lodash.clonedeep");
 
@@ -13,7 +13,6 @@ export const ORIENTATIONS = ["N", "E", "S", "W"] as const;
 export type Orientation = typeof ORIENTATIONS[number];
 
 export type Direction = "L" | "R";
-export const ROVER_INSTRUCTIONS = ["L", "R", "M", "S"] as const;
 
 export const moveVehicleForward = (
   vehicle: Pick<Vehicle, "position" | "orientation">,
@@ -49,15 +48,6 @@ export const rotateVehicle = (vehicle: Vehicle, direction: Direction) => {
     : ORIENTATIONS[ORIENTATIONS.indexOf(vehicle.orientation) + 1];
 };
 
-export const createRover = (
-  position: Position,
-  orientation: Orientation,
-  cameras: number,
-  sampleCapacity: number,
-  samplesTaken: number
-) => {
-  return { position, orientation, cameras, sampleCapacity, samplesTaken };
-};
 
 export const processAllVehicleInstructions = (
   grid: RectangularGrid,
@@ -71,28 +61,32 @@ export const processAllVehicleInstructions = (
 };
 
 export const processVehicleInstructions = (
-  grid: RectangularGrid,
+  plateau: Plateau,
   vehicleIndex: number,
   instructionList: string
 ) => {
-  let newGrid = cloneDeep(grid);
-  let movingVehicle = structuredClone(newGrid.vehicles[vehicleIndex]);
-  instructionList.split("").forEach((instruction) => {
+  let newPlateau: Plateau = cloneDeep(plateau);
+  const movingVehicle: Vehicle = cloneDeep(newPlateau.vehicles[vehicleIndex]);
+  for (let i = 0; i < instructionList.split("").length; i++) {    
+    const instruction = instructionList[i];
     if (instruction === "L")
       movingVehicle.orientation = rotateVehicle(movingVehicle, "L");
-    newGrid.vehicles[vehicleIndex] = movingVehicle;
+    newPlateau.vehicles[vehicleIndex] = movingVehicle;
     if (instruction === "R")
       movingVehicle.orientation = rotateVehicle(movingVehicle, "R");
-    newGrid.vehicles[vehicleIndex] = movingVehicle;
+    newPlateau.vehicles[vehicleIndex] = movingVehicle;
     if (instruction === "M")
-      movingVehicle.position = moveVehicleForward(movingVehicle, grid);
-    newGrid.vehicles[vehicleIndex] = movingVehicle;
-    if (instruction === "S") {
-      newGrid = takeSample(newGrid, vehicleIndex);
+      movingVehicle.position = moveVehicleForward(movingVehicle, plateau);
+    newPlateau.vehicles[vehicleIndex] = movingVehicle;
+    if (instruction === "S") {        
+      if (isRover(movingVehicle) && movingVehicle.samplesTaken + 1 <= movingVehicle.sampleCapacity) {
+        movingVehicle.samplesTaken++;        
+        newPlateau.samples.push(newPlateau.vehicles[vehicleIndex].position);
+      }
     }
-  });
+  };
 
-  return newGrid;
+  return newPlateau;
 };
 
 export function isOrientation(input: string): input is Orientation {

@@ -1,6 +1,6 @@
 import {
   moveVehicleForward,
-  rotateVehicle,  
+  rotateVehicle,
   processVehicleInstructions,
 } from "./vehicle-functions";
 import { Rover, createRover } from "./rover-functions";
@@ -211,5 +211,16 @@ describe("processVehicleInstructions", () => {
       samples: [{ xPos: 0, yPos: 0 }],
     });
   });
+  test("Increases samplesTaken by the correct number of Ss found and adds the samples to the grid", () => {
+    expect(processVehicleInstructions(grid, 0, "MSMS")).toEqual({
+      ...grid,
+      vehicles: [
+        { ...rover1, samplesTaken: 2, position: { xPos: 0, yPos: 2 } },
+      ],
+      samples: [
+        { xPos: 0, yPos: 1 },
+        { xPos: 0, yPos: 2 },
+      ],
+    });
+  });
 });
-

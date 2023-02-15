@@ -1,9 +1,7 @@
 import { RectangularGrid } from "../plateaus/grid-functions";
 import { Dimension } from "../plateaus/plateau-functions";
-import {  
-  isOrientation,
-} from "../vehicles/vehicle-functions";
-import { ROVER_INSTRUCTIONS } from "../vehicles/rover-functions";
+import { isOrientation } from "../vehicles/vehicle-functions";
+import { isRoverInstruction } from "../vehicles/rover-functions";
 
 export const parseGridDimension = (input: string) => {
   return isNaN(parseInt(input)) ? undefined : parseInt(input);
@@ -23,7 +21,7 @@ export const parseVehiclePositionOnGrid = (
 export const parseInstructionList = (input: string) => {
   return input
     .split("")
-    .filter((ch) => ROVER_INSTRUCTIONS.find((el) => el === ch) !== undefined)
+    .filter((ch) => isRoverInstruction(ch))
     .join("");
 };
 
