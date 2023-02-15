@@ -18,7 +18,7 @@ const rover1: Rover = {
   photos: []
 };
 const rover2: Rover = {  
-  position: { xPos: 3, yPos: 8 },
+  position: { xPos: 3, yPos: 7 },
   orientation: "N",
   cameras: 17,
   sampleCapacity: 3,
@@ -74,6 +74,7 @@ const rover8: Rover = {
   photos: []
 };
 const grid: RectangularGrid = createGrid(8, 8, [rover1], []);
+const grid2: RectangularGrid = createGrid(8, 8, [rover1, rover2], []);
 const PLATEAU: Plateau = {
   vehicles: [],
   samples: [],
@@ -113,7 +114,7 @@ describe("moveVehicleForward", () => {
   test("Does not move vehicle N if already at top of grid", () => {
     expect(moveVehicleForward(rover2, grid)).toEqual({
       xPos: 3,
-      yPos: 8,
+      yPos: 7,
     });
   });
   test("Does not move vehicle W if already at left of grid", () => {
@@ -236,6 +237,28 @@ describe("processVehicleInstructions", () => {
       ],
     });
   });
+  test("Does not add a photo to the array if instruction is 'P' but the vehicle has no cameras", () => {
+    expect(processVehicleInstructions(grid, 0, "P")).toEqual(grid);
+  });
+  test("Adds a photo to the array if instruction is 'P'", () => {
+    expect(processVehicleInstructions(grid2, 1, "P")).toEqual({
+      ...grid2,
+      vehicles: [rover1, { ...rover2, photos: [{xPos: 3, yPos: 7}] }]
+    });
+  });
+  test("Adds multiple photos to the array if instruction is a string of Ps", () => {
+    expect(processVehicleInstructions(grid2, 1, "P")).toEqual({
+      ...grid2,
+      vehicles: [rover1, { ...rover2, photos: [{xPos: 3, yPos: 7}] }]
+    });
+  });
+  test("Correctly follows a mixture of all instructions", () => {
+    expect(processVehicleInstructions(grid2, 1, "RMMPRMPRMSLM")).toEqual({
+      ...grid2,
+      vehicles: [rover1, { ...rover2, orientation: "S", position: {xPos: 4, yPos: 5}, photos: [{xPos: 5, yPos: 7}, {xPos: 5, yPos: 6}], samplesTaken: 3 }],
+      samples: [{xPos: 4, yPos: 6}]
+    });
+  });
 });
 
 describe("processAllVehicleInstructions", () => {
@@ -255,7 +278,7 @@ describe("processAllVehicleInstructions", () => {
     ...outputGrid,
     samples: [
       { xPos: 0, yPos: 3 },
-      { xPos: 4, yPos: 8 },
+      { xPos: 4, yPos: 7 },
     ],
     vehicles: [
       {
@@ -267,7 +290,7 @@ describe("processAllVehicleInstructions", () => {
       {
         ...rover2,
         samplesTaken: 3,
-        position: { xPos: 4, yPos: 8 },
+        position: { xPos: 4, yPos: 7 },
         orientation: "E",
       },
     ],

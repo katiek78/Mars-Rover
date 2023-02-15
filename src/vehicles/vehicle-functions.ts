@@ -80,7 +80,12 @@ export const processVehicleInstructions = (
     if (instruction === "S") {        
       if (isRover(movingVehicle) && movingVehicle.samplesTaken + 1 <= movingVehicle.sampleCapacity) {
         movingVehicle.samplesTaken++;        
-        newPlateau.samples.push(newPlateau.vehicles[vehicleIndex].position);
+        newPlateau.samples.push(movingVehicle.position);
+      }   
+    } 
+    if (instruction === "P") {
+      if (isRover(movingVehicle) && movingVehicle.cameras > 0) {
+        movingVehicle.photos.push(movingVehicle.position);
       }
     }
   });
