@@ -1,22 +1,34 @@
-import { Plateau, Position } from "./plateau-functions"
+import { Plateau, Position } from "./plateau-functions";
 import { Vehicle } from "../vehicles/vehicle-functions";
 
 export interface RectangularGrid extends Plateau {
   maxX: number;
   maxY: number;
-  checkMovement: (vehicle: Pick<Vehicle, 'position' | 'orientation'>, grid: Pick<RectangularGrid, 'maxX' | 'maxY'>) => boolean;
-};
+  checkMovement: (
+    vehicle: Pick<Vehicle, "position" | "orientation">,
+    grid: Pick<RectangularGrid, "maxX" | "maxY">
+  ) => boolean;
+}
 
 export const createGrid = (
   maxX: number,
-  maxY: number,  
+  maxY: number,
   vehicles: Array<Vehicle>,
   samples: Array<Position>
 ) => {
-  return { maxX, maxY, checkMovement: checkRectangularGridMovement, vehicles, samples };
+  return {
+    maxX,
+    maxY,
+    checkMovement: checkRectangularGridMovement,
+    vehicles,
+    samples,
+  };
 };
 
-export const checkRectangularGridMovement = (vehicle: Pick<Vehicle, 'position' | 'orientation'>, grid: Pick<RectangularGrid, 'maxX' | 'maxY'>) => {
+export const checkRectangularGridMovement = (
+  vehicle: Pick<Vehicle, "position" | "orientation">,
+  grid: Pick<RectangularGrid, "maxX" | "maxY">
+) => {
   switch (vehicle.orientation) {
     case "N":
       return vehicle.position.yPos + 1 < grid.maxY;
@@ -30,5 +42,5 @@ export const checkRectangularGridMovement = (vehicle: Pick<Vehicle, 'position' |
 };
 
 export function isRectangular(plateau: Plateau): plateau is RectangularGrid {
-  return 'maxX' in plateau;
+  return "maxX" in plateau;
 }

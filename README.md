@@ -55,4 +55,6 @@ Other plateau shapes could be implemented. These would require different inputs 
 
 Other vehicles could also be implemented, with different instruction strings (`ROVER_INSTRUCTIONS` currently specifies the allowed letters for its instruction list). For instance, some vehicles could just be used to move around the surface, whereas others might carry out blasting operations or only take photographs.
 
-Cameras would be the next area of functionality I would hope to add, as the Mars Rovers are designed to be able to send back photos of the planet. Each vehicle could have a different number of cameras, and the instruction list could have a 'P' option that takes a photo (if the vehicle has at least one camera).
+Cameras would be one of the main features I would hope to add, as the Mars Rovers are designed to be able to send back photos of the planet. Each vehicle could have a different number of cameras, and the instruction list could have a 'P' option that takes a photo (if the vehicle has at least one camera).
+
+I would also aim to add functionality to allow the user to move the vehicles that have already been defined. 

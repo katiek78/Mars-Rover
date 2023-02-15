@@ -18,31 +18,55 @@ describe("createGrid", () => {
       vehicles: [],
       samples: [],
     });
-    expect(createGrid(3, 8, [rover1], [{xPos: 1, yPos: 5}])).toEqual({
+    expect(createGrid(3, 8, [rover1], [{ xPos: 1, yPos: 5 }])).toEqual({
       maxX: 3,
       maxY: 8,
       checkMovement: checkRectangularGridMovement,
       vehicles: [rover1],
-      samples: [{xPos: 1, yPos: 5}],
+      samples: [{ xPos: 1, yPos: 5 }],
     });
-  });  
+  });
 });
-
 
 describe("checkRectangularGridMovement", () => {
   test("Returns false if we are at top of grid and trying to move N", () => {
-    expect(checkRectangularGridMovement({position: {xPos: 3, yPos: 9}, orientation: 'N'},{maxX: 6, maxY: 10})).toBeFalsy();
-});
-test("Returns false if we are at left of grid and trying to move W", () => {
-  expect(checkRectangularGridMovement({position: {xPos: 0, yPos: 9}, orientation: 'W'},{maxX: 6, maxY: 10})).toBeFalsy();
-});
-test("Returns false if we are at bottom of grid and trying to move S", () => {
-  expect(checkRectangularGridMovement({position: {xPos: 3, yPos: 0}, orientation: 'S'},{maxX: 6, maxY: 10})).toBeFalsy();
-});
-test("Returns false if we are at right of grid and trying to move E", () => {
-  expect(checkRectangularGridMovement({position: {xPos: 5, yPos: 9}, orientation: 'E'},{maxX: 6, maxY: 10})).toBeFalsy();
-});
-test("Returns true if we are not reaching the edge", () => {
-  expect(checkRectangularGridMovement({position: {xPos: 5, yPos: 5}, orientation: 'N'},{maxX: 10, maxY: 10})).toBeTruthy();
-});
+    expect(
+      checkRectangularGridMovement(
+        { position: { xPos: 3, yPos: 9 }, orientation: "N" },
+        { maxX: 6, maxY: 10 }
+      )
+    ).toBeFalsy();
+  });
+  test("Returns false if we are at left of grid and trying to move W", () => {
+    expect(
+      checkRectangularGridMovement(
+        { position: { xPos: 0, yPos: 9 }, orientation: "W" },
+        { maxX: 6, maxY: 10 }
+      )
+    ).toBeFalsy();
+  });
+  test("Returns false if we are at bottom of grid and trying to move S", () => {
+    expect(
+      checkRectangularGridMovement(
+        { position: { xPos: 3, yPos: 0 }, orientation: "S" },
+        { maxX: 6, maxY: 10 }
+      )
+    ).toBeFalsy();
+  });
+  test("Returns false if we are at right of grid and trying to move E", () => {
+    expect(
+      checkRectangularGridMovement(
+        { position: { xPos: 5, yPos: 9 }, orientation: "E" },
+        { maxX: 6, maxY: 10 }
+      )
+    ).toBeFalsy();
+  });
+  test("Returns true if we are not reaching the edge", () => {
+    expect(
+      checkRectangularGridMovement(
+        { position: { xPos: 5, yPos: 5 }, orientation: "N" },
+        { maxX: 10, maxY: 10 }
+      )
+    ).toBeTruthy();
+  });
 });
