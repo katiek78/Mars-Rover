@@ -1,6 +1,5 @@
 import { Vehicle, Orientation } from "./vehicle-functions";
-import { Plateau, Position } from "../plateaus/plateau-functions";
-import { cloneDeep } from "./vehicle-functions";
+import { Position } from "../plateaus/plateau-functions";
 
 export const ROVER_INSTRUCTIONS = ["L", "R", "M", "S"] as const;
 export type RoverInstruction = typeof ROVER_INSTRUCTIONS[number];
