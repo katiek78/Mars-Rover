@@ -1,7 +1,7 @@
 # Mars-Rover
 
 ## Introduction
-This app is designed to allow a number of Rovers to be moved around the surface of Mars. The instructions are entered via the console. The Rovers can also collect samples from the surface of Mars. The positions of the Rovers and any samples taken can also be viewed.
+This app is designed to allow a number of **Rovers** to be moved around the surface of Mars on a **plateau**. The instructions are entered via the console. The Rovers can also collect **samples** from the surface of Mars. The positions of the Rovers and any samples taken can also be viewed.
 
 ## Assumptions
 I have assumed that the plateau will be a rectangular grid (but the code is designed such that other plateau shapes can be implemented in the future).
@@ -33,7 +33,7 @@ The main file is index.ts: this is the top-level file that deals with the user i
 For anything related to the console itself, console.ts is used, while parse.ts parses the user input and ensures it is valid.
 
 The logic is all stored in the vehicles and plateaus directories.
-In the vehicles directory, there is a vehicle-functions.ts that contains everything relating to generic Mars vehicles. THe rover-functions.ts file only includes the code linked specifically to Rovers.
+In the vehicles directory, there is a vehicle-functions.ts that contains everything relating to generic Mars vehicles. The rover-functions.ts file only includes the code linked specifically to Rovers.
 
 While plateau-functions.ts takes care of generic plateau code, the grid-functions.ts file deals specifically with rectangular grids.
 
@@ -51,10 +51,10 @@ This helps to ensure that only valid values can be defined as Orientation, for e
 For each function, I have endeavoured to pass in only what information is required. The TypeScript syntax `Pick` has been used in some functions for this purpose. Rather than modifying variables such as the grid or rover directly, my approach has been to clone the object, modify it and re-assign.
 
 ## Ideas for the future
-Other plateau shapes could be implemented. These would require different inputs (e.g. for a triangular plateau with equal sides, only one input would be needed). The movement limits would need to be calculated in different ways, so the plateau could have a different `checkMovement` function than the one used by the `RectangularGrid`.
+**Other plateau shapes** could be implemented. These would require different inputs (e.g. for a triangular plateau with equal sides, only one input would be needed). The movement limits would need to be calculated in different ways, so the plateau could have a different `checkMovement` function than the one used by the `RectangularGrid`.
 
-Other vehicles could also be implemented, with different instruction strings (`ROVER_INSTRUCTIONS` currently specifies the allowed letters for its instruction list). For instance, some vehicles could just be used to move around the surface, whereas others might carry out blasting operations or only take photographs.
+**Other vehicles** could also be implemented, with different instruction strings (`ROVER_INSTRUCTIONS` currently specifies the allowed letters for its instruction list). For instance, some vehicles could just be used to move around the surface, whereas others might carry out blasting operations or only take photographs.
 
-Cameras would be one of the main features I would hope to add, as the Mars Rovers are designed to be able to send back photos of the planet. Each vehicle could have a different number of cameras, and the instruction list could have a 'P' option that takes a photo (if the vehicle has at least one camera).
+**Cameras** would be one of the main features I would hope to add, as the Mars Rovers are designed to be able to send back photos of the planet. Each vehicle could have a different number of cameras, and the instruction list could have a 'P' option that takes a photo (if the vehicle has at least one camera).
 
-I would also aim to add functionality to allow the user to move the vehicles that have already been defined. 
+I would also aim to add functionality to allow the user to **move the vehicles** that have already been defined. 
