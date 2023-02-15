@@ -15,23 +15,23 @@ const rover1: Rover = {
   cameras: 0,
   sampleCapacity: 10,
   samplesTaken: 0,
-  photos: []
+  photos: [],
 };
-const rover2: Rover = {  
+const rover2: Rover = {
   position: { xPos: 3, yPos: 7 },
   orientation: "N",
   cameras: 17,
   sampleCapacity: 3,
   samplesTaken: 2,
-  photos: []
+  photos: [],
 };
-const rover3: Rover = {  
+const rover3: Rover = {
   position: { xPos: 3, yPos: 8 },
   orientation: "W",
   cameras: 17,
   sampleCapacity: 3,
   samplesTaken: 2,
-  photos: []
+  photos: [],
 };
 const rover4: Rover = {
   position: { xPos: 3, yPos: 8 },
@@ -39,7 +39,7 @@ const rover4: Rover = {
   cameras: 17,
   sampleCapacity: 3,
   samplesTaken: 2,
-  photos: []
+  photos: [],
 };
 const rover5: Rover = {
   position: { xPos: 3, yPos: 8 },
@@ -47,31 +47,31 @@ const rover5: Rover = {
   cameras: 17,
   sampleCapacity: 3,
   samplesTaken: 2,
-  photos: []
+  photos: [],
 };
-const rover6: Rover = {  
+const rover6: Rover = {
   position: { xPos: 0, yPos: 5 },
   orientation: "W",
   cameras: 17,
   sampleCapacity: 3,
   samplesTaken: 2,
-  photos: []
+  photos: [],
 };
-const rover7: Rover = { 
+const rover7: Rover = {
   position: { xPos: 2, yPos: 0 },
   orientation: "S",
   cameras: 17,
   sampleCapacity: 3,
   samplesTaken: 2,
-  photos: []
+  photos: [],
 };
-const rover8: Rover = {  
+const rover8: Rover = {
   position: { xPos: 8, yPos: 6 },
   orientation: "E",
   cameras: 23,
   sampleCapacity: 3,
   samplesTaken: 3,
-  photos: []
+  photos: [],
 };
 const grid: RectangularGrid = createGrid(8, 8, [rover1], []);
 const grid2: RectangularGrid = createGrid(8, 8, [rover1, rover2], []);
@@ -159,6 +159,66 @@ describe("rotateVehicle", () => {
 });
 
 describe("processVehicleInstructions", () => {
+  const outputGrid = {
+    ...grid,
+    vehicles: [{ ...rover1, samplesTaken: 1 }],
+    samples: [{ xPos: 0, yPos: 0 }],
+  };
+
+  const outputGrid2 = {
+    ...grid,
+    vehicles: [{ ...rover1, samplesTaken: 2, position: { xPos: 0, yPos: 2 } }],
+    samples: [
+      { xPos: 0, yPos: 1 },
+      { xPos: 0, yPos: 2 },
+    ],
+  };
+
+  const outputGrid3 = {
+    ...grid,
+    vehicles: [{ ...rover1, samplesTaken: 10 }],
+    samples: [
+      { xPos: 0, yPos: 0 },
+      { xPos: 0, yPos: 0 },
+      { xPos: 0, yPos: 0 },
+      { xPos: 0, yPos: 0 },
+      { xPos: 0, yPos: 0 },
+      { xPos: 0, yPos: 0 },
+      { xPos: 0, yPos: 0 },
+      { xPos: 0, yPos: 0 },
+      { xPos: 0, yPos: 0 },
+      { xPos: 0, yPos: 0 },
+    ],
+  };
+
+  const outputGrid4 = {
+    ...grid2,
+    vehicles: [rover1, { ...rover2, photos: [{ xPos: 3, yPos: 7 }] }],
+  };
+
+  const outputGrid5 = {
+    ...grid2,
+    vehicles: [rover1, { ...rover2, photos: [{ xPos: 3, yPos: 7 }] }],
+  };
+
+  const outputGrid6 = {
+    ...grid2,
+    vehicles: [
+      rover1,
+      {
+        ...rover2,
+        orientation: "S",
+        position: { xPos: 4, yPos: 5 },
+        photos: [
+          { xPos: 5, yPos: 7 },
+          { xPos: 5, yPos: 6 },
+        ],
+        samplesTaken: 3,
+      },
+    ],
+    samples: [{ xPos: 4, yPos: 6 }],
+  };
+
   test("Returns original grid if instruction string is empty", () => {
     expect(processVehicleInstructions(grid, 0, "")).toEqual(grid);
   });
@@ -201,63 +261,29 @@ describe("processVehicleInstructions", () => {
     });
   });
   test("Increases samplesTaken if an 'S' is found and adds the sample to the grid", () => {
-    expect(processVehicleInstructions(grid, 0, "S")).toEqual({
-      ...grid,
-      vehicles: [{ ...rover1, samplesTaken: 1 }],
-      samples: [{ xPos: 0, yPos: 0 }],
-    });
+    expect(processVehicleInstructions(grid, 0, "S")).toEqual(outputGrid);
   });
   test("Increases samplesTaken by the correct number of Ss found and adds the samples to the grid", () => {
-    expect(processVehicleInstructions(grid, 0, "MSMS")).toEqual({
-      ...grid,
-      vehicles: [
-        { ...rover1, samplesTaken: 2, position: { xPos: 0, yPos: 2 } },
-      ],
-      samples: [
-        { xPos: 0, yPos: 1 },
-        { xPos: 0, yPos: 2 },
-      ],
-    });
+    expect(processVehicleInstructions(grid, 0, "MSMS")).toEqual(outputGrid2);
   });
   test("Stops taking samples when capacity is reached", () => {
-    expect(processVehicleInstructions(grid, 0, "SSSSSSSSSSSSSSSSSS")).toEqual({
-      ...grid,
-      vehicles: [{ ...rover1, samplesTaken: 10 }],
-      samples: [
-        { xPos: 0, yPos: 0 },
-        { xPos: 0, yPos: 0 },
-        { xPos: 0, yPos: 0 },
-        { xPos: 0, yPos: 0 },
-        { xPos: 0, yPos: 0 },
-        { xPos: 0, yPos: 0 },
-        { xPos: 0, yPos: 0 },
-        { xPos: 0, yPos: 0 },
-        { xPos: 0, yPos: 0 },
-        { xPos: 0, yPos: 0 },
-      ],
-    });
+    expect(processVehicleInstructions(grid, 0, "SSSSSSSSSSSSSSSSSS")).toEqual(
+      outputGrid3
+    );
   });
   test("Does not add a photo to the array if instruction is 'P' but the vehicle has no cameras", () => {
     expect(processVehicleInstructions(grid, 0, "P")).toEqual(grid);
   });
   test("Adds a photo to the array if instruction is 'P'", () => {
-    expect(processVehicleInstructions(grid2, 1, "P")).toEqual({
-      ...grid2,
-      vehicles: [rover1, { ...rover2, photos: [{xPos: 3, yPos: 7}] }]
-    });
+    expect(processVehicleInstructions(grid2, 1, "P")).toEqual(outputGrid4);
   });
   test("Adds multiple photos to the array if instruction is a string of Ps", () => {
-    expect(processVehicleInstructions(grid2, 1, "P")).toEqual({
-      ...grid2,
-      vehicles: [rover1, { ...rover2, photos: [{xPos: 3, yPos: 7}] }]
-    });
+    expect(processVehicleInstructions(grid2, 1, "P")).toEqual(outputGrid5);
   });
   test("Correctly follows a mixture of all instructions", () => {
-    expect(processVehicleInstructions(grid2, 1, "RMMPRMPRMSLM")).toEqual({
-      ...grid2,
-      vehicles: [rover1, { ...rover2, orientation: "S", position: {xPos: 4, yPos: 5}, photos: [{xPos: 5, yPos: 7}, {xPos: 5, yPos: 6}], samplesTaken: 3 }],
-      samples: [{xPos: 4, yPos: 6}]
-    });
+    expect(processVehicleInstructions(grid2, 1, "RMMPRMPRMSLM")).toEqual(
+      outputGrid6
+    );
   });
 });
 
